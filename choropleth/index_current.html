@@ -1,0 +1,131 @@
+<!-- Leaflet resources -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="leaflet-tilelayer-colorfilter.min.js"></script>
+    <style>
+        #map {
+    	position: absolute;
+    	display: block;
+        top: 0;
+    	bottom: 0;
+    	width: 100%;
+        overflow:hidden
+    }
+    </style>
+
+<!-- cemac@grr.la qwert -->
+<!-- API Key: 6810b44d-cf9d-4fc1-bfc7-c007af8fd294 -->
+<!-- https://github.com/alexurquhart/free-tiles -->
+<body>
+    <div id="map" class="map">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div id="densityMap" style="height:600px;"></div>
+                  </div>
+              </div>
+    </div>
+    
+
+  
+  <!-- You want the SVG feColorMatrix with type="matrix". Then discard the Red/Blue channels, and multiply the green-to-green to be darker.
+
+  Specifically, to turn an RGBA image to use just the green channel and darken it by half (and have full alpha no matter what the original alpha was), you want these matrix values:
+
+  /*R   G   B   A   1 */
+    0   0   0   0   0   // R = 0*R + 0*G   + 0*B + 0*A + 0*1
+    0  0.5  0   0   0   // G = 0*R + 0.5*G + 0*B + 0*A + 0*1
+    0   0   0   0   0   // B = 0*R + 0*G   + 0*B + 0*A + 0*1
+    0   0   0   0   1   // A = 0*R + 0*G   + 0*B + 0*A + 1*1 -->
+<svg>
+  <filter id="mapfilter">
+   <feColorMatrix type="matrix"
+       values="
+                0.2 0.2 0.2 0.2 0.1 
+                0.2 0.2 0.2 0.2 0.72 
+                0.2 0.2 0.2 0.2 0.717 
+                0.2 0.2 0.8 0 0.0 
+                  "/>
+  </filter>  
+</svg>
+  
+  
+<script>
+var width = window.innerWidth, height = window.innerHeight;
+
+const d3 = require("d3");
+var canvas = document.getElementById("canvas");
+
+var map = L.map("map", {
+    center: [-62.31994628906251, -24.23757312392183].reverse(), // it was lon lat
+    zoom: 4,
+    zoomControl: false
+});
+mapLink = '<a href="https://openstreetmap.org">OpenStreetMap</a>';
+
+var customfilter = [
+    // 'blur:0px',
+    "url:mapfilter",
+    "grayscale:12%",
+    "sepia:60%",
+    //'brightness:100%',
+    "contrast:120%",
+    "hue:180deg",
+    "opacity:90%",
+    "invert:900%",
+    "saturate:29%"
+];
+
+var basemap = L.tileLayer.colorFilter(
+    "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        attribution: "&copy; " + mapLink + " | DIFID | CEMAC   <br> " + "",
+        maxZoom: 17,
+        minZoom: 1,
+        filter: customfilter
+    }
+);
+//
+//           var basemap = L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}.png', {
+// 	maxZoom: 20,
+// 	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+// });
+//
+
+//basemap.addTo(map);
+
+var customfilter = [
+    // 'blur:0px',
+    // 'url:mapfilter',
+    //'grayscale:12%',
+    // 'sepia:0%',
+    "brightness:90%",
+    "contrast:110%",
+    "hue:180deg",
+    "opacity:100%",
+    "invert:100%",
+    "saturate:59%"
+];
+
+var basemap = L.tileLayer.colorFilter(
+    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=6810b44d-cf9d-4fc1-bfc7-c007af8fd294",
+    {
+        maxZoom: 20,
+
+        filter: customfilter,
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org">OpenMapTiles</a>, &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+    }
+);
+
+basemap.addTo(map);
+
+//map.latLngToLayerPoint(latlng);
+// overlayPane:
+svg = d3.select(map.getPanes().overlayPane).append("svg");
+
+threefns = require('./threeoverlay.js')
+
+var rs = threefns.init(map.getPanes().overlayPane)
+threefns.drawmap(map)
+threefns.animate()
+
+</script>

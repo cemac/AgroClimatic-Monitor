@@ -25,7 +25,7 @@ app.on('ready', function() {
 },
     show:true});
     mainWindow.openDevTools();    // and load the index.html of the app.
-    mainWindow.loadURL( myLocation + '/'+ (args[0]||'index.html')+'#'+args[1]);
+    mainWindow.loadURL( myLocation + '/'+ (args[0]||'index_current.html')+'#'+args[1]);
 
 
     mainWindow.on('closed', function() { mainWindow = null;  app.quit();});
