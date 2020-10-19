@@ -48,6 +48,58 @@
   </filter>  
 </svg>
   
+<style>
+    @keyframes rotate {
+  from {
+    -ms-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+  to {
+    -ms-transform: rotateY(360deg);
+    -moz-transform: rotateY(360deg);
+    -webkit-transform: rotateY(360deg);
+    -o-transform: rotateY(360deg);
+    transform: rotateY(360deg);
+  }
+}
+/* path {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+} */
+    
+    svg{pointer-events: auto;}
+path {
+   /* animation set */
+ /* /animation-play-state: paused;  */
+ /* animation-fill-mode: forwards; */
+  fill:grey;
+  fill-opacity:0.1;
+  stroke-opacity:.13;
+  stroke-width:1.2;
+  pointer-events: auto!important;
+}
+path:hover {
+  animation: rotate 4s linear; 
+  /* animation-play-state: running;  */
+  fill-opacity:.9;
+}
+path:hover::after {
+    -ms-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -webkit-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+</style>
+  
+  
   
 <script>
 var width = window.innerWidth, height = window.innerHeight;
@@ -64,21 +116,21 @@ mapLink = '<a href="https://openstreetmap.org">OpenStreetMap</a>';
 
 var customfilter = [
     // 'blur:0px',
-    "url:mapfilter",
-    "grayscale:12%",
-    "sepia:60%",
-    //'brightness:100%',
-    "contrast:120%",
+     "url:mapfilter",
+    "grayscale:2%",
+    "sepia:10%",
+    'brightness:120%',
+    "contrast:190%",
     "hue:180deg",
-    "opacity:90%",
-    "invert:900%",
-    "saturate:29%"
+    "opacity:80%",
+    "invert:100%",
+    "saturate:129%"
 ];
 
 var basemap = L.tileLayer.colorFilter(
-    "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-        attribution: "&copy; " + mapLink + " | DIFID | CEMAC   <br> " + "",
+        attribution: "&copy; " + mapLink + " | CCSP | CEMAC   <br> " + "",
         maxZoom: 17,
         minZoom: 1,
         filter: customfilter
@@ -92,7 +144,7 @@ var basemap = L.tileLayer.colorFilter(
 //
 
 //basemap.addTo(map);
-
+/*
 var customfilter = [
     // 'blur:0px',
     // 'url:mapfilter',
@@ -114,18 +166,16 @@ var basemap = L.tileLayer.colorFilter(
         filter: customfilter,
         attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org">OpenMapTiles</a>, &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }
-);
+); 
+
+*/
 
 basemap.addTo(map);
 
-//map.latLngToLayerPoint(latlng);
-// overlayPane:
-svg = d3.select(map.getPanes().overlayPane).append("svg");
 
-threefns = require('./threeoverlay.js')
+can = require('./canvasoverlay.js')
 
-var rs = threefns.init(map.getPanes().overlayPane)
-threefns.drawmap(map)
-threefns.animate()
+can.drawmap(map)
+can.get_data()
 
 </script>

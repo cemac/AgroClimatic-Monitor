@@ -1,20 +1,27 @@
 
 var THREE = require("three");
-//var OrbitControls = require("three-orbit-controls")(THREE);
+var OrbitControls = require("three-orbit-controls")(THREE);
 
 var scene, camera,renderer;
 
 
 function init(dom) {
     scene = new THREE.Scene();
-    camera = new THREE.OrthographicCamera( 0, width*2 , 0,height*2, 0, 1000 );
+    var aspect = window.innerWidth / window.innerHeight;
+    var frustumSize = height;
+    
+    
+    camera = new THREE.OrthographicCamera(0,width,0,height,0,1000);
 
+    //( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
+
+    camera.position.z = 0;
     // camera.position.z = 0;
     // camera.position.y = 0
     //camera.lookAt(scene.position);
-    var helper = new THREE.CameraHelper( camera );
-    scene.add( helper );
-    
+    // var helper = new THREE.CameraHelper( camera );
+    // scene.add( helper );
+    // 
     renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -22,7 +29,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
     scene.background = null;
     dom.appendChild(renderer.domElement);
     
-    return {renderer,scene}
+    return {renderer,scene,camera}
 }
 
 
@@ -44,13 +51,13 @@ d3.range(0, counties.length, chunks).forEach(i => {
         
         
         var pts = t.geometry.coordinates[0].map(c => {
-            var px = map.latLngToLayerPoint(c.map(parseFloat));
+            var px = map.latLngToLayerPoint(c.map(parseFloat).reverse());
             // console.log(x)
             return new THREE.Vector2(px.x, px.y);
         });
 
         var shape = new THREE.Shape(pts);
-        //console.log(pts)
+        console.log(pts)
         var geometry = new THREE.ShapeGeometry(shape);
         var material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         var mesh = new THREE.Mesh(geometry, material);

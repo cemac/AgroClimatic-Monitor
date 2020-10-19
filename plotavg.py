@@ -22,8 +22,8 @@ counties = json.load(open('data/BR_MUN_WGS84.geojson'))
 '''
 Get Data From HDH5
 '''
-
-what = 'VHI'
+print(list(h5file))
+what = 'spi_03'
 
 dates = list(h5file[what])
 selection = h5file[what][dates[-1]]
@@ -37,29 +37,31 @@ for c in countries:
 
 df = pd.DataFrame(data,columns = 'name mean std median min max'.split())
 
+df.to_csv('processed/vhi_group.csv')
+print(df.head)
 
-
-'''
-Plotting
-'''
-import plotly.express as px
-
-
-fig = px.choropleth(df, geojson=counties, locations='name', color='median',
-                           color_continuous_scale="Viridis",
-                           range_color=(np.min(df['min']), np.max(df['max'])),
-                           scope="south america",
-                           labels={what:'index'}
-                          )
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-fig.show()
-
-
-
-
-print('fi','http://127.0.0.1:50371')
-
-
+# 
+# '''
+# Plotting
+# '''
+# import plotly.express as px
+# 
+# 
+# fig = px.choropleth(df, geojson=counties, locations='name', color='median',
+#                            color_continuous_scale="Viridis",
+#                            range_color=(np.min(df['min']), np.max(df['max'])),
+#                            scope="south america",
+#                            labels={what:'index'}
+#                           )
+# fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+# fig.show()
+# 
+# 
+# 
+# 
+# print('fi','http://127.0.0.1:50371')
+# 
+# 
 
 
 
