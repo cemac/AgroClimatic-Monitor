@@ -5,12 +5,16 @@ from rasterio.mask import mask,raster_geometry_mask
 from shapely.geometry import mapping
 
 from numpy import ma,nan,where,nanmean,nanstd,nanmedian,nanmax,nanmin
-
+import os 
 '''
 Open HDF5 datafile
 '''
-h5file = h5py.File('processed/data.h5', 'a')
-
+try:
+    h5file = h5py.File('processed/data.h5', 'a')
+except:
+    os.system('rm processed/data.h5')
+    input('deleting ctrl-c to cancel, enter to continue')
+    h5file = h5py.File('processed/data.h5', 'w')
 
 '''
 Locate Data
@@ -51,13 +55,18 @@ def parsefiles(i_kind,FILES):
         '''
         data = rasterio.open(f)
         fname = f.split('/')[-1].replace('.tif','').replace(i_kind+'_','')
+        if i_kind == 'VHI':
+            fname = fname.split('_')
+            fname = '%s%s'%(fname[1],fname[0])
 
+        
         for shape in brazil.iterrows():
             
             selection = shape[1].geometry
-            sname = shape[1].NOME
+            sname = str(shape[1].GEOCODIGO)
             
-            if not sname: continue
+            name = shape[1].NOME
+            if not name: continue
 
             ## subgroup
             try: indicator_sub = indicator[fname]
@@ -69,6 +78,10 @@ def parsefiles(i_kind,FILES):
 
             masked = where(clipped_array<=data.meta['nodata'],nan,clipped_array)
 
+            
+            try: nanmax(masked)
+            except RuntimeWarning: continue
+
             ## save data
             try: dset = indicator_sub[sname]
             except KeyError:
@@ -78,6 +91,7 @@ def parsefiles(i_kind,FILES):
                 dset[:] = masked
                 dset.attrs['transform']= clipped_transform       
                 dset.attrs['geocode']=shape[1].GEOCODIGO
+                dset.attrs['name']=name
                 
                 ### dataset
                 dset.attrs['max'] = nanmax(masked)

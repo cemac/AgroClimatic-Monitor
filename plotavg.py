@@ -32,10 +32,10 @@ countries = list(selection)
 data = []
 for c in countries:
     cd = selection[c].attrs
-    info = [c, cd['mean'],cd['std'],cd['median'],cd['min'],cd['max']]
+    info = [cd['geocode'],c, cd['mean'],cd['std'],cd['median'],cd['min'],cd['max']]
     data.append(info)
 
-df = pd.DataFrame(data,columns = 'name mean std median min max'.split())
+df = pd.DataFrame(data,columns = 'geocode name mean std median min max'.split())
 
 df.to_csv('processed/vhi_group.csv')
 print(df.head)
