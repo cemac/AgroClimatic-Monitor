@@ -178,7 +178,7 @@ body{background-color: whitesmoke!important;}
                 </div>
             </nav>
 
-            <h2>SPI 3 Month avarage</h2>
+            <h2>SPI 6 Month avarage</h2>
             <p> Some text on what this is.</p>
             
             
@@ -230,7 +230,7 @@ body{background-color: whitesmoke!important;}
          
             
          // Creating Image overlay
-         var imageUrl = `plotdata/${year}${month}_spi_03.png`;
+         var imageUrl = `plotdata/${year}${month}_spi_06.png`;
          /// (left=-76.125, bottom=-34.125, right=-31.875, top=6.125)
          var imageBounds = [[-34.125, -76.125], [6.125, -31.875]];
          
@@ -252,7 +252,7 @@ body{background-color: whitesmoke!important;}
             if (type==='hm_'){month = ''+num} else {year=''+ num}
             console.log(year, month)
 
-            overlay.setUrl(`plotdata/${year}${month}_spi_03.png`,true)
+            overlay.setUrl(`plotdata/${year}${month}_spi_06.png`,true)
 
             console.log(overlay)
             

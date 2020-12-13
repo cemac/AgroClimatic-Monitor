@@ -55,35 +55,85 @@ svg text{
             </div>
 
             <ul class="list-unstyled components">
-                <p>Select Year</p>
+                <li class="active">
+                    <a href="#homeyear" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Year</a>
+                    <ul class="collapse list-unstyled" id="homeyear">
+                        
+                        
+                        <li>
+                            <a href="#" value="2019" id='hy_2019'>2019</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="2020" id='hy_2020'>2020</a>
+                        </li>
+                         
+
+                        
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list-unstyled components">
                 
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Select Date</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <!-- <li>
-                            <a href="#">Home 1</a>
-                        </li>
+                    <a href="#homemonth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Month</a>
+                    <ul class="collapse list-unstyled" id="homemonth">
+                        
+                        
                         <li>
-                            <a href="#">Home 2</a>
+                            <a href="#" value="01" id='hm_01'>01</a>
                         </li>
+                         
                         <li>
-                            <a href="#">Home 3</a>
-                        </li> -->
+                            <a href="#" value="02" id='hm_02'>02</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="03" id='hm_03'>03</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="04" id='hm_04'>04</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="05" id='hm_05'>05</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="06" id='hm_06'>06</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="07" id='hm_07'>07</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="08" id='hm_08'>08</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="09" id='hm_09'>09</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="10" id='hm_10'>10</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="11" id='hm_11'>11</a>
+                        </li>
+                         
+                        <li>
+                            <a href="#" value="12" id='hm_12'>12</a>
+                        </li>
+                         
+
+                        
                     </ul>
                 </li>
                 
-                <li>
-                    <a href="#">About</a>
-                </li>
-                
-    
-                <!-- <li>
-                    <a href="#"></a>
-                </li> -->
-                
-                
             </ul>
-
             <ul class="list-unstyled CTAs">
                 <li>
                     <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/wcssp/likelihood_extreme_events_eng.pdf" class="download">Project Aims</a>
@@ -110,16 +160,19 @@ svg text{
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">DroughtCompare</a>
+                            <li class="nav-item" id='drought'>
+                                <a class="nav-link" href="./droughtcompare.html">DroughtCompare</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">SPI</a>
+                            <li class="nav-item" id='spi3'>
+                                <a class="nav-link" href="./spi3.html">SPI3</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">VHI</a>
+                            <li class="nav-item" id='spi6'>
+                                <a class="nav-link" href="./spi6.html">SPI6</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" id='vhi'>
+                                <a class="nav-link" href="./vhi.html">VHI</a>
+                            </li>
+                            <li class="nav-item" id='specific'>
                                 <a class="nav-link" href="#">Regional</a>
                             </li>
                         </ul>
@@ -128,8 +181,9 @@ svg text{
             </nav>
 
             <h2>Drought Compare</h2>
-            <p>We use a bivariate colour bar to indicate regions of drought using the VHI and SPI indicators. See key for more information. 
-              </p>
+            <p> We use a bivariate colour bar to indicate regions of drought using the VHI and SPI indicators. See key for more information.</p>
+            
+
 
             <div class="line"></div>
             

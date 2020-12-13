@@ -45,94 +45,36 @@ body{background-color: whitesmoke!important;}
             </div>
 
             <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="#homeyear" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Year</a>
-                    <ul class="collapse list-unstyled" id="homeyear">
-                        
-                        
-                        <li>
-                            <a href="#" onclick='loadImage("hy_", "2019");this.classList.toggle("activeimg");' id='hy_2019'>2019</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hy_", "2020");this.classList.toggle("activeimg");' id='hy_2020'>2020</a>
-                        </li>
-                         
-
-                        
-                    </ul>
-                </li>
-            </ul>
-            <ul class="list-unstyled components">
+                <p>Select Year</p>
                 
                 <li class="active">
-                    <a href="#homemonth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Month</a>
-                    <ul class="collapse list-unstyled" id="homemonth">
-                        
-                        
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="#" onclick='loadImage("hm_", "01");this.classList.toggle("activeimg");' id='hm_01'>01</a>
+                            <a href="#">Home 1</a>
                         </li>
-                         
                         <li>
-                            <a href="#" onclick='loadImage("hm_", "02");this.classList.toggle("activeimg");' id='hm_02'>02</a>
+                            <a href="#">Home 2</a>
                         </li>
-                         
                         <li>
-                            <a href="#" onclick='loadImage("hm_", "03");this.classList.toggle("activeimg");' id='hm_03'>03</a>
+                            <a href="#">Home 3</a>
                         </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "04");this.classList.toggle("activeimg");' id='hm_04'>04</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "05");this.classList.toggle("activeimg");' id='hm_05'>05</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "06");this.classList.toggle("activeimg");' id='hm_06'>06</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "07");this.classList.toggle("activeimg");' id='hm_07'>07</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "08");this.classList.toggle("activeimg");' id='hm_08'>08</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "09");this.classList.toggle("activeimg");' id='hm_09'>09</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "10");this.classList.toggle("activeimg");' id='hm_10'>10</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "11");this.classList.toggle("activeimg");' id='hm_11'>11</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "12");this.classList.toggle("activeimg");' id='hm_12'>12</a>
-                        </li>
-                         
-
-                        
                     </ul>
                 </li>
                 
+                <li>
+                    <a href="#">About</a>
+                </li>
+                
+    
+                <!-- <li>
+                    <a href="#"></a>
+                </li> -->
+                
+                
             </ul>
-
-
 
             <ul class="list-unstyled CTAs">
-
-                <li>
-                    <a href="./categories.png">Identifier Key</a>
-                </li>
-
                 <li>
                     <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/wcssp/likelihood_extreme_events_eng.pdf" class="download">Project Aims</a>
                 </li>
@@ -158,19 +100,16 @@ body{background-color: whitesmoke!important;}
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item" id='drought'>
-                                <a class="nav-link" href="./droughtcompare.html">DroughtCompare</a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">DroughtCompare</a>
                             </li>
-                            <li class="nav-item" id='spi3'>
-                                <a class="nav-link" href="./spi3.html">SPI3</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">SPI</a>
                             </li>
-                            <li class="nav-item" id='spi6'>
-                                <a class="nav-link" href="./spi6.html">SPI6</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">VHI</a>
                             </li>
-                            <li class="nav-item" id='vhi'>
-                                <a class="nav-link" href="./vhi.html">VHI</a>
-                            </li>
-                            <li class="nav-item" id='specific'>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">Regional</a>
                             </li>
                         </ul>
@@ -178,8 +117,8 @@ body{background-color: whitesmoke!important;}
                 </div>
             </nav>
 
-            <h2>SPI 3 Month avarage</h2>
-            <p> Some text on what this is.</p>
+            <h2>SPI 3 Month Average</h2>
+            <p> </p>
             
             
             
@@ -219,44 +158,18 @@ body{background-color: whitesmoke!important;}
          ).addTo(map)
          
          
-         var year='2020'
-         var month='07'
-         document.getElementById('hm_'+month).classList.toggle('activeimg')
-         document.getElementById('hy_'+year).classList.toggle('activeimg')
-         
-         // var year = [...document.querySelectorAll('#homeyear a')].pop().innerText
-         // var month = [...document.querySelectorAll('#homemonth a')].pop().innerText
-         
          
             
          // Creating Image overlay
-         var imageUrl = `plotdata/${year}${month}_spi_03.png`;
+         var imageUrl = 'plotfiles/demo2.png';
          /// (left=-76.125, bottom=-34.125, right=-31.875, top=6.125)
-         var imageBounds = [[-34.125, -76.125], [6.125, -31.875]];
-         
-         
-         
-        const overlay = L.imageOverlay(imageUrl, imageBounds);
+         var imageBounds = [[-76.125,-34.125].reverse(), [-31.875,6.125].reverse()];
+         var overlay = L.imageOverlay(imageUrl, imageBounds);
          overlay.addTo(map);
          overlay.setOpacity(.35)
          
          window.o = overlay
-        
-        
-        function loadImage(type,num){
-            
-
-            console.log(type,num,'clicke');
-            [...document.querySelectorAll(`.activeimg[id^="${type}"]`)].forEach(d=>d.classList.toggle('activeimg'))
-            
-            if (type==='hm_'){month = ''+num} else {year=''+ num}
-            console.log(year, month)
-
-            overlay.setUrl(`plotdata/${year}${month}_spi_03.png`,true)
-
-            console.log(overlay)
-            
-        } 
+         
          
          
       </script>
@@ -284,9 +197,6 @@ body{background-color: whitesmoke!important;}
             $("#sidebar").mCustomScrollbar({
                 theme: "minimal"
             });
-
-            // $('#sidebar, #content').hasClass('active');
-            $("sidebar:not([class*='active'])").addClass("active");
 
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');

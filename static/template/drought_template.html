@@ -13,13 +13,23 @@
     filter:invert(1)hue-rotate(180deg);
     background-color: #222!important;
 }
-body{background-color: whitesmoke!important;}
-#map{
-    width:100%;
-    height:800px;
-    top:0
+body{background-color: white!important;}
+</style>
+
+
+<style>    
+svg{background-color:#ececec}
+.countypath{fill:#222
+            stroke:whitesmoke;
+            stroke-width:2px}
+svg text{
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size:8pt;
+  dy:0;
+  text-anchor: middle
 }
 </style>
+
 
 
     <!-- Bootstrap CSS CDN -->
@@ -49,15 +59,11 @@ body{background-color: whitesmoke!important;}
                     <a href="#homeyear" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Year</a>
                     <ul class="collapse list-unstyled" id="homeyear">
                         
-                        
+                        {% for value in year %}
                         <li>
-                            <a href="#" onclick='loadImage("hy_", "2019");this.classList.toggle("activeimg");' id='hy_2019'>2019</a>
+                            <a href="#" value="{{value}}" id='hy_{{value}}'>{{value}}</a>
                         </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hy_", "2020");this.classList.toggle("activeimg");' id='hy_2020'>2020</a>
-                        </li>
-                         
+                         {% endfor %}
 
                         
                     </ul>
@@ -69,70 +75,18 @@ body{background-color: whitesmoke!important;}
                     <a href="#homemonth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Month</a>
                     <ul class="collapse list-unstyled" id="homemonth">
                         
-                        
+                        {% for value in month %}
                         <li>
-                            <a href="#" onclick='loadImage("hm_", "01");this.classList.toggle("activeimg");' id='hm_01'>01</a>
+                            <a href="#" value="{{value}}" id='hm_{{value}}'>{{value}}</a>
                         </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "02");this.classList.toggle("activeimg");' id='hm_02'>02</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "03");this.classList.toggle("activeimg");' id='hm_03'>03</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "04");this.classList.toggle("activeimg");' id='hm_04'>04</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "05");this.classList.toggle("activeimg");' id='hm_05'>05</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "06");this.classList.toggle("activeimg");' id='hm_06'>06</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "07");this.classList.toggle("activeimg");' id='hm_07'>07</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "08");this.classList.toggle("activeimg");' id='hm_08'>08</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "09");this.classList.toggle("activeimg");' id='hm_09'>09</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "10");this.classList.toggle("activeimg");' id='hm_10'>10</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "11");this.classList.toggle("activeimg");' id='hm_11'>11</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "12");this.classList.toggle("activeimg");' id='hm_12'>12</a>
-                        </li>
-                         
+                         {% endfor %}
 
                         
                     </ul>
                 </li>
                 
             </ul>
-
-
-
             <ul class="list-unstyled CTAs">
-
-                <li>
-                    <a href="./categories.png">Identifier Key</a>
-                </li>
-
                 <li>
                     <a href="https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/wcssp/likelihood_extreme_events_eng.pdf" class="download">Project Aims</a>
                 </li>
@@ -178,96 +132,38 @@ body{background-color: whitesmoke!important;}
                 </div>
             </nav>
 
-            <h2>SPI 3 Month avarage</h2>
-            <p> Some text on what this is.</p>
-            
-            
+            <h2>{{title}}</h2>
+            <p> {{description}}</p>
             
 
+
             <div class="line"></div>
+            
+            <div class="stateMap"></div>
+            
+            
+            <div class="updatefill"></div>
+            <div class="elements"></div>
+
+
 <!-- 
             <h2>Lorem Ipsum Dolor</h2>
             <p>llit anim id est laborum.</p>
 
             <div class="line"></div> -->
-            
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-          crossorigin=""></script>
-          
-    <div id = "map"></div>
-      <script>
-         // Creating map options
-         var map = L.map("map", {
-             center: [-62.31994628906251, -24.23757312392183].reverse(), // it was lon lat
-             zoom: 4,
-             zoomControl: false
-         });
-         mapLink = '<a href="https://openstreetmap.org">OpenStreetMap</a>';
-
-
-         var basemap = L.tileLayer(
-             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-             {
-                 attribution: "&copy; " + mapLink + " | CSSP | CEMAC   <br> " + "",
-                 maxZoom: 17,
-                 minZoom: 1
-             }
-         ).addTo(map)
-         
-         
-         var year='2020'
-         var month='07'
-         document.getElementById('hm_'+month).classList.toggle('activeimg')
-         document.getElementById('hy_'+year).classList.toggle('activeimg')
-         
-         // var year = [...document.querySelectorAll('#homeyear a')].pop().innerText
-         // var month = [...document.querySelectorAll('#homemonth a')].pop().innerText
-         
-         
-            
-         // Creating Image overlay
-         var imageUrl = `plotdata/${year}${month}_spi_03.png`;
-         /// (left=-76.125, bottom=-34.125, right=-31.875, top=6.125)
-         var imageBounds = [[-34.125, -76.125], [6.125, -31.875]];
-         
-         
-         
-        const overlay = L.imageOverlay(imageUrl, imageBounds);
-         overlay.addTo(map);
-         overlay.setOpacity(.35)
-         
-         window.o = overlay
-        
-        
-        function loadImage(type,num){
-            
-
-            console.log(type,num,'clicke');
-            [...document.querySelectorAll(`.activeimg[id^="${type}"]`)].forEach(d=>d.classList.toggle('activeimg'))
-            
-            if (type==='hm_'){month = ''+num} else {year=''+ num}
-            console.log(year, month)
-
-            overlay.setUrl(`plotdata/${year}${month}_spi_03.png`,true)
-
-            console.log(overlay)
-            
-        } 
-         
-         
-      </script>
-            
-            
-            
 
     </div>
 
+<!-- INSERT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- <script src="https://d3js.org/d3-dsv.v2.min.js"></script>
+    <script src="https://d3js.org/d3-fetch.v2.min.js"></script>     -->
+    <script src='droughtcompare.module.js' type="module"></script>
+    <!--  -->
 
-
+    
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -285,14 +181,17 @@ body{background-color: whitesmoke!important;}
                 theme: "minimal"
             });
 
-            // $('#sidebar, #content').hasClass('active');
-            $("sidebar:not([class*='active'])").addClass("active");
-
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar, #content').toggleClass('active');
                 $('.collapse.in').toggleClass('in');
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
+            
+        //     $('#homeSubmenu').ready(()=>[...document.querySelectorAll('#homeSubmenu li a')].pop().click()
+        // )
+        
+            
+            
         });
     </script>
 </body>

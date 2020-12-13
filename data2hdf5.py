@@ -3,6 +3,7 @@ import rasterio,h5py,glob,time
 from rasterio import MemoryFile
 from rasterio.mask import mask,raster_geometry_mask
 from shapely.geometry import mapping
+import dataconvert as dc
 
 from numpy import ma,nan,where,nanmean,nanstd,nanmedian,nanmax,nanmin
 import os 
@@ -59,6 +60,11 @@ def parsefiles(i_kind,FILES):
             fname = fname.split('_')
             fname = '%s%s'%(fname[1],fname[0])
 
+        ###
+        ## DRAW
+        ###
+        dc.getpng(f,fname,i_kind)
+        
         
         for shape in brazil.iterrows():
             
@@ -120,3 +126,4 @@ Close the hdf5 file cleanly
 '''
 h5file.close()
 
+os.system('rm demo.png')

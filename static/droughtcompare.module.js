@@ -1,82 +1,98 @@
-import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import {
+    Runtime,
+    Inspector
+} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 import define from "https://api.observablehq.com/@wolfiex/reusable-brazil.js?v=3";
 
 
 
 const main = new Runtime().module(define, name => {
-  console.log(name)    
-  switch (name){
-  case "stateMap": return Inspector.into(".stateMap")();
-  case "updatefill": return Inspector.into(".updatefill")();
-  case "elements": return Inspector.into(".elements")();
-  // case 'e':
-  // return {
-  //     fulfilled(value) { console.log(name, value); },
-  //     rejected(error) { console.error(error); }
-  //   };
+    console.log(name)
+    switch (name) {
+        case "stateMap":
+            return Inspector.into(".stateMap")();
+        case "updatefill":
+            return Inspector.into(".updatefill")();
+        case "elements":
+            return Inspector.into(".elements")();
+            // case 'e':
+            // return {
+            //     fulfilled(value) { console.log(name, value); },
+            //     rejected(error) { console.error(error); }
+            //   };
 
-}});
+    }
+});
 
-const menu = document.getElementById('homeSubmenu')
+
+
+
+
 
 
 console.log(d3)
 
-main.redefine("width", Math.min(window.innerWidth,window.innerHeight));
+main.redefine("width", Math.min(window.innerWidth, window.innerHeight));
 
 
-var date = '201911'
+var year
+var month
 var alld;
 
+document.getElementById('homeyear').addEventListener("click", function(e) {
+    loadImage("hy_", e.path[0].getAttribute('value'))
+    e.path[0].classList.toggle("activeimg")
+});
+document.getElementById('homemonth').addEventListener("click", function(e) {
+    loadImage("hm_", e.path[0].getAttribute('value'))
+    e.path[0].classList.toggle("activeimg")
+});
 
- d3.json('./biindicate.json').then(function (data){
-         main.redefine("data", data );
-         alld=data
-         console.log(data)
-     }).then(
-      async()=>{
-
-         const sleep = m => new Promise(r => setTimeout(r, m))
 
 
-         
-         console.log('start')
-         
-          // (async () => {
-              
-         var keys = Object.keys(alld)
-         console.log(keys)
-         for (var i = 0; i < keys.length-3; i++) {
-             
-             
-            var node=document.createElement("LI");
-            var item=document.createElement('a')
-            item.value = keys[i];
-            item.innerText = keys[i].slice(0,4)+' '+keys[i].slice(4,6)
-            node.appendChild(item);
-            menu.appendChild(node);
+d3.json('./plotdata/biindicate.json').then(function(data) {
+        main.redefine("data", data);
+        alld = data
+        //console.log(data)
+    }).then(() => {
+
+            setTimeout(function() {
+                
+                year = year || [...document.querySelectorAll('#homeyear a')].pop().innerText
+                
+                month = Object.keys(alld).filter(d=>d.slice(0,4)===year).map(d=>d.slice(4)).sort((a, b) => b-a)[0]
+                
+                
+                document.getElementById('hm_'+month).classList.toggle('activeimg')
+                document.getElementById('hy_'+year).classList.toggle('activeimg')
+                
+                // month = month || [...document.querySelectorAll('#homemonth a')].pop().innerText
+                
+                console.log('updsat',year,month);
+                loadImage('hm_',month)
+
+
+            }, 300)
+        
+})
+
+
+
+
+
+            function loadImage(type, num) {
+
+                [...document.querySelectorAll(`.activeimg[id^="${type}"]`)].forEach(d => d.classList.toggle('activeimg'))
+
+
+                if (type === 'hm_') {
+                    month = '' + num
+                } else {
+                    year = '' + num
+                }
+                console.log(year, month)
+                main.redefine('elements', alld[year + month])
+
+
 
             }
-            
-            
-            
-            
-            menu.addEventListener("click",function(e) {
-                    console.log('click',e.path[0].value)
-                    main.redefine('elements',alld[e.path[0].value])
-
-    });
-            
-            
-         
-}).then(()=>{
-    
-setTimeout(function(){ 
-       console.log('updsat');
-       [...document.querySelectorAll('#homeSubmenu li a')].pop().click()
-
-}, 2000)
-}
-)
-
-

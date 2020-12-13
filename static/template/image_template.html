@@ -49,15 +49,11 @@ body{background-color: whitesmoke!important;}
                     <a href="#homeyear" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Year</a>
                     <ul class="collapse list-unstyled" id="homeyear">
                         
-                        
+                        {% for value in year %}
                         <li>
-                            <a href="#" onclick='loadImage("hy_", "2019");this.classList.toggle("activeimg");' id='hy_2019'>2019</a>
+                            <a href="#" onclick='loadImage("hy_", "{{value}}");this.classList.toggle("activeimg");' id='hy_{{value}}'>{{value}}</a>
                         </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hy_", "2020");this.classList.toggle("activeimg");' id='hy_2020'>2020</a>
-                        </li>
-                         
+                         {% endfor %}
 
                         
                     </ul>
@@ -69,55 +65,11 @@ body{background-color: whitesmoke!important;}
                     <a href="#homemonth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Month</a>
                     <ul class="collapse list-unstyled" id="homemonth">
                         
-                        
+                        {% for value in month %}
                         <li>
-                            <a href="#" onclick='loadImage("hm_", "01");this.classList.toggle("activeimg");' id='hm_01'>01</a>
+                            <a href="#" onclick='loadImage("hm_", "{{value}}");this.classList.toggle("activeimg");' id='hm_{{value}}'>{{value}}</a>
                         </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "02");this.classList.toggle("activeimg");' id='hm_02'>02</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "03");this.classList.toggle("activeimg");' id='hm_03'>03</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "04");this.classList.toggle("activeimg");' id='hm_04'>04</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "05");this.classList.toggle("activeimg");' id='hm_05'>05</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "06");this.classList.toggle("activeimg");' id='hm_06'>06</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "07");this.classList.toggle("activeimg");' id='hm_07'>07</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "08");this.classList.toggle("activeimg");' id='hm_08'>08</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "09");this.classList.toggle("activeimg");' id='hm_09'>09</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "10");this.classList.toggle("activeimg");' id='hm_10'>10</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "11");this.classList.toggle("activeimg");' id='hm_11'>11</a>
-                        </li>
-                         
-                        <li>
-                            <a href="#" onclick='loadImage("hm_", "12");this.classList.toggle("activeimg");' id='hm_12'>12</a>
-                        </li>
-                         
+                         {% endfor %}
 
                         
                     </ul>
@@ -178,8 +130,8 @@ body{background-color: whitesmoke!important;}
                 </div>
             </nav>
 
-            <h2>SPI 3 Month avarage</h2>
-            <p> Some text on what this is.</p>
+            <h2>{{title}}</h2>
+            <p> {{description}}</p>
             
             
             
@@ -219,8 +171,8 @@ body{background-color: whitesmoke!important;}
          ).addTo(map)
          
          
-         var year='2020'
-         var month='07'
+         var year='{{syear}}'
+         var month='{{smonth}}'
          document.getElementById('hm_'+month).classList.toggle('activeimg')
          document.getElementById('hy_'+year).classList.toggle('activeimg')
          
@@ -230,9 +182,9 @@ body{background-color: whitesmoke!important;}
          
             
          // Creating Image overlay
-         var imageUrl = `plotdata/${year}${month}_spi_03.png`;
+         var imageUrl = `plotdata/${year}${month}{{ext}}`;
          /// (left=-76.125, bottom=-34.125, right=-31.875, top=6.125)
-         var imageBounds = [[-34.125, -76.125], [6.125, -31.875]];
+         var imageBounds = {{bounds}};
          
          
          
@@ -252,7 +204,7 @@ body{background-color: whitesmoke!important;}
             if (type==='hm_'){month = ''+num} else {year=''+ num}
             console.log(year, month)
 
-            overlay.setUrl(`plotdata/${year}${month}_spi_03.png`,true)
+            overlay.setUrl(`plotdata/${year}${month}{{ext}}`,true)
 
             console.log(overlay)
             
