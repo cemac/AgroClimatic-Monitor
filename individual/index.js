@@ -1,6 +1,6 @@
 let d3 = require('d3')
 
-const plotheight = 400
+const plotheight = 200
 
 
 var svg = d3.select("svg"),
@@ -54,7 +54,7 @@ var context = svg.append("g")
     .attr("class", "context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-
+svg.style('background-color','whitesmoke')
 
 
 var allcharts=[];
@@ -82,7 +82,7 @@ d3.csv("data.tsv").then(function (data) {
       start = id*plotheight 
       console.log(id,start)
       var x = d3.scaleTime().range([0, width]),
-          y = d3.scaleLinear().range([start+plotheight, start]);
+          y = d3.scaleLinear().range([start+plotheight-50, start]);
   
   var line = d3.line()
       .x(function (d) { return x(d.Date); })
@@ -108,7 +108,7 @@ d3.csv("data.tsv").then(function (data) {
     
           focus.append("g")
               .attr("class", "axis axis--x")
-              .attr("transform", "translate(0," + start+plotheight + ")")
+              .attr("transform", "translate(0," + ((1+id)*plotheight-50) + ")")
               .call(xAxis);
 
           focus.append("g")
