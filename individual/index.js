@@ -1,207 +1,350 @@
-let d3 = require('d3')
+let d3 = require("d3");
 
-const plotheight = 200
+const plotheight = 140;
+
+var hash = "1100254";
 
 
-var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 110, left: 40},
-    margin2 = {top: 430, right: 20, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
-    
 
-var parseDate = d3.timeParse("%m/%d/%Y %H:%M");
+// svg.style("background-color", "whitesmoke");
 
-// var x = d3.scaleTime().range([0, width]),
-var     x2 = d3.scaleTime().range([0, width]),
+var bar = d3.select("#bar")
+var svg = d3.select("#svg"),
+    margin = {
+        top: 20,
+        right: 20,
+        bottom: 110,
+        left: 40
+    },
+    // margin2 = {top: 430, right: 20, bottom: 30, left: 40},
+    width = +window.innerWidth - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+// height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+const defs = svg.append("defs")
+const parseDate = function(x) {
+    return x.map(y => d3.timeParse("%Y-%m")(y));
+};
+
+var x = d3.scaleTime().range([0, width]);
+var x2 = d3.scaleTime().range([0, width]),
     // y = d3.scaleLinear().range([height, 0]),
-    y2 = d3.scaleLinear().range([height2, 0]);
+    y2 = d3.scaleLinear().range([20, 0]);
 
-var xAxis2 = d3.axisBottom(x2)
+var xAxis2 = d3.axisBottom(x2);
 
-var brush = d3.brushX()
-    .extent([[0, 0], [width, height2]])
-    // .on("brush end", brushed);
+const color = '003049-d62828-f77f00-fcbf49-eae2b7'.split('-').map(d=>'#'+d)
 
-var zoom = d3.zoom()
+//box
+var brush = d3.brushX().extent([[0, 10], [width, 70]]);
+// .on("brush end", brushed);
+
+var zoom = d3
+    .zoom()
     .scaleExtent([1, Infinity])
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
-    .on("zoom", zoomed);
+    .on("zoom", update);
+
+var line2 = d3
+    .line()
+    .x(function(d) {
+        return x2(+d.Date);
+    })
+    .y(function(d) {
+        return y2(+d.Air_Temp);
+    });
+
+var clip = bar
+    .append("defs")
+    .append("svg:clipPath")
+    .attr("id", "clip")
+    .append("svg:rect")
+    .attr("width", width)
+    .attr("height", 100)
+    .attr("x", 0)
+    .attr("y", 0);
 
 
-
-    var line2 = d3.line()
-        .x(function (d) { return x2(+d.Date); })
-        .y(function (d) { return y2(+d.Air_Temp); });
-
-    var clip = svg.append("defs").append("svg:clipPath")
-        .attr("id", "clip")
-        .append("svg:rect")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("x", 0)
-        .attr("y", 0); 
-
-
-
-    var focus = svg.append("g")
-        .attr("class", "focus")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var context = svg.append("g")
+var context = bar
+    .append("g")
     .attr("class", "context")
-    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-
-svg.style('background-color','whitesmoke')
+    .attr("transform", "translate(" + margin.left + "," + 0 + ")");
 
 
-var allcharts=[];
-
-
-
-
+var allcharts = [];
 
 ////////
-d3.csv("data.tsv").then(function (data) {
-  data = data.map(function type(d) {
-    d.Date = parseDate(d.Date);
-    d.Air_Temp = +d.Air_Temp;
-    return d;
-  })
-  window.d = data
-  // x2.domain(x.domain());
-  // y2.domain(y.domain());
-  x2.domain(d3.extent(data, function(d) { return d.Date; }));
-  y2.domain([0, d3.max(data, function (d) { return d.Air_Temp; })]);
-  
-  
-  function indicator(){
-      id = allcharts.length
-      start = id*plotheight 
-      console.log(id,start)
-      var x = d3.scaleTime().range([0, width]),
-          y = d3.scaleLinear().range([start+plotheight-50, start]);
-  
-  var line = d3.line()
-      .x(function (d) { return x(d.Date); })
-      .y(function (d) { return y(+d.Air_Temp); });
-      
-  x.domain(d3.extent(data, function(d) { return d.Date; }));
-  y.domain([0, d3.max(data, function (d) { return d.Air_Temp; })]);
+d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
+    window.d = data;
 
-  var Line_chart = svg.append("g")
-      .attr("class", "focus")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .attr("clip-path", "url(#clip)");
+    var dates = [];
+
+    Object.values(data).forEach(d => {
+        dates = dates.concat(d.x).concat(d.px);
+    });
+    dates = parseDate(dates);
+
+    window.e = dates;
+    // x2.domain(x.domain());
+    // y2.domain(y.domain());
+    x.domain(d3.extent(dates));
+    x2.domain(x.domain());
+    y2.domain([0, 8]);
+
+//////////////
+    function indicator(item, whatami) {
+        item.allx = item.x.concat(item.px);
+        item.ally = item.y.concat(item.py);
+
+        item.x = parseDate(item.x);
+        item.px = parseDate(item.px);
+        item.allx = parseDate(item.allx);
 
 
+         console.log("item", item);
 
-  Line_chart.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", d=>{console.log('dsf',d);line(d);});
 
-      var xAxis = d3.axisBottom(x),
-          yAxis = d3.axisLeft(y);
-    
-          focus.append("g")
-              .attr("class", "axis axis--x")
-              .attr("transform", "translate(0," + ((1+id)*plotheight-50) + ")")
-              .call(xAxis);
+         var linearGradient = defs
+                    .append("linearGradient")
+                    .attr("id", "gradient_"+whatami)
+                    .attr("gradientTransform", "rotate(90)");
 
-          focus.append("g")
-              .attr("class", "axis axis--y")
-              .call(yAxis);
+                linearGradient.append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", color[1]);
 
-    
-    
-    return {x,y,line,Line_chart,xAxis,yAxis}
-      
+                linearGradient.append("stop")
+                    .attr("offset", "25%")
+                    .attr("stop-color", color[2]);
+
+                linearGradient.append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", color[3]);
+                // 
+                // linearGradient.append("stop")
+                //     .attr("offset", "75%")
+                //     .attr("stop-color", color(4));
+                // 
+                // linearGradient.append("stop")
+                //     .attr("offset", "100%")
+                //     .attr("stop-color", color(5));
+                // 
+                // 
+                    
+
+
+        id = allcharts.length;
+        start = id * plotheight;
+        console.log(id, start);
+        var y = d3.scaleLinear().range([start + plotheight - 50, start]).domain(d3.extent(item.ally));
+
+        svg.append("text")
+            .attr("x", width+35)
+            .attr("y", start+11)
+            .attr("dy", ".35em")
+            .style('text-anchor','end')
+            .text(whatami.replace('_',' ').toUpperCase());
+
+
+        var line = d3
+            .line()
+            .x(function(d) {
+                return x(d[0]);
+            })
+            .y(function(d) {
+                return y(+d[1]);
+            })
+             .curve(d3.curveCatmullRom.alpha(0.1))
+            
+        var area = d3.area()
+          .x(function(d) { return x(d[0]) })
+          .y0(function(d) { 
+              var lim = y.domain()[1]; 
+
+              return (d[1]<lim)? y(d[1]) : y.range()[1]
+          })
+          .y1(function(d) { 
+              var lim = y.domain()[0]; 
+              // return y(d[2])
+              return (d[2]>lim)? y(d[1]) : y.range()[0]
+          })
+          //.defined(true)
+           .curve(d3.curveCatmullRom.alpha(0.5))
+
+        var Line_chart = svg
+            .append("g")
+            .attr("class", "focus")
+            .attr(
+                "transform",
+                "translate(" + margin.left + "," + margin.top + ")"
+            )
+            .attr("clip-path", "url(#clip)");
+
+        Line_chart.append("path")
+            //.datum(item)
+            .datum(d3.zip(item.x, item.y))
+            .attr("class", "line")
+            
+            .attr("d",line)
+            .style('stroke',`url(#gradient_${whatami})`)
+            
+            
+//////// AREAS 
+            
+            Line_chart.append("path")
+                //.datum(item)
+                .datum(d3.zip(item.px, item.pt, item.pb))
+                .attr("class", "area")
+          .style("fill", "#cce5df")
+          .style("stroke", "none")
+          .style('opacity',.8)
+          .attr("d", d=>area(d))
+          
+            
+            // prediction line
+            Line_chart.append("path")
+                //.datum(item)
+                .datum(d3.zip(item.px, item.py))
+                .attr("class", "line")
+                .attr("d",line)
+                .style('opacity',.6)
+                .style('stroke', 'green')   
+                .style("stroke-dasharray", ("3, 3")) 
+            
+            
+
+        var xAxis = d3.axisBottom(x), yAxis = d3.axisLeft(y).ticks(5);
+
+        var focus = svg
+            .append("g")
+            .attr("class", "focus")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        focus
+            .append("g")
+            .attr("class", "axis axis--x")
+            .attr(
+                "transform",
+                "translate(0," + ((1 + id) * plotheight - 50) + ")"
+            )
+            .call(xAxis);
+
+        focus.append("g").attr("class", "axis axis--y").call(yAxis);
+
+        return {
+            y,
+            line,
+            area,
+            Line_chart,
+            focus,
+            xAxis,
+            yAxis,
+            whatami
+        };
     }
 
-    allcharts.push(indicator())
-    allcharts.push(indicator())
+    var keys = ["VHI", "spi_01", "spi_03", "spi_06", "spi_12"]; //"IIS3",
 
-    endplots= plotheight*allcharts.length
-    
-    svg.attr('height', endplots+100)
-    clip.attr('height',endplots+100)
-    
-    
-    context.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line2);
+    //Object.keys(data)
 
+    keys.forEach(e => {
+        console.log(e);
+        allcharts.push(indicator(data[e], e));
+    });
 
-  context.append("g")
-      .attr("class", "axis axis--x")
-      .attr("transform", "translate(0," + height2 + ")")
-      .call(xAxis2);
+    endplots = plotheight * allcharts.length;
 
-      context.append("g")
-          .attr("class", "brush")
-          .call(brush)
-          .call(brush.move, x2.range());
+    svg.attr("height", endplots + 100);
+    clip.attr("height", endplots + 100);
 
+    //
+    // context.append("path")
+    //     .datum(data)
+    //     .attr("class", "line")
+    //     .attr("d", line2);
 
-  svg.append("rect")
-      .attr("class", "zoom")
-      .attr("width", width)
-      .attr("height", endplots)
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(zoom)
-      .attr('fill','red')
-      
+    context
+        .append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + 70 + ")")
+        .call(xAxis2);
 
+    context
+        .append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.move, x2.range());
 
-brushed('loading')
+    svg
+        .append("rect")
+        .attr("class", "zoom")
+        .attr("width", width)
+        .attr("height", endplots)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(zoom)
+        .attr("fill", "red");
 
+    update({type:"brush"});
 });
 
 
 
 
+function update(e){
+    
+    switch (e.type){
+        case 'brush':
+        
+        var s = e.selection || x2.range();
 
+        allcharts.forEach(c => {
+            console.log(c);
+            x.domain(s.map(x2.invert, x2));
+            c.Line_chart.selectAll(".line").attr("d", c.line);
+            c.Line_chart.selectAll(".area").attr("d", c.area);
+            c.focus.select(".axis--x").call(c.xAxis);
+        });
 
+        svg
+            .select(".zoom")
+            .call(
+                zoom.transform,
+                d3.zoomIdentity.scale(width / (s[1] - s[0])).translate(-s[0], 0)
+            );
+        break
+        
+        
+        case 'zoom':
+        var t = e.transform;
 
-
-
-
-
-/////// brush functions
-function brushed(e) {
-    console.log(e)    
-  if (e.type === "zoom") return; // ignore brush-by-zoom
-  
-  var s = e.selection || x2.range();
-
-  allcharts.forEach(c=>{
-  console.log(c)
-  c.x.domain(s.map(x2.invert, x2));
-  c.Line_chart.select(".line").attr("d", c.line);
-focus.select(".axis--x").call(c.xAxis);
-  })
-  
-   
-  
-  svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-      .scale(width / (s[1] - s[0]))
-      .translate(-s[0], 0));
+        allcharts.forEach(c => {
+            x.domain(t.rescaleX(x2).domain());
+            c.Line_chart.selectAll(".line").attr("d", c.line);
+            c.Line_chart.selectAll(".area").attr("d", c.area);
+            c.focus.select(".axis--x").call(c.xAxis);
+            context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+        });
+    }
+    
+    
+    
+    
+    
+    
 }
 
-function zoomed(e) {
-  if (e.type === "brush") return; // ignore zoom-by-brush
-  var t = e.transform;
-  
-    allcharts.forEach(c=>{
-  c.x.domain(t.rescaleX(x2).domain());
-  c.Line_chart.select(".line").attr("d", c.line);
-  focus.select(".axis--x").call(c.xAxis);
-  context.select(".brush").call(brush.move, c.x.range().map(t.invertX, t));
-})
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

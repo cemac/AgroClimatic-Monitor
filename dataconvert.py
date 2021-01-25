@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 import os 
 
 
-def getpng(loc,name,what):
+def getpng(loc,name,what,where ='./processed/plotdata/' ):
     plt.clf()
     
     ra = rio.open(loc)
@@ -37,8 +37,9 @@ def getpng(loc,name,what):
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     plt.savefig('demo.png', dpi=my_dpi, transparent=True,bbox_inches='tight',pad_inches=0)
     #plt.show()
+    plt.close()
 
-    os.system('convert demo.png -transparent white  ./static/plotdata/%s_%s.png'%(name,what))
+    os.system('convert demo.png -transparent white  %s%s_%s.png'%(where,name,what))
     
     #print('static/plotdata/%s_%s.png'%(name,what))
     

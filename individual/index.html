@@ -7,11 +7,11 @@
     <meta institution: CEMAC @ Uni. of Leeds >
 
     <style>
-        
+    body{top:0;left:0;margin:0}    
  .line {
         fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
+        /* stroke: steelblue; */
+        stroke-width: 2.05px;
     }
 .zoom {
   cursor: move;
@@ -19,13 +19,22 @@
   pointer-events: all;
 }
 
+#bar{
+    width:100vw;
+    height:100px;
+    bottom:0;
+    position:absolute;
+    display: block';
+}
+
+svg{font-family: 'Montserrat', sans-serif;}
     </style>
 </head>
 
 <body>
 
-<svg width="960" height="500"></svg>
-
+<svg id='svg' width="960" height="500"></svg>
+<svg id='bar'></svg>
 
     <!-- <script src='dist/bundle.js'></script> -->
     <script src='index.js'></script>
@@ -34,4 +43,7 @@
 
 </body>
 
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
 </HTML>
