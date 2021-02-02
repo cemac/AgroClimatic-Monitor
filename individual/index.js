@@ -2,7 +2,7 @@ let d3 = require("d3");
 
 const plotheight = 140;
 
-var hash = "1100254";
+var hash = "1100049";
 
 
 
@@ -32,7 +32,7 @@ var x2 = d3.scaleTime().range([0, width]),
 
 var xAxis2 = d3.axisBottom(x2);
 
-const color = '003049-d62828-f77f00-fcbf49-eae2b7'.split('-').map(d=>'#'+d)
+const color = '003049-d62828-f77f00-fcbf49-eae2b7'.split('-').map(d=>'#'+d)//.reverse()
 
 //box
 var brush = d3.brushX().extent([[0, 10], [width, 70]]);
@@ -93,6 +93,12 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
 
 //////////////
     function indicator(item, whatami) {
+        
+        console.log("item", item);
+        
+        
+        var areadir = item.lim[0]<item.lim[1]
+        
         item.allx = item.x.concat(item.px);
         item.ally = item.y.concat(item.py);
 
@@ -100,26 +106,57 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
         item.px = parseDate(item.px);
         item.allx = parseDate(item.allx);
 
+        item.x.push(item.x[item.x.length-1])
+        item.x.push(item.x[item.x.length-1])
+        
+        item.y.push(item.lim[0])
+        item.y.push(item.lim[1])
+        
+        id = allcharts.length;
+        start = id * plotheight;
+        console.log(id, start);
+        
+        var y = d3.scaleLinear().range([start + plotheight - 50, start]).domain(item.lim||d3.extent(item.ally));
 
-         console.log("item", item);
+
 
 
          var linearGradient = defs
                     .append("linearGradient")
+                    .attr('gradientUnits',"userSpaceOnUse")
                     .attr("id", "gradient_"+whatami)
                     .attr("gradientTransform", "rotate(90)");
 
-                linearGradient.append("stop")
-                    .attr("offset", "0%")
-                    .attr("stop-color", color[1]);
 
-                linearGradient.append("stop")
-                    .attr("offset", "25%")
-                    .attr("stop-color", color[2]);
+                    linearGradient.append("stop")
+                        .attr("offset",0)
+                        .attr("stop-color", color[0]);
 
+
+                item.catlims.reverse().forEach((q,l)=>{
+                    
+                    console.log(q,l,y(q),(plotheight*6), y(q)/(plotheight*6))
+                    
+                    linearGradient.append("stop")
+                        .attr("offset",y(q)/(plotheight*6+100))//,Math.abs((item.lim[1]+q)/(item.lim[0]-item.lim[1]))))
+                        .attr("stop-color", color[l+1]);
+                    
+                    
+                })
+                
                 linearGradient.append("stop")
-                    .attr("offset", "100%")
-                    .attr("stop-color", color[3]);
+                    .attr("offset",1)
+                    .attr("stop-color", color[color.length]);
+
+
+                // 
+                // linearGradient.append("stop")
+                //     .attr("offset", "25%")
+                //     .attr("stop-color", color[2]);
+                // 
+                // linearGradient.append("stop")
+                //     .attr("offset", "100%")
+                //     .attr("stop-color", color[3]);
                 // 
                 // linearGradient.append("stop")
                 //     .attr("offset", "75%")
@@ -133,17 +170,6 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
                     
 
 
-        id = allcharts.length;
-        start = id * plotheight;
-        console.log(id, start);
-        var y = d3.scaleLinear().range([start + plotheight - 50, start]).domain(d3.extent(item.ally));
-
-        svg.append("text")
-            .attr("x", width+35)
-            .attr("y", start+11)
-            .attr("dy", ".35em")
-            .style('text-anchor','end')
-            .text(whatami.replace('_',' ').toUpperCase());
 
 
         var line = d3
@@ -190,10 +216,10 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
             
             
 //////// AREAS 
-            
+            var areadata = (areadir)? d3.zip(item.px, item.pt, item.pb): d3.zip(item.px, item.pb, item.pt)
             Line_chart.append("path")
                 //.datum(item)
-                .datum(d3.zip(item.px, item.pt, item.pb))
+                .datum(areadata)
                 .attr("class", "area")
           .style("fill", "#cce5df")
           .style("stroke", "none")
@@ -231,6 +257,17 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
             .call(xAxis);
 
         focus.append("g").attr("class", "axis axis--y").call(yAxis);
+        
+                svg.append("text")
+                    .attr("x", width+35)
+                    .attr("y", start+11)
+                    .attr("dy", ".35em")
+                    .style('text-anchor','end')
+                    .text(whatami.replace('_',' ').toUpperCase());
+
+
+
+
 
         return {
             y,
@@ -244,13 +281,14 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
         };
     }
 
-    var keys = ["VHI", "spi_01", "spi_03", "spi_06", "spi_12"]; //"IIS3",
+    var keys = ["VHI", "spi_01", "spi_03", "spi_06", "spi_12"]; //"IIS3",'RZSM'
 
     //Object.keys(data)
 
     keys.forEach(e => {
         console.log(e);
-        allcharts.push(indicator(data[e], e));
+        var de = data[e]
+        if (de) allcharts.push(indicator(de, e));
     });
 
     endplots = plotheight * allcharts.length;
