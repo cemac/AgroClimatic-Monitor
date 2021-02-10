@@ -22,10 +22,13 @@ import geopandas as gpd
 
 #min norm, abnorm, mod, sev, ext exception (else) max 8 
 cat_lims = {"VHI":[[40,30,20,12,6],[100,0]],### VHI is backwards
-            "spi_01":[[-.5,-.8,-1.3,-1.6,-2],[5,-5]],
-            "spi_03":[[-.5,-.8,-1.3,-1.6,-2],[5,-5]],
-            "spi_06":[[-.5,-.8,-1.3,-1.6,-2],[5,-5]],
-            "spi_12":[[-.5,-.8,-1.3,-1.6,-2],[5,-5]]
+            "spi_01":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi_03":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi_06":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi_12":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "SPI":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "RZSM":[[40,30,20,12,6],[100,0]],
+            "IIS3":[[40,30,20,12,6],[100,0]]
             }
 
 
@@ -173,6 +176,30 @@ for code in codenames:
     jsn_grp['geoy'] = list(y)
     
 
+    jsn = {}
+    yv = []
+    maxl = 0
+    for spi in jsn_grp:
+        if 'spi_' in  spi:
+            spd = jsn_grp[spi]
+            jsn['x'] = spd['x']
+            yv.append(spd['y'])
+            # jsn['cat'] = spd['cat']
+            #jsn['lim'] = spd['lim']
+            jsn['catlims'] = spd['catlims']
+            maxl = max(maxl,len(jsn['x']))
+            
+    # lazily expand array
+    for i in range(len(yv)):
+        for j in range(maxl-len(yv[i])):
+            yv[i].append(0) 
+            
+            
+    
+    jsn['y'] = list(np.array(yv).mean(axis=0))
+    jsn['cat'],jsn['lim'] = categorize(jsn['y'],indicate)
+    jsn_grp['SPI'] = jsn
+    
     
     jsn_grp['center'] = list(map(getXY, b.centroid))[0]
 

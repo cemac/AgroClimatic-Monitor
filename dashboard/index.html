@@ -38,6 +38,43 @@ stroke-width:1.5px}
     stroke:#36b9cc
 }
 
+
+.spi_01{
+    stroke:#f9c80e;
+    color:#f9c80e;
+}
+.spi_03{
+    stroke:#F86624;
+    color:#F86624;
+}
+.spi_06{
+    stroke:#EA3546;
+    color:#EA3546;
+}
+.spi_12{
+    stroke:#662E9B;
+    color:#662E98;
+}
+
+.s1{
+    border-left: .25rem solid #f9c80e!important;
+}
+.s3{
+    border-left: .25rem solid #F86624!important;
+}
+.s6{
+    border-left: .25rem solid #EA3546!important;
+}
+.s12{
+    border-left: .25rem solid #662E9B!important;
+}
+
+.bs1{background-color: #f9c80e!important;}
+.bs3{background-color: #F86624!important;}
+.bs6{background-color: #EA3546!important;}
+.bs12{background-color: #662E9B!important;}
+
+circle{stroke:#222}
 </style>
 </head>
 
@@ -223,6 +260,29 @@ stroke-width:1.5px}
                     <div class="row">
 
 
+                        <div class="col-xl-12 col-lg-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3" style='height:40px'>
+                                    Chart Description
+                                </div>
+                                <div style='margin:20px' id='text'>
+                                    
+                                <br>
+                                    <p> Below there are two graphs. Each of which shows the scaled categories representing the drought categories for a range of indicators. For each indicator, the avaraged measurement may be obtained by viewing the independant cells whilst moving the cursor over the figure. 
+                                <br><br>
+                                    The top graph displays the avarage of all available spi value categories. The individual plots can be seen in the second graph. The mouseover events for both figures have been linked to allowe inter-comparison.
+                                
+                                    </p>
+                                </div>
+                                
+                                
+                            </div>
+
+                        </div>
+
+</div>
+                        <div class="row">
+
 
                         <!-- big left 1  -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -230,24 +290,20 @@ stroke-width:1.5px}
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                VHI -
-                                                <span id='VHIcat'> status </span>
-                                            
-                                            </div>
-                                
-                                                <!-- <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 vhi" id ='vhival'>50
-                                                    </div> -->
-                                                <!-- </div> -->
-                                                
-                                                    <div class="col-auto">
-                                                        <span id='VHIval'> n/a </span>
-                                                        
-                                                        <div class="progress progress-sm mr-2" style='width:100%'>
-                                                            <div id='VHIpc' class="progress-bar bg-primary vhi" role="progressbar" style="width: 80%" ></div>
-                                                        </div>
-                                                    </div>
+    <div class="text-xs font-weight-bold text-primary text-uppercase mb-0">
+        VHI -
+        <span id='VHIcat'> status </span>
+
+    </div>
+
+
+    <div class="col-auto">
+        <span id='VHIval'> n/a </span>
+
+        <div class="progress progress-sm mr-2" style='width:100%'>
+            <div id='VHIpc' class="progress-bar bg-primary vhi" role="progressbar" style="width: 80%"></div>
+        </div>
+    </div>
                                                 
                                                 
                                         
@@ -263,13 +319,22 @@ stroke-width:1.5px}
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-0">
+                                                SPI -
+                                                <span id='SPIcat'> status </span>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <span id='SPIval'> n/a </span>
+
+                                                <div class="progress progress-sm mr-2" style='width:100%'>
+                                                    <div id='SPIpc' class="progress-bar bg-success vhi" role="progressbar" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +346,7 @@ stroke-width:1.5px}
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-0">Tasks
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -308,7 +373,7 @@ stroke-width:1.5px}
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-0">
                                                 Pending Requests</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
@@ -375,6 +440,199 @@ stroke-width:1.5px}
 
 
                     </div>
+                    
+                    
+                    
+                    
+                    <div class="row">
+
+
+
+                        <!-- big left 1  -->
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 s1">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold spi_01 text-uppercase mb-0">
+                                                SPI 1 -
+                                                <span id='spi_01cat'> status </span>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <span id='spi_01val'> n/a </span>
+
+                                                <div class="progress progress-sm mr-2" style='width:100%'>
+                                                    <div id='spi_01pc' class="progress-bar bg-success vhi bs1" role="progressbar" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 s3">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold spi_03 text-uppercase mb-0">
+                                                SPI 3 -
+                                                <span id='spi_03cat'> status </span>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <span id='spi_03val'> n/a </span>
+
+                                                <div class="progress progress-sm mr-2" style='width:100%'>
+                                                    <div id='spi_03pc' class="progress-bar bg-success vhi bs3" role="progressbar" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 s6">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold spi_06 text-uppercase mb-0">
+                                                SPI 6 -
+                                                <span id='spi_06cat'> status </span>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <span id='spi_06val'> n/a </span>
+
+                                                <div class="progress progress-sm mr-2" style='width:100%'>
+                                                    <div id='spi_06pc' class="progress-bar bg-success vhi bs6" role="progressbar" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2 s12">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold spi_12 text-uppercase mb-0">
+                                                SPI 12 -
+                                                <span id='spi_12cat'> status </span>
+
+                                            </div>
+
+
+                                            <div class="col-auto">
+                                                <span id='spi_12val'> n/a </span>
+
+                                                <div class="progress progress-sm mr-2" style='width:100%'>
+                                                    <div id='spi_12pc' class="progress-bar bg-success vhi bs12" role="progressbar" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                    
+
+
+                    <!-- SPI PLOT -->
+                    
+                    <div class="row">
+                        
+                        
+                    <!-- <div class="col-xl-2 col-lg-0">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
+                            </div>
+                            <div class="card-body" style='height:400px'>
+                                <p>info</p>
+                            </div>
+                        </div>
+
+                    </div> -->
+                    
+                    
+                        <div class="col-xl-12 col-lg-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">SPI Plots</h6>
+                                </div>
+                                <div style='height:400px' id='spiplot'>
+                                </div>
+                            </div>
+
+                        </div>
+
+            
+
+
+
+
+
+                    </div>
+                    
+
+
+
+
+
+
+
+
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <!-- <script>
                         /* -->
                     <!-- Content Row -->

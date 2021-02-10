@@ -127,7 +127,6 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
                     .attr("id", "gradient_"+whatami)
                     .attr("gradientTransform", "rotate(90)");
 
-
                     linearGradient.append("stop")
                         .attr("offset",0)
                         .attr("stop-color", color[0]);
@@ -281,7 +280,7 @@ d3.json(`../processed/muncipalities/file_${hash}.json`).then(function(data) {
         };
     }
 
-    var keys = ["VHI", "spi_01", "spi_03", "spi_06", "spi_12"]; //"IIS3",'RZSM'
+    var keys = ["VHI", "SPI", "spi_01", "spi_03", "spi_06", "spi_12"]; //"IIS3",'RZSM'
 
     //Object.keys(data)
 
