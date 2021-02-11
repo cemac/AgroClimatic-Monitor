@@ -3,7 +3,9 @@
 
 let d3 = require("d3");
 let L = require("leaflet");
-// center of the map
+
+const fall = require('../../processed/allfiles.json')
+const keys = Object.keys(fall)
 
 
 
@@ -12,6 +14,15 @@ let what = window.location.hash.replace("#", "") || "VHI";
 if (what === "undefined") {
     what = "VHI";
 }
+
+
+
+
+//////////////////////
+//// leaflet
+//////////////////
+
+
 
 // Create the map
 var map = L.map("lmap", {
@@ -37,48 +48,142 @@ var bounds = L.latLngBounds([
     [-73.9830625, -28.6341164].reverse()
 ]);
 
-var videoOverlay = L.videoOverlay(
-    `../../processed/movies/${what}.webm`,
-    bounds,
-    { opacity: 1 }
-);
 
-videoOverlay.addTo(map);
 
-function sleep(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
+var bounds = L.latLngBounds([
+    [-33.8689056, 5.2842873].reverse(),
+    [-73.9830625, -28.6341164].reverse()
+]);
 
-// Usage!
-sleep(500).then(() => {
-    videoOverlay.getElement().play();
-});
+const image = L.imageOverlay('',bounds)
+image.addTo(map);
 
-videoOverlay.on("load", function() {
-    var MyPauseControl = L.Control.extend({
-        onAdd: function() {
-            var button = L.DomUtil.create("button");
-            button.innerHTML = "⏸";
-            L.DomEvent.on(button, "click", function() {
-                videoOverlay.getElement().pause();
-            });
-            return button;
-        }
-    });
-    var MyPlayControl = L.Control.extend({
-        onAdd: function() {
-            var button = L.DomUtil.create("button");
-            button.innerHTML = "▶️";
-            L.DomEvent.on(button, "click", function() {
-                videoOverlay.getElement().play();
-            });
-            return button;
-        }
-    });
 
-    var pauseControl = new MyPauseControl().addTo(map);
-    var playControl = new MyPlayControl().addTo(map);
-});
+
+
+
+
+
+
+
+
+
+
+////////////////
+///Summary
+///////////////
+
+
+var color = d3.scaleOrdinal(d3.range(keys.length).map(i=>d3.interpolateViridis(i/(keys.length-1))))
+const pt = d3.timeParse("%Y-%m")
+const re = new RegExp('(\\d{4}-\\d{2})');
+const sp = document.getElementById('sp')
+
+var allplots = document.getElementById("summary");
+var allsize = allplots.getBoundingClientRect();
+const psvg = d3.select(allplots).append("svg");
+psvg.attr("width", allsize.width).attr("height", allsize.height);
+var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(Object.values(fall).flat().map(d=>pt(re.exec(d)[0]))))
+
+var y = d3.scaleLinear().range([allsize.height-50,0]).domain([0,7])
+
+    var bisect = d3.bisector(d => d).right;
+    psvg.on("touchmove mousemove", mousemove);
+    
+    
+    psvg
+        .append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + (allsize.height - 30) + ")")
+        .call(d3.axisBottom(x));
+
+
+keys.reverse().map((d,i)=>{
+    
+    psvg.append('g')
+   .selectAll("d")
+   .data(fall[d])
+   .enter()
+   .append("circle")
+     .classed('circle',true)
+     .attr("cx", function (d) { return x(pt(re.exec(d)[0])); } )
+     .attr("cy", y(i))
+     .attr("r", 5)
+     .style("fill", color(i))
+     .style('stroke','whitesmoke')
+     .style('stroke-width',2)
+     .style('stroke-opacity',.6)
+     .on('mouseover',d=>{
+         console.log(d.target.__data__)
+         image.setUrl('../.'+d.target.__data__)
+         
+         d3.selectAll('.circle').style('stroke','whitesmoke')
+         d3.select(d.target).style('stroke','red')
+     })
+
+    psvg.append("text")
+    .attr("x", 0)
+    .attr("y", y(i))
+    .attr("dy", ".35em")
+    .text(d);
+    
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    function mousemove(event) {
+        var coords = d3.pointer(event);
+        var x0 = x.invert(coords[0]);
+        var shift = `translate(${coords[0] + 30}, ${allsize.height - 30} )`;
+        var mid = coords[0] > allsize.width / 2;
+
+        d3
+            .selectAll(".linetext text")
+            .attr("x", coords[0] + (mid ? -20 : 20))
+            .attr("text-anchor", mid ? "end" : "start");
+
+        d3.selectAll(".vline").attr("transform", shift);
+
+        // // FOR EACH
+        // allkeys.forEach(name => {
+        //     var i = bisect(data[name].t, x0, 1);
+        //     var yval = data[name].y[i];
+        //     var measure = data[name].ys(yval);
+        //     var pc = 100 - 100 * (measure / allsize.height);
+        //     document.getElementById(name + "val").innerText = format(yval);
+        // 
+        //     // console.log(name,i)  
+        //     //
+        //     document.getElementById(name + "cat").innerText = dkeys[data[name].cat[i]+1];
+        //     document.getElementById(name + "pc").style.width = pc + "%";
+        //     d3
+        //         .select("#circle" + name)
+        //         .attr("cy", measure)
+        //         .attr("cx", coords[0]);
+        // 
+        //     // console.log(x0,yval,i,name,pc)
+        // });
+    }
+
+
+
+
+
 
 //////////////////////////////
 ///// overlay

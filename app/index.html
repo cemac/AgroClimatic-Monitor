@@ -92,7 +92,7 @@
             </div>
             
             <li class="nav-item">
-                <a class="nav-link" href="../overview/databrowser.html">
+                <a class="nav-link" onclick="change('databrowser/index.html')">
                     <i class="fas fa-fw fa-braille"></i>
                     <span>DataBrowser</span></a>
             </li>
@@ -109,19 +109,19 @@
                     
                         <h6 class="collapse-header">Vegitation Based</h6>
                     
-                        <a class="collapse-item" href="/overview/index.html#VHI">VHI</a>
-                        <a class="collapse-item" href="/overview/index.html#RZSM">RZSM</a>
-                        <a class="collapse-item" href="/overview/index.html#IIS3">IIS3</a>
+                        <a class="collapse-item" onclick="change('overview/index.html#VHI')">VHI</a>
+                        <a class="collapse-item" onclick="change('overview/index.html#RZSM')">RZSM</a>
+                        <a class="collapse-item" onclick="change('overview/index.html#IIS3')">IIS3</a>
                         
                     
                         <div class="collapse-divider"></div>
                     
                         <h6 class="collapse-header">Precipitation Based</h6>
                         
-                            <a class="collapse-item" href="/overview/index.html#spi_01">SPI 1 month</a>
-                            <a class="collapse-item" href="/overview/index.html#spi_03">SPI 3 months</a>
-                            <a class="collapse-item" href="/overview/index.html#spi_06">SPI 6 months</a>
-                            <a class="collapse-item" onclick="change('/overview/index.html#spi_12')">SPI 12 months</a>
+                            <a class="collapse-item" onclick="change('overview/index.html#spi_01')">SPI 1 month</a>
+                            <a class="collapse-item" onclick="change('overview/index.html#spi_03')">SPI 3 months</a>
+                            <a class="collapse-item" onclick="change('overview/index.html#spi_06')">SPI 6 months</a>
+                            <a class="collapse-item" onclick=onclick="change('overview/index.html#spi_12')">SPI 12 months</a>
                     
                     </div>
                 </div>
@@ -209,8 +209,23 @@
 
 const ifr = document.getElementById('content')
 function change(url){
-    ifr.src= window.location.pathname.replace('index.html', url)
+    var redir = window.location.pathname.replace('index.html', url)
+    console.log(url,window.location.pathname ,redir)
+    
+    
+    ifr.src= redir
+    // ifr.contentWindow.window.location.href = redir
+    // ifr.contentWindow.window.location.reload()
+    if (url.includes('overview')){
+        
+setTimeout(function(){ 
+    var h = +ifr.contentWindow.document.scrollingElement.scrollHeight
+    ifr.height = h+400
+}, 1000);
 }
+    
+}
+
 
 
 </script>

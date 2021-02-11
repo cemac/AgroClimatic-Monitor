@@ -24,7 +24,6 @@ for ind in indicators:
     
     
 with open('./processed/allfiles.json','w') as f:
-    f.write('allfiles =')
     f.write(json.dumps(combine, indent=4, sort_keys=True))
     
     
