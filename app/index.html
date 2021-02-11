@@ -209,10 +209,11 @@
 
 const ifr = document.getElementById('content')
 function change(url){
-    if (url.includes('index.html')){
-    var redir = window.location.pathname.replace('index.html', url)
-}else{ var redir = window.location.pathname+url}
-    console.log(url,window.location.pathname ,redir)
+    var path = window.location.pathname
+    if (path.includes('index.html')){
+    var redir = path.replace('index.html', url)
+}else{ var redir = path+url}
+    console.log(url,path ,redir,url.includes('index.html'))
     
     
     ifr.src= redir
