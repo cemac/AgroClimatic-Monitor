@@ -208,7 +208,7 @@ function drawmap(map) {
 
     var g = svg.append("g").attr("class", "leaflet-zoom-hide"); //
 
-    d3.json("../../data/web_simplified.geojson").then(onmapload);
+    d3.json("../../data/BR_MUN_WGS84.geojson").then(onmapload);
 
     function onmapload(topology) {
         console.log(topology);
