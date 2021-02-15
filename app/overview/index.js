@@ -21,7 +21,7 @@ var map = L.map("lmap", {
 });
 
 var w = L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     // "https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png",
     {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
@@ -32,15 +32,21 @@ var w = L.tileLayer(
 );
 map.addLayer(w);
 
+
+// [-33.8689056, 5.2842873].reverse(),
+// [-73.9830625, -35.6341164].reverse()
+
 var bounds = L.latLngBounds([
-    [-33.8689056, 5.2842873].reverse(),
-    [-73.9830625, -28.6341164].reverse()
+    [7, -33],
+    [-36, -74]//y,x
 ]);
 
+console.log(bounds)
 var videoOverlay = L.videoOverlay(
     `../../processed/movies/${what}.webm`,
     bounds,
-    { opacity: 1 }
+    
+    { opacity: 1,preserveAspectRatio:"none" }
 );
 
 videoOverlay.addTo(map);

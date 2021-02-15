@@ -34,6 +34,10 @@ Parse FILES
 #
 
 
+## overwrite
+# indicators = 'VHI RZSM'.split()
+
+
 args = [(kind,iloc[kind],dataloc,imageloc,) for kind in indicators]
 
 

@@ -42,20 +42,26 @@ var w = L.tileLayer(
     }
 );
 map.addLayer(w);
+// 
+// var bounds = L.latLngBounds([
+//     [-33.8689056, 5.2842873].reverse(),
+//     [-73.9830625, -28.6341164].reverse()
+// ]);
+
+
 
 var bounds = L.latLngBounds([
     [-33.8689056, 5.2842873].reverse(),
-    [-73.9830625, -28.6341164].reverse()
+    [-73.9830625, -35.6341164].reverse()
 ]);
 
+// var bounds = L.latLngBounds([
+//     [7, -33],
+//     [-36, -74]//y,x
+// ]);
 
 
-var bounds = L.latLngBounds([
-    [-33.8689056, 5.2842873].reverse(),
-    [-73.9830625, -28.6341164].reverse()
-]);
-
-const image = L.imageOverlay('',bounds)
+const image = L.imageOverlay('',bounds,{preserveAspectRatio:"none",})
 image.addTo(map);
 
 
