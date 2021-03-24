@@ -1,0 +1,1 @@
+PROCESSED = __file__.replace('config.py','processed/')

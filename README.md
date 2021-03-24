@@ -19,3 +19,25 @@ https://cemac.github.io/CSSP-Brazil/app/
 - processed : netcdf and individual 
 - static : web map plot (copy images 'plotdata' to here)
 - serverapp : dynamic file upload
+
+
+
+## Bundles
+This should only be needed if developing new scripts.
+
+
+### Global NPM 
+```
+conda install nodejs
+npm install --global webpack
+cd app/templates/bundles/
+npm install
+
+```
+### Compilation (if changes are made)
+```
+conda activate cssp
+cd app/templates/bundles/
+python webpack.py 
+```
+
