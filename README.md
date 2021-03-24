@@ -1,7 +1,6 @@
 # CSSP-Brazil
 
-
-https://cemac.github.io/CSSP-Brazil/static/droughtcompare.html
+https://cemac.github.io/CSSP-Brazil/app/
 
 
 
@@ -23,8 +22,6 @@ https://cemac.github.io/CSSP-Brazil/static/droughtcompare.html
 
 
 
-
-
 ## Bundles
 This should only be needed if developing new scripts.
 
@@ -43,3 +40,4 @@ conda activate cssp
 cd app/templates/bundles/
 python webpack.py 
 ```
+
