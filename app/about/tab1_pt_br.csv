@@ -1,0 +1,7 @@
+SPI,VHI,RZSM,Drought Classification
+> -0.5,> 40,? 30,Normal
+-0.5 to -0.8,30 to 40,20 to 30,Anormalmente seco
+-0.8 to -1.3,20 to 30,11 to 20,Moderadamente seco
+-1.3 to -1.6,12 to 20,6 to 11,Seca severa
+-1.6 to -2.0,6 to 12,3 to 6,Seca extrema
+> -2.0,< 6,< 3,Excepcionalmente seco
