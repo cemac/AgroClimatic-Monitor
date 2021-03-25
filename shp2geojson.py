@@ -6,17 +6,28 @@ Author: D.Ellis
 '''
 
 import geopandas as gpd  
+import pandas as pd
 import config as cf
 
-print(vars(cf))
+# print(vars(cf))
 
-encoding = 'utf-8'#'ISO-8859-1'
+encoding = 'iso-8859-1'#'ISO-8859-1'
 
-brazil = gpd.read_file('data/shapefile/BR_borders/BR_MUN_WGS84.shp',encoding='iso-8859-1')
 
-brazil=brazil[[type(q)!=type(None) for q in  brazil['NOME']]]
+print(cf.DATA)
+brazil = gpd.read_file(cf.DATA+'shapefile/BR_borders/BR_MUN_WGS84.shp',encoding='iso-8859-1')
 
-brazil['id'] = brazil['NOME']
+# brazil=brazil[[type(q)!=type(None) for q in  brazil['NOME']]]
+
+codes = pd.read_csv(cf.DATA+'GEOCODES.csv',encoding='iso-8859-1').set_index('GEOCODE')['name'].to_dict()
+
+
+both = set(brazil['GEOCODIGO'].astype(int)) & set(codes.keys())
+
+print(len(both)- len(brazil['GEOCODIGO']))
+
+brazil = brazil[[q in both for q in  brazil['GEOCODIGO'].astype(int)]]
+brazil['id'] = [codes[int(i)] for i in brazil['GEOCODIGO']]
 
 
 
@@ -36,7 +47,7 @@ import topojson as tp
 topo = tp.Topology(brazil, prequantize=False)
 simple = topo.toposimplify(2).to_gdf()
 
-simple.to_file(cf.PROCESSED+'geojson/web_simplified.geojson', driver='GeoJSON', encoding=encoding)
+simple.to_file(cf.PROCESSED+'geojson/web_simplified.geojson', driver='GeoJSON', encoding='utf8')
 
 # 
 # import matplotlib.pyplot as plt

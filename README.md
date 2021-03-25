@@ -43,3 +43,13 @@ conda activate cssp
 cd app/templates/bundles/
 python webpack.py 
 ```
+
+
+## Shapefile 
+
+
+
+## User Credentials 
+These are contained within an encrypted sqlite database. (Note that the code for this only seems to work on linux machines like the VM).
+
+
