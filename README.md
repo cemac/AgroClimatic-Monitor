@@ -7,15 +7,19 @@ https://cemac.github.io/CSSP-Brazil/static/droughtcompare.html
 
 1. Login to the see gateway
 2. ssh 129.11.78.152
-3. 
+
 
 ## install conda 
 ```
 https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 ```
 
-### update base
-``` conda env update --file local.yml ```
+### update base to include data
+``` 
+conda install pip;
+conda env update --file local.yml 
+
+```
 
 ## Processing
 
