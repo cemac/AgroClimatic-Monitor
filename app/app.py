@@ -26,6 +26,16 @@ from flask import Flask, flash, request, redirect, render_template,url_for,Respo
 from werkzeug.utils import secure_filename
 from serverscripts.secure_db import *
 from serverscripts.config import *
+# import the about scripts
+import serverscripts.importdir as importdir
+importdir.do('about',globals())
+f = parsetext.f
+about_br = parsetext.about(about_us_text_pt_br)
+about_uk = parsetext.about(about_us_text_en_uk)
+tool_br = parsetext.about(about_tool_text_pt_br)
+tool_uk = parsetext.about(about_tool_text_en_uk)
+disc_br = parsetext.about(discl_liab_text_pt_br)
+disc_uk = parsetext.about(discl_liab_text_en_uk)
 
 # import getchoro as gc
 
@@ -83,15 +93,41 @@ def home(lang):
     if lang == 'staticpages':
         return None
     
-    if lang == 'br':
-        data = 'brazil'
-    else:
-        data = 'english'
+    if lang == 'br': atext = about_br
+    else: atext = about_uk
+        
+    return render_template('about.html', atext=atext, title='About Us')
 
-    print(lang,data)
-    # filelist = gc.listfiles(which)
-    iframe = 'staticpages/bginfo/'
-    return render_template('home.html', iframe=iframe)
+
+
+@app.route('/<lang>/tool')
+def tool(lang):
+    if lang == 'staticpages':
+        return None
+    if lang == 'br': atext = tool_br
+    else: atext = tool_uk
+        
+    return render_template('about.html', atext=atext, title='Using the Tool')
+
+
+
+@app.route('/<lang>/disclaimer')
+def disc(lang):
+    if lang == 'staticpages':
+        return None
+    if lang == 'br': atext = disc_br
+    else: atext = disc_uk
+        
+    return render_template('about.html', atext=atext, title='Disclaimer')
+
+
+
+
+
+
+
+
+
 
 
 '''
@@ -116,12 +152,25 @@ def getdata(folder,item):
     
 
 
-
+'''
+overview
+'''
 
 
 @app.route('/<lang>/overview/')
-def getover(lang):
-    return render_template('overview.html')
+def noover(lang):
+    return redirect('/%s/overview/RZSM'%lang)
+
+@app.route('/<lang>/overview/<what>')
+def getover(lang,what):
+    if lang =='br':
+        ov = index_anim_text_pt_br
+        #page = 'overview_br.html'
+    else: 
+        ov = index_anim_text_en_uk
+    
+    page = 'overview.html'
+    return render_template(page, title=ov.index_anim_title,textbox1=f(ov.index_anim_textbox1),indicator=what)
 
 
 

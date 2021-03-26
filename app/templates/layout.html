@@ -14,7 +14,7 @@
 
     <!-- <script src="./js/jquery-1.11.3.min.js"></script> -->
     
-    <title>CSSP-Brazil Dashboard </title>
+    <title> Agroclimatic Monitor </title>
 
     <!-- Custom fonts for this template-->
     <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,11 +43,12 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <!-- <i class="fas fa-laugh-wink"></i> -->
-                </div>
-                <div class="sidebar-brand-text mx-3" id='title'> CSSP Brazil</div>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" onclick="change('/')">
+                <!-- <div class="sidebar-brand-icon rotate-n-15">
+                    CSSP 
+                </div> -->
+                <div class="sidebar-brand-text mx-3" id='title' style='font-family: Arial,Nunito'> Agroclimatic Monitor </div>
+                <!-- mx-3 -->
             </a>
 
             <!-- Divider -->
@@ -61,19 +62,28 @@
                 Information
             </div>
             
+            <li class="nav-item">
+                <a class="nav-link collapsed" onclick="change('')" >
+                    <i class="fas fa-fw fa-globe-europe"></i>
+                    <span>About Us</span>
+                </a>
+                
+            </li>    
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" onclick="change('about/index.html')" >
+                <a class="nav-link collapsed" onclick="change('tool')" >
                     <i class="fas fa-fw fa-globe-europe"></i>
-                    <span>Intro</span>
+                    <span>Using the Tool</span>
                 </a>
                 
             </li>
+            
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" onclick="change('about/indicators.html')" >
                     <i class="fas fa-fw fa-chart-line"></i>
-                    <span>Indicators</span>
+                    <span>Index</span>
                 </a>
                 
             </li>
@@ -82,7 +92,7 @@
             <li class="nav-item">
                 <a class="nav-link" onclick="change('about/tables.html')">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Indicator Keys</span></a>
+                    <span>Index Keys</span></a>
             </li>
 
 
@@ -104,7 +114,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Indicator Maps</span>
+                    <span>Index Maps</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -112,19 +122,19 @@
                     
                         <h6 class="collapse-header">Vegitation Based</h6>
                     
-                        <a class="collapse-item" onclick="change('overview/index.html#VHI')">VHI</a>
-                        <a class="collapse-item" onclick="change('overview/index.html#RZSM')">RZSM</a>
-                        <a class="collapse-item" onclick="change('overview/index.html#IIS3')">IIS3</a>
+                        <a class="collapse-item" onclick="change('overview/VHI')">VHI</a>
+                        <a class="collapse-item" onclick="change('overview/RZSM')">RZSM</a>
+                        <a class="collapse-item" onclick="change('overview/IIS3')">IIS3</a>
                         
                     
                         <div class="collapse-divider"></div>
                     
                         <h6 class="collapse-header">Precipitation Based</h6>
                         
-                            <a class="collapse-item" onclick="change('overview/index.html#spi_01')">SPI 1 month</a>
-                            <a class="collapse-item" onclick="change('overview/index.html#spi_03')">SPI 3 months</a>
-                            <a class="collapse-item" onclick="change('overview/index.html#spi_06')">SPI 6 months</a>
-                            <a class="collapse-item" onclick=onclick="change('overview/index.html#spi_12')">SPI 12 months</a>
+                            <a class="collapse-item" onclick="change('overview/spi_01')">SPI 1 month</a>
+                            <a class="collapse-item" onclick="change('overview/spi_03')">SPI 3 months</a>
+                            <a class="collapse-item" onclick="change('overview/spi_06')">SPI 6 months</a>
+                            <a class="collapse-item" onclick=onclick="change('overview/spi_12')">SPI 12 months</a>
                     
                     </div>
                 </div>
@@ -139,9 +149,13 @@
             </li>
 
 
+            <hr class="sidebar-divider d-none d-md-block">
             <!-- Nav Item - Tables -->
-    
-
+            <li class="nav-item">
+                <a class="nav-link" onclick='change("disclaimer")'>
+                    <i class="fas fa-fw fa-check-circle"></i>
+                    <span>Disclaimer</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -150,6 +164,27 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
+
+<div style='position:absolute;top:calc(100vh - 70px);margin-bottom:2px'>
+    <div class="sidebar-heading">
+        
+            <i class="fas fa-fw fa-globe-europe"></i>
+        Change the Language
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" style="display: inline" onclick="setlang('en')" >
+            <span>English</span>
+        </a> 
+        / 
+        <a class="nav-link collapsed" style="display: inline" onclick="setlang('br')" >
+            <span>Portuguese</span>
+        </a>
+        
+    </li>
+
+    
+    
+</div>
 
         </ul>
         <!-- End of Sidebar -->
@@ -214,6 +249,16 @@
     {% block scripts %} 
     {% endblock scripts %}
 
+<script>
+function change (url){
+    window.location.href= `/${window.location.pathname.split('/')[1]}/${url}`
+}
+function setlang (lang){
+    var path = window.location.pathname.split('/')
+    path[1] = lang
+    window.location.href= path.join('/')
+}
+</script>
 <!-- <script>
 
 const ifr = document.getElementById('content')

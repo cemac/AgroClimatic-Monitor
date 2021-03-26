@@ -34,8 +34,10 @@ cat_lims = {"VHI":[[40,30,20,12,6],[100,0]],### VHI is backwards
             }
             
             
-colours = ['#'+i for i in '003049-003049-d62828-f77f00-fcbf49-eae2b7-eae2b7'.split('-')][::-1]
+colours = 'whitesmoke whitesmoke #FFFFCC #FED976 #FD8C3C #E2191C #800026'.split()[::-1]
 
+
+print('CHANGE PARAM LOCATION')
 
 iloc={
 'VHI': './data/raster/VHI/VHI_*.tif',

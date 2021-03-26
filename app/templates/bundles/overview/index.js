@@ -3,11 +3,10 @@
 
 let d3 = require("d3");
 let L = require("leaflet");
-// center of the map
 
 
-
-let what = window.location.hash.replace("#", "") || "VHI";
+let what =  window.location.pathname.split('/overview/')[1] || 'RZSM'
+//window.location.hash.replace("#", "") || "VHI";
 
 if (what === "undefined") {
     what = "VHI";
@@ -17,7 +16,7 @@ if (what === "undefined") {
 var map = L.map("lmap", {
     center: [-62.31994628906251, -24.23757312392183].reverse(),
     zoom: 4,
-    minZoom: 1,
+
     
     // dragging:false
 });
@@ -29,8 +28,8 @@ var w = L.tileLayer(
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
         subdomains: "abcd",
         maxZoom: 19,
-        minZoom:3,
-        opacity: 0.8
+        minZoom:2,
+        opacity: 1
     }
 );
 map.addLayer(w);
@@ -132,9 +131,12 @@ function drawmap(map) {
 
         feature
             .attr("d", path)
-            .attr("stroke", '#222')//"whitesmoke")
+            .classed('cpoly',true)
+            .attr("stroke", "#AAA9AD")
+            .attr('stroke-opacity',.4)
             .attr("opacity", 0.36)
-            .attr("fill", "none")
+            .attr("fill", "steelblue")
+            .attr('fill-opacity',0)
             .attr("id", t => t.properties.NOME)
             .attr("geoid", t => t.properties.GEOCODIGO)
             .attr("transform-origin", t => {
@@ -145,9 +147,18 @@ function drawmap(map) {
                 return `${pt.x}px ${pt.y}px`;
             }) //transform-origin: 20% 40%;
             .on("mouseover", d => {
-                mapname.innerText=d3.select(d.toElement).attr('id')
+                d3.selectAll('.cpoly').attr('fill-opacity',0)
+                var el = d3.select(d.toElement)
+                mapname.innerText=el.attr('id')
+                el.attr('fill-opacity',1)
+                
                 // console.log(d.toElement);
             })
+            // .on("mouseout", d => {
+            //     d3.select(d.toElement).attr('fill-opacity',0)
+            // 
+            //     // console.log(d.toElement);
+            // })
             .on("dblclick", d => {
                 window.location.href = d3.select(d.toElement).attr('geoid')
                 

@@ -1,9 +1,14 @@
+''' 
+A script to create movies from each file
+'''
+
 import glob, os,json 
 from params import i_match,indicators
+import config as cf
 
-os.system('rm ./processed/movies/*.webm')
+os.system('rm %smovies/*.webm'%cf.PROCESSED)
 
-files = glob.glob('./processed/plotdata/*-*_*.png')
+files = glob.glob('%splotdata/*-*_*.png'%cf.PROCESSED)
 
 combine = {}
 
@@ -15,7 +20,7 @@ for ind in indicators:
     print (len(plots))
     
     linked = '|'.join(plots)
-    cmd = "ffmpeg -framerate .4 -i concat:'%s' -r 30 -c:v vp9 -pix_fmt yuva420p ./processed/movies/%s.webm"%(linked,ind)
+    cmd = "ffmpeg -framerate .4 -i concat:'%s' -r 30 -c:v vp9 -pix_fmt yuva420p %smovies/%s.webm"%(linked,cf.PROCESSED,ind)
 
     os.system(cmd)
     
@@ -23,7 +28,7 @@ for ind in indicators:
     
     
     
-with open('./processed/allfiles.json','w') as f:
+with open('%sallfiles.json'%cf.PROCESSED,'w') as f:
     f.write(json.dumps(combine, indent=4, sort_keys=True))
     
     

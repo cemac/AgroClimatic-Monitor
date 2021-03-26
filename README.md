@@ -1,7 +1,6 @@
 # CSSP-Brazil
 
-
-https://cemac.github.io/CSSP-Brazil/static/droughtcompare.html
+https://cemac.github.io/CSSP-Brazil/app/
 
 
 
@@ -20,8 +19,6 @@ https://cemac.github.io/CSSP-Brazil/static/droughtcompare.html
 - processed : netcdf and individual 
 - static : web map plot (copy images 'plotdata' to here)
 - serverapp : dynamic file upload
-
-
 
 
 
@@ -52,4 +49,5 @@ python webpack.py
 ## User Credentials 
 These are contained within an encrypted sqlite database. (Note that the code for this only seems to work on linux machines like the VM).
 
-
+# template_br
+These are identical to the normal template, except that they have 

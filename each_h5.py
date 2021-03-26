@@ -16,6 +16,7 @@ from matplotlib import pyplot as plt
 import matplotlib as mpl
 import os,warnings,sys
 import dataconvert as dc
+import config as cf
 
 from params import cat_lims,colours 
 warnings.filterwarnings('ignore', category=RuntimeWarning)
@@ -23,7 +24,7 @@ warnings.filterwarnings('ignore', category=RuntimeWarning)
 '''
 Load Shapefiles
 '''
-brazil = gpd.read_file('./data/shapefile/BR_borders/BR_MUN_WGS84.shp')
+brazil = gpd.read_file(cf.DATA+'shapefile/BR_borders/BR_MUN_WGS84.shp')
 breakearly = True
 
 

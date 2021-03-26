@@ -55,4 +55,4 @@ import PostProcess
 
 print ('ALL UP TO DATE')
 # clean up
-os.system('rm demo.png')
+os.system('rm *_*.png')
