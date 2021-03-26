@@ -1,6 +1,8 @@
 from flask import Markup
+import markdown
+
 def f(text):
-    return Markup(text.lstrip().replace('\n\n','<br><br>'))
+    return Markup(markdown.markdown(text.lstrip().replace('\n\n','<br><br>')))
     
 def about(module):
     '''
