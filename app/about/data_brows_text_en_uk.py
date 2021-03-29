@@ -13,7 +13,7 @@ corresponding circle.
 
 Double Click on the municipality boundaries to open the dashboard for that selected 
 municipality. A time series can also be downloaded for any index and municipality 
-by %%%%. 
+by selecting an indiviual item. 
 
  '''
 

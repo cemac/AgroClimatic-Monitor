@@ -15,7 +15,7 @@ combine = {}
 for ind in indicators:
     plots = list(filter(lambda x: ind in x, files))
     plots.sort()
-    combine[ind] = plots
+    
 
     print (len(plots))
     
@@ -23,6 +23,9 @@ for ind in indicators:
     cmd = "ffmpeg -framerate .4 -i concat:'%s' -r 30 -c:v vp9 -pix_fmt yuva420p %smovies/%s.webm"%(linked,cf.PROCESSED,ind)
 
     os.system(cmd)
+    
+    combine[ind] = [i.split('/plotdata/')[1] for i in plots]
+    #only take filenames
     
     print(cmd)
     

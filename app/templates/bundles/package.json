@@ -5,7 +5,10 @@
   "main": "main.js",
   "dependencies": {
     "d3": "^6.4.0",
-    "leaflet": "^1.7.1"
+    "install": "^0.13.0",
+    "leaflet": "^1.7.1",
+    "npm": "^7.7.5",
+    "tiny-complete": "^1.1.1"
   },
   "devDependencies": {
     "webpack": "^5.17.0",

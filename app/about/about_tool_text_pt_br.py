@@ -1,6 +1,8 @@
 # variable name structure:  pagename_pagesection_sectionpart
 # The source of this file is in https://docs.google.com/document/d/1fGuYaJOWJixb99-qZEj_Urqk2wb4JnLupFYybIRu3pw/edit?usp=sharing
 
+import pandas 
+
 about_tool_title = ''' Sobre a ferramenta '''
 
 about_tool_textbox1 = ''' 
@@ -105,12 +107,16 @@ conforme a Tabela 1.
 
 about_tool_textbox6_title = ''' Interpretação dos índices '''
 
+#class="table table-bordered dataTable"
 about_tool_textbox6_text = ''' 
 Tabela 1. Classificação de seca para SPI, VHI e RZSM, ISS3
- '''
-#------------#
-#--- Tab1 ---#
-#------------#
+
+<table border="1" class="table table-bordered dataTable">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SPI</th>\n      <th>VHI</th>\n      <th>RZSM</th>\n      <th>Drought Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>&gt; -0.5</td>\n      <td>&gt; 40</td>\n      <td>? 30</td>\n      <td>Normal</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>-0.5 to -0.8</td>\n      <td>30 to 40</td>\n      <td>20 to 30</td>\n      <td>Anormalmente seco</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>-0.8 to -1.3</td>\n      <td>20 to 30</td>\n      <td>11 to 20</td>\n      <td>Moderadamente seco</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>-1.3 to -1.6</td>\n      <td>12 to 20</td>\n      <td>6 to 11</td>\n      <td>Seca severa</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>-1.6 to -2.0</td>\n      <td>6 to 12</td>\n      <td>3 to 6</td>\n      <td>Seca extrema</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>&gt; -2.0</td>\n      <td>&lt; 6</td>\n      <td>&lt; 3</td>\n      <td>Excepcionalmente seco</td>\n    </tr>\n  </tbody>\n</table>
+'''
+
+
+# pd.read_csv('./app/about/tab1_pt_br.csv').html()
+
 
 about_tool_textbox7_title = ''' Como usar '''
 
@@ -133,6 +139,11 @@ condições de seca observadas em seus locais, podendo gerar uma classificação
 customizada como na Tabela 1 de acordo com suas próprias necessidades e condições.
 
  '''
+ 
+
+ 
+ 
+ 
  
 about_tool_textbox8_title = ''' Referências '''
 

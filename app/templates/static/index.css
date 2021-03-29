@@ -57,3 +57,17 @@ iframe{
     left:0;
     border:none;
 }
+
+a.scroll-to-top{
+    right:auto;
+    left:1rem;
+    background:red;
+    animation: blinker 3s linear infinite;
+    
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

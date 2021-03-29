@@ -65,5 +65,21 @@ python webpack.py
 ## User Credentials 
 These are contained within an encrypted sqlite database. (Note that the code for this only seems to work on linux machines like the VM).
 
+
+### Adding a new user 
+From the main directory
+```
+python -m app.serverscripts.new_user UserName SecretCodeToEnter
+```
+If a password has already been used you will get an error containing 
+`UNIQUE constraint failed`
+
+
+### When initiating we need to build the database.
+```
+python -m app.serverscripts.secure_db --wipe
+```
+
+
 # template_br
 These are identical to the normal template, except that they have 

@@ -17,9 +17,13 @@ var map = L.map("lmap", {
     center: [-62.31994628906251, -24.23757312392183].reverse(),
     zoom: 4,
 
-    
+
     // dragging:false
 });
+
+map.doubleClickZoom.disable()
+map.options.minZoom = 3;
+map.options.maxZoom = 8;    
 
 var w = L.tileLayer(
     // 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
@@ -27,8 +31,6 @@ var w = L.tileLayer(
     {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
         subdomains: "abcd",
-        maxZoom: 19,
-        minZoom:2,
         opacity: 1
     }
 );

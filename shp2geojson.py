@@ -47,15 +47,45 @@ import topojson as tp
 topo = tp.Topology(brazil, prequantize=False)
 simple = topo.toposimplify(2).to_gdf()
 
-simple.to_file(cf.PROCESSED+'geojson/web_simplified.geojson', driver='GeoJSON', encoding='utf8')
+
 
 # 
 # import matplotlib.pyplot as plt
 # simple.plot()
 # plt.show()
-
-
 # simple.geometry = simple.geometry.scale(xfact=0.9, yfact=0.9, zfact=1.0)#, origin=(0, 0))
+
+simple.to_file(cf.PROCESSED+'geojson/web_simplified.geojson', driver='GeoJSON', encoding='utf8')
+
+
+simple['GEOCODIGO id MESOREGIAO MICROREGIA LATITUDE LONGITUDE'.split()].set_index('GEOCODIGO').to_csv(cf.PROCESSED+'geojson/locinfo.csv')
+
+
+def getxy(i):
+    x,y = i.exterior.coords.xy
+    return [list(x),list(y)]
+
+x = list(map(getxy, simple['geometry']))
+
+## plotting shapes
+search = simple['GEOCODIGO id MESOREGIAO MICROREGIA'.split()]
+search['poly']=x
+search.set_index('GEOCODIGO').to_csv(cf.PROCESSED+'geojson/poly.csv')
+
+
+
+
+search = simple['id GEOCODIGO'.split()]
+search.columns = ['key', 'val']
+
+search.set_index('key').to_csv(cf.PROCESSED+'geojson/search.csv')
+
+search = simple['id GEOCODIGO'.split()]
+search.columns = ['key', 'val']
+
+
+
+
 # simple.to_file('web_simplified_2.geojson', driver='GeoJSON')
 
 '''

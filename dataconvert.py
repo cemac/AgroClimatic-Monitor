@@ -1,6 +1,7 @@
 
 import rasterio as rio
 from rasterio.plot import show
+import numpy as np
 
 ####################################
 ## rebound 
@@ -31,6 +32,12 @@ from matplotlib import pyplot as plt
 import matplotlib as mpl
 import os 
 
+projection = 'EPSG:3857'
+dst_crs = {'init': projection}
+from rasterio.warp import reproject, Resampling
+
+
+
 bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
 
 def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
@@ -47,6 +54,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     ratio = ra.width/ra.height
 
 
+
     # show(ra.read(), cmap='viridis')
     # 
     # plt.show()
@@ -54,14 +62,28 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     #plt.figure(figsize=(ra.width/my_dpi, ra.height/my_dpi), dpi=my_dpi)
 
     width = 400
-    height = .85 * width * ratio 
+    height = int(.85 * width * ratio )
+    
+    
+    dst_shape = (width, height)
+    destination = np.zeros(dst_shape, np.uint8)
+    
+    reproject(
+        ra,
+        destination,
+        # src_transform=src_transform,
+        # src_crs=src_crs,
+        # dst_transform=dst_transform,
+        dst_crs=dst_crs,
+        resampling=Resampling.nearest)
+    
     
     plt.figure(figsize=(width/my_dpi, height/my_dpi), dpi=my_dpi)
 
     ax = plt.gca()
 
     
-    show(ra, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
+    show(destination, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
     #ra.read(1, masked=True)
     # 
     plt.xlim(bbox[-1],bbox[1])
@@ -72,7 +94,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     
-    plt.text(.95,.95, name, horizontalalignment='center',          verticalalignment='center', transform=ax.transAxes, c='green')
+    plt.text(.95,.95, '-'.join(name.split('-')[::-1]), horizontalalignment='center',          verticalalignment='center', transform=ax.transAxes, c='black')
 
     
     plt.savefig('%s.png'%what, dpi=my_dpi, transparent=True,bbox_inches='tight',pad_inches=0)
@@ -80,7 +102,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     plt.close()
 
     # blur and invert
-    os.system('convert %s.png -transparent white -blur 0x1 %s%s_%s.png'%(what,where,name,what))
+    os.system('convert %s.png -transparent white -blur 1x3 %s%s_%s.png'%(what,where,name,what))
     # -negate
     
     #print('static/plotdata/%s_%s.png'%(name,what))

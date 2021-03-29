@@ -1,8 +1,9 @@
 
 from pysqlcipher3 import dbapi2 as sqlite3
+import os
+try: from .config import app_key, db_loc, STAGING
+except: from config import app_key, db_loc, STAGING
 
-try: from .config import app_key, db_loc
-except: from config import app_key, db_loc
 
 from datetime import datetime
 
@@ -26,7 +27,6 @@ class Database(object):
             CREATE TABLE IF NOT EXISTS upload (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            dir TEXT NOT NULL,
             uploadcode TEXT UNIQUE
             );
             '''
@@ -42,19 +42,22 @@ class Database(object):
             );
             '''
         )
-
+        print(self.conn)
         self.conn.commit()
         self.conn.close()
 
 
-    def add_user(self, user, dir, keycode):
+    def add_user(self, user, keycode):
         self.conndb()
         self.cursor.execute(
             '''
-            INSERT INTO upload (name, dir, uploadcode)
-            VALUES ("%s", "%s", "%s")
-            '''%(user,dir,keycode)
+            INSERT INTO upload (name,  uploadcode)
+            VALUES ("%s", "%s")
+            '''%(user,keycode)
         )
+        os.system('mkdir %s%s'%(STAGING,user))
+        print('Save location at %s%s'%(STAGING,user))
+        
         self.conn.commit()
         self.conn.close()        
 
@@ -80,7 +83,6 @@ class Database(object):
         result = self.cursor.fetchall()
         
         
-        
         if len(result)<0: 
             passed = False
         elif not file:
@@ -98,7 +100,7 @@ class Database(object):
         self.conn.commit()
         self.conn.close()
 
-        return passed
+        return result[0][1]
         
     def printlog(self):
         self.conndb()
@@ -118,7 +120,11 @@ class Database(object):
 if __name__ == '__main__':
     import sys,os
     ## you can use arg parse if you want a neater interface
+    
+    print(db_loc)
+    
     if '--wipe' in sys.argv:
+        print('making new db')
         os.system('rm '+db_loc)
         sqlc = Database(db_loc,app_key)
         sqlc.createDB()

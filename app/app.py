@@ -11,7 +11,7 @@ __contact__='d.ellis-A-T-leeds.ac.uk'
 CONSTS
 '''
 
-PROCESSED = '/Users/wolfiex/CCSP-Brazil/processed/'
+
 
 
 
@@ -20,10 +20,20 @@ PROCESSED = '/Users/wolfiex/CCSP-Brazil/processed/'
 imports
 '''
 import sys,os,re,glob
+import pandas as pd
 import simplejson as json
 from flask import Flask, flash, request, redirect, render_template,url_for,Response,send_from_directory
-
+# from flask_login import (LoginManager, login_required, login_user, 
+#                          current_user, logout_user, UserMixin)
+# from itsdangerous import URLSafeTimedSerializer
 from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+# from werkzeug.security import generate_password_hash
+# print generate_password_hash("P1ain-text-user-passw@rd", "sha256")
+#print check_password_hash("sha256$lTsEjTVv$c794661e2c734903267fbc39205e53eca607f9ca2f85812c95020fe8afb3bc62", "P1ain-text-user-passw@rd")
+
+
+from serverscripts.get_individual import m_new
 from serverscripts.secure_db import *
 from serverscripts.config import *
 # import the about scripts
@@ -37,11 +47,11 @@ tool_uk = parsetext.about(about_tool_text_en_uk)
 disc_br = parsetext.about(discl_liab_text_pt_br)
 disc_uk = parsetext.about(discl_liab_text_en_uk)
 
-# import getchoro as gc
 
 
 
-app=Flask('CSSPBRZ', 
+
+app=Flask('AGROCLIM_SERVER', 
             static_url_path='', # removes path prefix requirement 
             static_folder=os.path.abspath('templates/static/'),# static file location
             template_folder='templates' # template file location
@@ -49,7 +59,6 @@ app=Flask('CSSPBRZ',
             
             
 app.secret_key = app_key
-# app.config['SERVER_NAME']='CCSP.server'
 
 
 app.config['DATA_LOCATION'] = PROCESSED
@@ -57,12 +66,13 @@ app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
 sqlc = Database(db_loc,app_key)
 
 # # Check that the upload folder exists
-# def makedir (dest):
-#     fullpath = '%s/%s'%(upload_dest,dest)
-#     if not os.path.isdir(fullpath):
-#         os.mkdir(fullpath)
+def makedir (dest):
+    global STAGING
+    fullpath = '%s%s'%(STAGING,dest)
+    if not os.path.isdir(fullpath):
+        os.mkdir(fullpath)
 # 
-# makedir('')# make uploads folder
+makedir('')# make uploads folder
 
 '''
 serve static
@@ -79,6 +89,9 @@ serve static
 # 
 
 
+
+
+
 '''
 Home
 '''
@@ -92,10 +105,8 @@ def nolang():
 def home(lang):
     if lang == 'staticpages':
         return None
-    
     if lang == 'br': atext = about_br
-    else: atext = about_uk
-        
+    else: atext = about_uk        
     return render_template('about.html', atext=atext, title='About Us')
 
 
@@ -142,6 +153,11 @@ def getstat(page):
 def getbundle(page):
     return render_template('bundles/'+page+'/dist/bundle.js')
 
+@app.route('/allfiles/')
+def getallfiles():
+    print(PROCESSED)
+    return send_from_directory('%s/'%(PROCESSED), 'allfiles.json', as_attachment=True)
+
 
 @app.route('/data/<folder>/<item>/')
 def getdata(folder,item):
@@ -175,6 +191,61 @@ def getover(lang,what):
 
 
 
+''' 
+Data Browser
+'''
+# @app.route('/<lang>/dataview/')
+# def nobd(lang):
+#     return redirect('/%s/dataview'%lang)
+
+@app.route('/<lang>/databrowser')
+def getdatamap(lang):
+    if lang =='br':
+        ov = data_brows_text_pt_br
+        #page = 'overview_br.html'
+    else: 
+        ov = data_brows_text_en_uk
+    
+    page = 'databrowser.html'
+    return render_template(page, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1))
+
+
+''' 
+Individual
+'''
+# @app.route('/<lang>/dataview/')
+# def nobd(lang):
+#     return redirect('/%s/dataview'%lang)
+
+@app.route('/<lang>/individual/<geoid>/')
+def getindi(lang,geoid):
+    if lang =='br':
+        ov = data_brows_text_pt_br
+        #page = 'overview_br.html'
+    else: 
+        ov = data_brows_text_en_uk
+    
+    page = 'individual.html'
+    return render_template(page, title=ov.data_brows_title,hash=geoid)
+
+
+@app.route('/idata/<item>/')
+def getidata(item):
+    folder = 'muncipalities'
+    fitem = 'file_%s.json'%item
+    jsn = '%s%s/%s'%(PROCESSED,folder,fitem)
+    updated = max([os.path.getmtime(i) for i in h5locs])
+    
+    try:
+        if (os.path.getmtime(jsn) < updated):
+            print('NEW DATA AVAILABLE')
+            assert False
+    except FileNotFoundError:
+        m_new(item)
+    
+    print('%s%s/'%(PROCESSED,folder),'\n\n\n')
+
+    return send_from_directory('%s%s/'%(PROCESSED,folder), fitem, as_attachment=True)
 
 
 
@@ -187,8 +258,10 @@ UPLOAD
 ## on page load display the upload file
 @app.route('/upload')
 def upload_form():
-    flash('Drag files to upload here.')
-    return render_template('upload.html')
+    # flash('Drag files to upload here.')
+    return render_template('upload.html',uploads = 'This populates on sucessful submission...')
+
+
 
 
 ## on a POST request of data 
@@ -197,6 +270,9 @@ def upload_file():
     if request.method == 'POST':
 
         psw = str(request.form['psw'])
+        
+        print(psw,'aaaasdkjlkj')
+        
         #str(request.args.get('psw'))
         allfiles = request.files
 
@@ -214,7 +290,7 @@ def upload_file():
                 check = sqlc.writefile(psw,filename)
                 if (check):
                     makedir(check)
-                    file.save(os.path.join(upload_dest,check, filename))
+                    file.save(os.path.join(STAGING,check, filename))
                 else:
                     print( 'Wrong Credentials! ')
                     flash('Wrong Credentials!') 
@@ -224,7 +300,14 @@ def upload_file():
                 
         
         flash('File(s) uploaded')
+        
+        last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
+        
+        
+        flash('kljlkj')
+        
         return redirect('/upload')
+        #render_template('upload.html', uploads = f(last))
 
 
 
@@ -234,18 +317,21 @@ def data_get(upload_id):
     
     if request.method == 'POST': # POST request
         print(request.get_text())  # parse as text
+        
+        
         return 'OK', 200
     
     else: # GET request
-        print('%s/%s/*'%(upload_dest,sqlc.writefile(upload_id)))
-        files = glob.glob('%s/%s/*'%(upload_dest,sqlc.writefile(upload_id)) ) 
+        print('%s/%s/*'%(STAGING,sqlc.writefile(upload_id)))
+        files = glob.glob('%s/%s/*'%(STAGING,sqlc.writefile(upload_id)) ) 
         print ('------',upload_id,files)
+        
         return ','.join([i.rsplit('/',1)[1] for i in files])
 
 
 
 
 if __name__ == "__main__":
-    print('to upload files navigate to http://127.0.0.1:4000/upload')
+    print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
-    app.run(host='127.0.0.1',port=4000,debug=True,threaded=True)
+    app.run(host='127.0.0.1',port=57263,debug=True,threaded=True)

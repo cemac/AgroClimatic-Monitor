@@ -5,7 +5,7 @@ npm -ig webpack
 needs to be installed globally
 '''
 
-import os 
+import os , sys
 
 cmd = 'webpack --entry=./index.js --output-filename=./bundle.js --mode=production'
 
@@ -13,9 +13,14 @@ import glob
 loc = __file__.replace('webpack.py','')
 # if loc=='':loc = './'
 print('App Location:', loc)
-## from all directories with a dist folder
-files = glob.glob('%s*/dist'%loc)
-# print(files)
+
+try:
+    assert len(sys.argv)>1
+    files = ['%s%s/dist'%(i,loc) for i in sys.argv[1:]]
+except:
+    ## from all directories with a dist folder
+    files = glob.glob('%s*/dist'%loc)
+    # print(files)
 
 
 
@@ -23,7 +28,7 @@ files = glob.glob('%s*/dist'%loc)
 for f in files:
     f = f.replace('/dist','')
     r = os.popen('cd %s && %s'%(f,cmd)).read()
-    if 'error' not in r:
+    if 'error' not in r and 'such' not in r:
         print('web packed', f ,'\n')
     else: 
         print('ERROR',f,r)

@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{{title}}</h1>
+                        <a id='imlink' href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Download Current Image</a>
+                    </div>
+
+
+                    
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Instructions</h6>
+                                
+                                </div>
+                                <div style="width:auto;height:auto;margin:20px" id=''>
+                        
+                    {{textbox1}}
+                                    
+                                    <!-- end content -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary" id='sp'>Summary Plot</h6>
+                                
+                                </div>
+                                
+                                <div style="width:auto;height:180px;margin:20px" id='summary'>
+                                    
+                                    <!-- end content -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-0">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary" id='mapname'>Map</h6>
+                                
+                                </div>
+                                
+                                <div id='lmap' style="width:auto;height:700px">
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+{% endblock content %}
+
+{% block scripts %} 
+<script src='/bundles/databrowser/'></script>
+{% endblock scripts %}
