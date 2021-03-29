@@ -75,7 +75,15 @@ var bisect = d3.bisector(d => d).right;
 psvg.on("touchmove mousemove", mousemove);
 ssvg.on("touchmove mousemove", mousemove);
 
-d3.json(`/idata/${hash}/`).then(function(data) {
+fetch(`/idata/${hash}/`)
+.then(response => {
+  if (!response.ok) {
+    console.log(response);
+    throw new Error("unable to fetch");
+    window.location.href='/error/500/Munciality Not Found/'
+  }
+  return response.json();
+}).then(function(data) {
     window.d = data;
     
     console.log(data)
@@ -107,23 +115,6 @@ d3.json(`/idata/${hash}/`).then(function(data) {
     var polymap = map.addLayer(polygon);
     // map.setView(data.center.reverse())
     map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
-    
-    
-    /////////
-    map.cursor.enable();
-//     map.addEventListener('mousemove', (event) => {
-//         console.log(event.latlng)
-// 
-//     console.log('MOUSE',lat,lng)
-//   }
-// });
-    
-map.on('mouseover', function(ev){
-  var latlng = map.mouseEventToLatLng(ev.originalEvent);
-  console.log(latlng,'mouse');
-});
-    
-    /////////
     
     
     

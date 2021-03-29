@@ -50,7 +50,7 @@ var videoOverlay = L.videoOverlay(
     `/data/movies/${what}.webm`,
     bounds,
     
-    { opacity: 1,preserveAspectRatio:"none" }
+    { opacity: .8,preserveAspectRatio:"none" }
 );
 
 videoOverlay.addTo(map);
@@ -94,107 +94,69 @@ videoOverlay.on("load", function() {
 ///// overlay
 /////////////////////////////
 
-function drawmap(map) {
-    var bbmap = document.getElementById("lmap").getBoundingClientRect();
-    var mapname = document.getElementById("mapname")
+// function drawmap(map) {
+//     var bbmap = document.getElementById("lmap").getBoundingClientRect();
+//     var mapname = document.getElementById("mapname")
+// 
+//     var svg = d3
+//         .select(map.getPanes().overlayPane)
+//         .append("svg")
+//         .classed("leaflet-interactive", true)
+//         .attr("width", bbmap.width)
+//         .attr("height", bbmap.height);
+// 
+//     var g = svg.append("g").attr("class", "leaflet-zoom-hide"); //
+// 
+// 
+// 
+//     d3.json("/data/geojson/web_simplified.geojson").then(onmapload);
+// 
+// 
+// 
+//     //colour()
+// }
+//drawmap(map);
 
-    var svg = d3
-        .select(map.getPanes().overlayPane)
-        .append("svg")
-        .classed("leaflet-interactive", true)
-        .attr("width", bbmap.width)
-        .attr("height", bbmap.height);
 
-    var g = svg.append("g").attr("class", "leaflet-zoom-hide"); //
+d3.csv('/data/geojson/poly.csv/').then(e=>{
+    // window.d3 = d3
+    // window.e = e
+    // console.log(e)
+    // d3.polygonHull(points);
+    
+    polygons = e.map(q=>{
+        var i = eval(q.poly)
+        q.poly = d3.polygonHull(d3.zip(i[0],i[1]))
+        return q    
+    })
+    // window.p = polygons
 
-
-
-    d3.json("/data/geojson/web_simplified.geojson").then(onmapload);
-
-    function onmapload(topology) {
-        console.log(topology);
-        //var counties = topology.features; //.slice(0,1300)
-        var chunks = 600;
-
-        function projectPoint(x, y) {
-            var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-            this.stream.point(point.x, point.y);
+    
+    function find(ev) {
+       lat = ev.latlng.lat;
+       lng = ev.latlng.lng;
+       console.log(lat,lng)
+       for (i = 0; i < polygons.length; i++) {
+       if (d3.polygonContains(polygons[i].poly,    [lng,lat]) ) { 
+              console.log('found',i,polygons[i])
+              break; }
         }
-
-        var transform = d3.geoTransform({ point: projectPoint }),
-            path = d3.geoPath().projection(transform);
-
-        var feature = g
-            .selectAll("path")
-            .data(topology.features)
-            .enter()
-            .append("path")
-            .attr("style", "pointer-events: all;");//auto
-
-        feature
-            .attr("d", path)
-            .classed('cpoly',true)
-            .attr("stroke", "#AAA9AD")
-            .attr('stroke-opacity',.4)
-            .attr("opacity", 0.36)
-            .attr("fill", "steelblue")
-            .attr('fill-opacity',0)
-            .attr("id", t => t.properties.NOME)
-            .attr("geoid", t => t.properties.GEOCODIGO)
-            .attr("transform-origin", t => {
-                var pt = map.latLngToLayerPoint([
-                    t.properties.Cen_Y,
-                    t.properties.Cen_X
-                ]);
-                return `${pt.x}px ${pt.y}px`;
-            }) //transform-origin: 20% 40%;
-            .on("mouseover", d => {
-                d3.selectAll('.cpoly').attr('fill-opacity',0)
-                var el = d3.select(d.toElement)
-                mapname.innerText=el.attr('id')
-                el.attr('fill-opacity',1)
-                
-                // console.log(d.toElement);
-            })
-            // .on("mouseout", d => {
-            //     d3.select(d.toElement).attr('fill-opacity',0)
-            // 
-            //     // console.log(d.toElement);
-            // })
-            .on("dblclick", d => {
-                window.location.href = d3.select(d.toElement).attr('geoid')
-                
-            });
-
-        map.on("zoom", resetSVG);
-        resetSVG();
-
-        // Reposition the SVG to cover the features.
-        function resetSVG() {
-            //console.log(path.bounds(topology), bounds, topology);
-
-            (bounds = path.bounds(topology)), (topLeft =
-                bounds[0]), (bottomRight = bounds[1]);
-
-            svg
-                .attr("width", bottomRight[0] - topLeft[0])
-                .attr("height", bottomRight[1] - topLeft[1])
-                .style("left", topLeft[0] + "px")
-                .style("top", topLeft[1] + "px");
-
-            g.attr(
-                "transform",
-                "translate(" + -topLeft[0] + "," + -topLeft[1] + ")"
-            );
-
-            feature.attr("d", path);
-        }
+        // console.log('end search')
+        var select = polygons[i]
+        document.getElementById('mapname').innerText=select.MESOREGIAO + ' - '+ select.MICROREGIA + ' - ' + select.id;
+        return select
+       
     }
 
-    //colour()
-}
-
-drawmap(map);
+    map.addEventListener('click', find);
+    map.addEventListener('dblclick', (ev)=>{
+        console.log('DOUBLE')
+        window.location.href = `/${window.location.pathname.split('/')[1]}/individual/${find(ev).GEOCODIGO}`
+        ;})
+    
+    
+    
+})
 
 window.onresize = reload
 window.onhashchange = reload

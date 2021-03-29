@@ -70,4 +70,4 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     plt.close()
 
     # blur and invert
-    os.system('convert %s.png -transparent white -blur 1x3 %s%s_%s.png'%(what,where,name,what))
+    os.system('convert %s.png -transparent whitesmoke -blur 1x3 %s%s_%s.png'%(what,where,name,what))

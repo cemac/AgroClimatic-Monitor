@@ -134,10 +134,16 @@ def disc(lang):
 
 @app.errorhandler(404)
 def not_found(e):
-  return render_template("404.html")
+  return render_template("404.html", number= 404)
 
 
+@app.errorhandler(500)
+def not_found500(e):
+  return render_template("404.html", number = 500)
 
+@app.route('/error/<number>/<message>/')
+def not_foundcustom(number,message):
+  return render_template("404.html", number = number, message=message)
 
 
 
