@@ -154,5 +154,7 @@ Keyantash, Jncfarse, and Others. 2018. “The Climate Data Guide: Standardized P
  - McKee, Thomas B. 1995. “Drought Monitoring with Multiple Time Scales.” In Proceedings of 9th Conference on Applied Climatology, Boston, 1995. https://ci.nii.ac.jp/naid/10028178079/.
  - McKee, Thomas B., Nolan J. Doesken, John Kleist, and Others. 1993. “The Relationship of Drought Frequency and Duration to Time Scales.” In Proceedings of the 8th Conference on Applied Climatology, 17:179–83. Boston.
 Svoboda, M., M. Hayes, D. Wood, and Others. 2012. “Standardized Precipitation Index User Guide.” World Meteorological Organization Geneva, Switzerland 900.
+
+<img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
  '''
 
