@@ -77,9 +77,13 @@ ssvg.on("touchmove mousemove", mousemove);
 
 d3.json(`/idata/${hash}/`).then(function(data) {
     window.d = data;
+    
+    console.log(data)
 
     document.getElementById('dashname').innerText=data.id;
     document.getElementById('region').innerText=data.macro + ' - '+ data.micro + ' - ' + data.id;
+
+    document.getElementById('loading').remove()
 
     var dates = [];
 
@@ -94,13 +98,7 @@ d3.json(`/idata/${hash}/`).then(function(data) {
     // console.log(data,d3.extent(dates))
 
     var lscale = [];
-
-    draw(data, pkeys, psvg);
-    draw(data, skeys, ssvg, true);
-
-    indicators(psvg, pkeys);
-    indicators(ssvg, skeys);
-
+    
     // leaflet
     var polygonPoints = data.geox.map((d, i) => {
         return new L.LatLng(data.geoy[i], d);
@@ -109,6 +107,41 @@ d3.json(`/idata/${hash}/`).then(function(data) {
     var polymap = map.addLayer(polygon);
     // map.setView(data.center.reverse())
     map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
+    
+    
+    /////////
+    map.cursor.enable();
+//     map.addEventListener('mousemove', (event) => {
+//         console.log(event.latlng)
+// 
+//     console.log('MOUSE',lat,lng)
+//   }
+// });
+    
+map.on('mouseover', function(ev){
+  var latlng = map.mouseEventToLatLng(ev.originalEvent);
+  console.log(latlng,'mouse');
+});
+    
+    /////////
+    
+    
+    
+
+    
+    try{
+    draw(data, pkeys, psvg);
+    draw(data, skeys, ssvg, true);
+
+    indicators(psvg, pkeys);
+    indicators(ssvg, skeys);
+    }
+    catch(err){
+        alert('An error occured - no data present')
+        console.error(err)
+    }
+
+
 });
 
 //////////////////////////////

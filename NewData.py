@@ -52,6 +52,7 @@ for item in args:
 
 ### movies
 import PostProcess
+PostProcess.update()
 
 print ('ALL UP TO DATE')
 # clean up

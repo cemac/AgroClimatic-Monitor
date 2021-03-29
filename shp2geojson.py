@@ -65,7 +65,7 @@ def getxy(i):
     x,y = i.exterior.coords.xy
     return [list(x),list(y)]
 
-x = list(map(getxy, simple['geometry']))
+x = list(map(getxy, brazil['geometry']))
 
 ## plotting shapes
 search = simple['GEOCODIGO id MESOREGIAO MICROREGIA'.split()]

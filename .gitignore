@@ -1,6 +1,7 @@
 *.h5
 *.db
-
+upload/
+node_modules/
 
 # Logs
 logs

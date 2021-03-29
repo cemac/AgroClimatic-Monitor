@@ -132,7 +132,9 @@ def disc(lang):
     return render_template('about.html', atext=atext, title='Disclaimer')
 
 
-
+@app.errorhandler(404)
+def not_found(e):
+  return render_template("404.html")
 
 
 

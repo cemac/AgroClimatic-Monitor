@@ -8,6 +8,9 @@ var last;
 // const fall = require('/allfiles')
 
 d3.json('/allfiles').then(fall=>{
+
+
+
 const keys = Object.keys(fall)
 
 currentfile= '/data/plotdata/'+fall[keys[0]][0]+'/'
@@ -102,7 +105,7 @@ keys.reverse().map((d,i)=>{
      .attr("cx", function (d) { return x(pt(re.exec(d)[0])); } )
      .attr("cy", y(i))
      .attr("r", 5)
-     .style("fill", color(i%2==0?.6:.8))
+     .style("fill", i%2==0?'#222':'#777')//color(i%2==0?.6:.8))
      .style('stroke','whitesmoke')
      .style('stroke-width',2)
      .style('stroke-opacity',.6)
