@@ -43,6 +43,7 @@ dependencies:
   - wheel
   - xz
   - zlib
+  - python=3.7
   - pip:
     - cycler
     - cython
@@ -79,4 +80,4 @@ dependencies:
     - topojson
     - urllib3
     - werkzeug
- 
+    - pysqlcipher3 
