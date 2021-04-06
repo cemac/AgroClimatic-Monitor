@@ -1,6 +1,7 @@
 
-from pysqlcipher3 import dbapi2 as sqlite3
-import os
+# from pysqlcipher3 import dbapi2 as sqlite3
+
+import os, sqlite3
 try: from .config import app_key, db_loc, STAGING
 except: from config import app_key, db_loc, STAGING
 
