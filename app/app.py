@@ -46,7 +46,8 @@ tool_br = parsetext.about(about_tool_text_pt_br)
 tool_uk = parsetext.about(about_tool_text_en_uk)
 disc_br = parsetext.about(discl_liab_text_pt_br)
 disc_uk = parsetext.about(discl_liab_text_en_uk)
-
+ini_br  = parsetext.about(ini_page_text_pt_br)
+ini_en  = parsetext.about(ini_page_text_en_uk)
 
 
 
@@ -105,9 +106,9 @@ def nolang():
 def home(lang):
     if lang == 'staticpages':
         return None
-    if lang == 'br': atext = about_br
-    else: atext = about_uk        
-    return render_template('about.html', atext=atext, title='About Us')
+    if lang == 'br': atext = ini_br
+    else: atext = ini_en
+    return render_template('about.html', atext=atext, title='Welcome!')
 
 
 
@@ -342,4 +343,4 @@ def data_get(upload_id):
 if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
-    app.run(host='127.0.0.1',port=57263,debug=True,threaded=True)
+    app.run(host='129.11.78.152',port=57263,debug=True,threaded=True)
