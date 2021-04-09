@@ -50,6 +50,9 @@ ini_br  = parsetext.about(ini_page_text_pt_br)
 ini_en  = parsetext.about(ini_page_text_en_uk)
 
 
+from flask_sqlalchemy import SQLAlchemy
+from flask_statistics import Statistics
+
 
 
 app=Flask('AGROCLIM_SERVER', 
@@ -62,9 +65,42 @@ app=Flask('AGROCLIM_SERVER',
 app.secret_key = app_key
 
 
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///statslog.sqlite3'
+
 app.config['DATA_LOCATION'] = PROCESSED
 app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
+
 sqlc = Database(db_loc,app_key)
+
+
+db = SQLAlchemy(app)
+
+class Request(db.Model):
+    __tablename__ = "request"
+
+    index = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    response_time = db.Column(db.Float)
+    date = db.Column(db.DateTime)
+    method = db.Column(db.String)
+    size = db.Column(db.Integer)
+    status_code = db.Column(db.Integer)
+    path = db.Column(db.String)
+    user_agent = db.Column(db.String)
+    remote_address = db.Column(db.String)
+    exception = db.Column(db.String)
+    referrer = db.Column(db.String)
+    browser = db.Column(db.String)
+    platform = db.Column(db.String)
+    mimetype = db.Column(db.String)
+
+db.create_all()
+statistics = Statistics(app, db, Request)
+
+
+
+
 
 # # Check that the upload folder exists
 def makedir (dest):
