@@ -7,14 +7,6 @@ __organisation__= 'CEMAC'
 __contact__='d.ellis-A-T-leeds.ac.uk'
 
 
-'''
-CONSTS
-'''
-
-
-
-
-
 
 ''' 
 imports
@@ -103,9 +95,12 @@ statistics = Statistics(app, db, Request)
 
 
 # # Check that the upload folder exists
-def makedir (dest):
-    global STAGING
-    fullpath = '%s%s'%(STAGING,dest)
+def makedir (dest,upload=True):
+    if upload:
+            global STAGING
+            fullpath = '%s%s'%(STAGING,dest)
+    else:
+            fullpath = dest
     if not os.path.isdir(fullpath):
         os.mkdir(fullpath)
 # 
@@ -335,7 +330,19 @@ def upload_file():
                 check = sqlc.writefile(psw,filename)
                 if (check):
                     makedir(check)
-                    file.save(os.path.join(STAGING,check, filename))
+                    saveloc = os.path.join(STAGING,check, filename)
+                    file.save(saveloc)
+                    
+                    filesplit = filename.upper().split('_')
+                    dest = filesplit[0]
+                    makedir(STORAGE+dest)
+                    if dest == 'SPI':
+                          dest += '/%s%02d'%(dest,filesplit[1])
+                          makedir(STORAGE+dest)
+                    os.system('gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest))
+
+
+                        
                 else:
                     print( 'Wrong Credentials! ')
                     flash('Wrong Credentials!') 
