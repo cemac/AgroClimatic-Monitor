@@ -137,6 +137,8 @@ def nolang():
 def home(lang):
     if lang == 'staticpages':
         return None
+    if lang == 'upload':
+        return redirect('/upload')
     if lang == 'br': atext = ini_br
     else: atext = ini_en
     return render_template('about.html', atext=atext, title='Welcome!')
@@ -329,17 +331,19 @@ def upload_file():
                 
                 check = sqlc.writefile(psw,filename)
                 if (check):
-                    makedir(check)
+                    makedir(check,False)
                     saveloc = os.path.join(STAGING,check, filename)
                     file.save(saveloc)
                     
                     filesplit = filename.upper().split('_')
                     dest = filesplit[0]
-                    makedir(STORAGE+dest)
+                    makedir(STORAGE+dest,False)
                     if dest == 'SPI':
                           dest += '/%s%02d'%(dest,filesplit[1])
                           makedir(STORAGE+dest)
                     os.system('gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest))
+            
+                    print('-----------------',saveloc,STORAGE+dest)
 
 
                         
@@ -356,7 +360,7 @@ def upload_file():
         last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
         
         
-        flash('kljlkj')
+#         flash('kljlkj')
         
         return redirect('/upload')
         #render_template('upload.html', uploads = f(last))
