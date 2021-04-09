@@ -24,6 +24,8 @@ programadores da University of Leeds e Cemaden regularmente atualiza e mantém e
 ferramenta da web, que foi financiada pelo programa Met Office CSSP-Brasil. Para 
 obter mais informações, consulte nossa página “Sobre nós”.
 
+<img src='/data/geojson/ini.jpeg' style="width:100%></img>
+
  '''
 
 #--------------------------#
