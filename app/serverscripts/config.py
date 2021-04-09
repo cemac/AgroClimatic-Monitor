@@ -14,7 +14,7 @@ extensions = set(['txt', 'pdf', 'image/png', 'image/tiff','image/gtiff'])
 
 
 ### if change set in main/config.py too
-STORAGE = 'uolstorage/Data/' #symbolic link in main repo level 1
+STORAGE = __file__.replace('app/serverscripts/config.py','uolstorage/Data/') #symbolic link in main repo level 1
 PROCESSED = __file__.replace('app/serverscripts/config.py','processed/')
 DATA = __file__.replace('app/serverscripts/config.py',STORAGE+'data/')
 STAGING = __file__.replace('app/serverscripts/config.py',STORAGE+'upload/')
