@@ -80,16 +80,6 @@ If a password has already been used you will get an error containing
 python -m app.serverscripts.secure_db --wipe
 ```
 
-### gdal 
-```
-export CPLUS_INCLUDE_PATH=/usr/include/gdal
-export C_INCLUDE_PATH=/usr/include/gdal
-
-# check gdal version with 
-gdal-config --version
-conda install -c conda-forge gdal
-```
-
 
 
 # template_br
