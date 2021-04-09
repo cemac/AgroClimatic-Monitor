@@ -339,7 +339,7 @@ def upload_file():
                     dest = filesplit[0]
                     makedir(STORAGE+dest,False)
                     if dest == 'SPI':
-                          dest += '/%s%02d'%(dest,filesplit[1])
+                          dest += '%s%02d'%(dest,filesplit[1])
                           makedir(STORAGE+dest)
                     os.system('gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest+filename))
             
