@@ -17,7 +17,7 @@ extensions = set(['txt', 'pdf', 'image/png', 'image/tiff','image/gtiff'])
 STORAGE = __file__.replace('app/serverscripts/config.py','uolstorage/Data/') #symbolic link in main repo level 1
 PROCESSED = __file__.replace('app/serverscripts/config.py','processed/')
 DATA = __file__.replace('app/serverscripts/config.py',STORAGE+'data/')
-STAGING = STORAGE+'upload/'
+STAGING = STORAGE+'upload'
 db_loc = os.path.join(__file__.replace('app/serverscripts/config.py','app/'), 'upload.db')
 
 

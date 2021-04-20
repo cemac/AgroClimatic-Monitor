@@ -44,7 +44,7 @@ ini_en  = parsetext.about(ini_page_text_en_uk)
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
-
+from flask_socketio import SocketIO
 
 
 app=Flask('AGROCLIM_SERVER', 
@@ -68,6 +68,8 @@ sqlc = Database(db_loc,app_key)
 
 
 db = SQLAlchemy(app)
+socketio = SocketIO(app)
+
 
 class Request(db.Model):
     __tablename__ = "request"
@@ -142,6 +144,16 @@ def home(lang):
     if lang == 'br': atext = ini_br
     else: atext = ini_en
     return render_template('about.html', atext=atext, title='Welcome!')
+
+
+@app.route('/<lang>/about')
+def about(lang):
+    if lang == 'staticpages':
+        return None
+    if lang == 'br': atext = about_br
+    else: atext = about_uk
+
+    return render_template('about.html', atext=atext, title='Using the Tool')
 
 
 
@@ -286,7 +298,7 @@ def getidata(item):
         m_new(item)
     
     print('%s%s/'%(PROCESSED,folder),'\n\n\n')
-
+/1qq
     return send_from_directory('%s%s/'%(PROCESSED,folder), fitem, as_attachment=True)
 
 
@@ -297,6 +309,13 @@ def getidata(item):
 '''
 UPLOAD
 '''
+
+## on upload end
+@socketio.on('upload_disconnect')
+def process(data):
+    print(data,'\n\nUPLOAD END\n\n')
+
+
 ## on page load display the upload file
 @app.route('/upload')
 def upload_form():
@@ -339,11 +358,11 @@ def upload_file():
                     dest = filesplit[0]
                     makedir(STORAGE+dest,False)
                     if dest == 'SPI':
-                          dest += '%s%02d'%(dest,int(filesplit[1]))
-                          makedir(STORAGE+dest)
-                    os.system('gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest+filename))
+                          dest += '/%s%02d'%(dest,int(filesplit[1]))
+                          makedir(STORAGE+dest,False)
+                    os.system('/bin/gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest+filename))
             
-                    print('-----------------',saveloc,STORAGE+dest)
+                    print('-----------------',saveloc,STORAGE+dest+filename)
 
 
                         
@@ -390,4 +409,4 @@ def data_get(upload_id):
 if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
-    app.run(host='129.11.78.152',port=57263,debug=True,threaded=True)
+    socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)

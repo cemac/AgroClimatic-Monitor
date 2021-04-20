@@ -64,7 +64,7 @@
 
         </form>
 
-                <div class="row">
+                <div class="row" style='visibility:hidden;height:0px'>
                     <div class="col-xl-12 col-lg-0">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -92,7 +92,14 @@
                 </div>
 
 
-
+<div class="col-lg-6 mb-4">
+                                    <div class="card bg-success text-white shadow" onclick=' socket.emit("upload_disconnect", {"process":true});window.location.href=window.location.origin;'>
+                                        <div class="card-body">
+                                            Process (Click Here)
+                                            <div class="text-white-50 small">All files are automatically processed on outward navigation from this page.</div>
+                                        </div>
+                                    </div>
+                                </div>
     
 
 </div>
@@ -199,8 +206,14 @@
     }
 </style>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 <script>
+
+var socket = io();
+window.onbeforeunload = function () {
+        socket.emit('upload_disconnect', {'process':true});
+    }
+	
     const dropArea = document.querySelector("#drop-area");
     const progressBar = document.querySelector("#progress-bar");
     const fileElem = document.querySelector("#fileElem");
