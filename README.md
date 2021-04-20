@@ -2,6 +2,13 @@
 
 <img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
 
+
+
+# Viewing the machine (pre global or VPN release)
+1. Navigate to https://vwd.leeds.ac.uk/ and log into the virtual desktop 
+2. open chrome
+3. navigate to http://129.11.78.152:57263
+
 # VM 
 
 1. Login to the see gateway
