@@ -1,6 +1,8 @@
 
 import rasterio as rio
 from rasterio.plot import show
+from rasterio.warp import reproject, Resampling
+
 import numpy as np
 
 from matplotlib import pyplot as plt
@@ -8,7 +10,7 @@ import matplotlib as mpl
 import os 
 
 projection = 'EPSG:3857'
-#
+inputproj = 'EPSG:4326'
 
 
 bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
@@ -33,17 +35,17 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     height = int(.85 * width * ratio )
     
     
-    # dst_shape = (width, height)
-    # destination = np.zeros(dst_shape, np.uint8)
-    # 
-    # reproject(
-    #     ra,
-    #     destination,
-    #     # src_transform=src_transform,
-    #     # src_crs=src_crs,
-    #     # dst_transform=dst_transform,
-    #     dst_crs=dst_crs,
-    #     resampling=Resampling.nearest)
+    dst_shape = (width, height)
+    destination = np.zeros(dst_shape, np.uint8)
+    
+    reproject(
+        ra,
+        destination,
+        # src_transform=src_transform,
+        src_crs={'init': input_proj},
+        # dst_transform=dst_transform,
+        dst_crs={'init': projection},
+        resampling=Resampling.nearest)
     # 
     
     plt.figure(figsize=(width/my_dpi, height/my_dpi), dpi=my_dpi)
