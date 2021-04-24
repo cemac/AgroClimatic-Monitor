@@ -153,7 +153,7 @@ def about(lang):
     if lang == 'br': atext = about_br
     else: atext = about_uk
 
-    return render_template('about.html', atext=atext, title='Using the Tool')
+    return render_template('about.html', atext=atext, title='About Us')
 
 
 
@@ -298,7 +298,7 @@ def getidata(item):
         m_new(item)
     
     print('%s%s/'%(PROCESSED,folder),'\n\n\n')
-/1qq
+
     return send_from_directory('%s%s/'%(PROCESSED,folder), fitem, as_attachment=True)
 
 
@@ -313,8 +313,9 @@ UPLOAD
 ## on upload end
 @socketio.on('upload_disconnect')
 def process(data):
+    global filelist 
     print(data,'\n\nUPLOAD END\n\n')
-
+    print(filelist)
 
 ## on page load display the upload file
 @app.route('/upload')
@@ -323,11 +324,12 @@ def upload_form():
     return render_template('upload.html',uploads = 'This populates on sucessful submission...')
 
 
-
+filelist = []
 
 ## on a POST request of data 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    global filelist
     if request.method == 'POST':
 
         psw = str(request.form['psw'])
@@ -360,9 +362,12 @@ def upload_file():
                     if dest == 'SPI':
                           dest += '/%s%02d'%(dest,int(filesplit[1]))
                           makedir(STORAGE+dest,False)
-                    os.system('/bin/gdalwarp -t_srs EPSG:3857 %s %s'%(saveloc,STORAGE+dest+filename))
-            
-                    print('-----------------',saveloc,STORAGE+dest+filename)
+
+                    fl = STORAGE+dest+'/'+filename
+                    os.system('/bin/gdalwarp -s_srs EPSG:4326 -t_srs EPSG:3857 -r cubicpline %s %s'%(saveloc,fl))
+                    filelist.append(fl)
+
+                    print('-----------------',saveloc,fl)
 
 
                         
@@ -374,6 +379,8 @@ def upload_file():
                 print('Not allowed', file)
                 
         
+            
+
         flash('File(s) uploaded')
         
         last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
@@ -381,7 +388,7 @@ def upload_file():
         
 #         flash('kljlkj')
         
-        return redirect('/upload')
+        return redirect('/processing')
         #render_template('upload.html', uploads = f(last))
 
 
