@@ -10,7 +10,7 @@ import matplotlib as mpl
 import os 
 
 projection = 'EPSG:3857'
-inputproj = 'EPSG:4326'
+input_proj = 'EPSG:4326'
 
 
 bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
