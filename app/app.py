@@ -384,7 +384,13 @@ def upload_file():
                           makedir(STORAGE+dest,False)
 
                     fl = STORAGE+dest+'/'+filename
-                    os.system('/bin/gdalwarp -s_srs EPSG:4326 -t_srs EPSG:3857 -r cubicpline %s %s'%(saveloc,fl))
+            
+                    os.system('cp %s %s'%(saveloc,fl))
+                   
+            
+            
+            
+#                     os.system('/bin/gdalwarp -s_srs EPSG:4326 -t_srs EPSG:3857 -r cubicpline %s %s'%(saveloc,fl))
                     filelist.append(fl)
 
                     print('-----------------',saveloc,fl)
