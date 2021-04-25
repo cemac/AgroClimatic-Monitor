@@ -19,6 +19,7 @@ PROCESSED = __file__.replace('app/serverscripts/config.py','processed/')
 DATA = STORAGE+'data/' #__file__.replace('app/serverscripts/config.py',STORAGE+'data/')
 STAGING = STORAGE+'upload'
 db_loc = os.path.join(__file__.replace('app/serverscripts/config.py','app/'), 'upload.db')
+FNEW = PROCESSED + 'filelist.json'
 
 
 
