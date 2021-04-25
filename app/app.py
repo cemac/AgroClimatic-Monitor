@@ -14,7 +14,7 @@ imports
 import sys,os,re,glob
 from pathlib import Path
 file = Path(__file__).resolve()
-parent, root = file.parent, file.parents[1] # 1 level up
+parent, root = file.parent, file.parents[2] # 1 level up
 sys.path.append(str(root))
 
 import pandas as pd
