@@ -68,7 +68,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     
     plt.text(.95,.95, '-'.join(name.split('-')[::-1]), horizontalalignment='center',          verticalalignment='center', transform=ax.transAxes, c='black')
 
-    
+    print('FILENAME ' , which)
     plt.savefig('%s.png'%what, dpi=my_dpi, transparent=True,bbox_inches='tight',pad_inches=0)
     #plt.show()
     plt.close()
