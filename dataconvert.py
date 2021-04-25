@@ -36,10 +36,10 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     
     
     dst_shape = (width, height)
-    #destination = np.zeros(dst_shape, np.uint8)
+    destination = np.zeros(dst_shape, np.uint8)
     
     
-    destination = rio.open('./temp.tiff','w')
+    #destination = rio.open('./temp.tiff','w')
     reproject(
         rio.band(ra,1),
         rio.band(destination,1),
