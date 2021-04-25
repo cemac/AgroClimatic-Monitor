@@ -207,5 +207,5 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
     return i_kind+' finished'
 
 if __name__ == '__main__':
-    print(sys.argv)
+#     print(sys.argv)
     parsefiles(*sys.argv[1:5])
