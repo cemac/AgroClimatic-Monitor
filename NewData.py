@@ -38,7 +38,7 @@ Parse FILES
 # indicators = 'VHI RZSM'.split()
 
 
-args = [(kind,iloc[kind],dataloc,imageloc,) for kind in indicators]
+args = [(kind,STORAGE+iloc[kind],dataloc,imageloc,) for kind in indicators]
 
 
 print('### this should be done in a batch script!')
