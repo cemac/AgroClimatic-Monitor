@@ -43,10 +43,14 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
     print(i_kind, imageloc,dataloc)
     
     thisfile = '%sdata_%s.h5'%(dataloc,i_kind)
+    if os.path.exists(thisfile):
+        basetime = os.path.getmtime(thisfile)
+    else:
+        basetime=-0
     
     try:
         indicator = h5py.File( thisfile , 'a')
-        basetime = os.path.getmtime(thisfile)
+        
     except:
             # try closing all instances of the file first
             basetime = -1 
@@ -120,7 +124,7 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
         '''
         
         if basetime>os.path.getmtime(f):
-            print('£££££££££££££££££££££',f ,basetime, os.path.getmtime(f) )
+            print('Skipping:',f ,basetime, os.path.getmtime(f) )
             continue # this file is older than the combigned one - ignore. 
         
         data = rasterio.open(f)
