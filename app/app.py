@@ -12,10 +12,14 @@ __contact__='d.ellis-A-T-leeds.ac.uk'
 imports
 '''
 import sys,os,re,glob
+
+## file processing (uploads)
 from pathlib import Path
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1] # 1 level up
 sys.path.append(str(root))
+import each_h5 as processing
+from params import imatch,indicators
 
 import pandas as pd
 import simplejson as json
@@ -29,7 +33,7 @@ from werkzeug.security import check_password_hash
 # print generate_password_hash("P1ain-text-user-passw@rd", "sha256")
 #print check_password_hash("sha256$lTsEjTVv$c794661e2c734903267fbc39205e53eca607f9ca2f85812c95020fe8afb3bc62", "P1ain-text-user-passw@rd")
 
-import each_h5 as processing
+
 
 from serverscripts.get_individual import m_new
 from serverscripts.secure_db import *
@@ -113,6 +117,13 @@ def makedir (dest,upload=True):
         os.mkdir(fullpath)
 # 
 makedir('')# make uploads folder
+
+# create uploads folders if they dont exist
+for i in indicators:
+            makedir(STORAGE+i,False)
+
+
+
 
 '''
 serve static
