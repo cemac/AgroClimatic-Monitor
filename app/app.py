@@ -19,7 +19,7 @@ file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1] # 1 level up
 sys.path.append(str(root))
 # import each_h5 as processing
-from params import imatch,indicators
+from params import indicators
 
 import pandas as pd
 import simplejson as json
