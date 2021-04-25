@@ -55,7 +55,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     ax = plt.gca()
 
     
-    show(ra, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
+    show(destination, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
     #ra.read(1, masked=True)
     # 
     plt.xlim(bbox[-1],bbox[1])
