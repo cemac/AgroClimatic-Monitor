@@ -17,6 +17,7 @@ privacy_policy_title = ''' Privacy Policy '''
 
 privacy_policy_textbox1 = ''' 
 
-We do not collect any user information at this time. 
+No identifying information shall be used in this code. 
+Only they number of hits per page are recorded. 
 <fill in with ULeeds Standard>
  '''
