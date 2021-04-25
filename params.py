@@ -1,4 +1,4 @@
-import config as cf
+
 
 indicators = ['VHI','spi_01','spi_03','spi_06','spi_12','IIS3','RZSM']
 
