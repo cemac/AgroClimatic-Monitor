@@ -35,27 +35,27 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     height = int(.85 * width * ratio )
     
     
-    dst_shape = (width, height)
-    destination = np.zeros(dst_shape, np.uint8)
+#     dst_shape = (width, height)
+#     destination = np.zeros(dst_shape, np.uint8)
     
     
     #destination = rio.open('./temp.tiff','w')
-    reproject(
-        ra,
-        destination,
-        # src_transform=src_transform,
-        src_crs={'init': input_proj},
-        # dst_transform=dst_transform,
-        dst_crs={'init': projection},
-        resampling=Resampling.nearest)
-    # 
+#     reproject(
+#         ra,
+#         destination,
+#         # src_transform=src_transform,
+#         src_crs={'init': input_proj},
+#         # dst_transform=dst_transform,
+#         dst_crs={'init': projection},
+#         resampling=Resampling.nearest)
+#     # 
     
     plt.figure(figsize=(width/my_dpi, height/my_dpi), dpi=my_dpi)
 
     ax = plt.gca()
 
     
-    show(destination, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
+    show(ra, cmap=cmap,norm=norm,with_bounds=True, ax = ax)
     #ra.read(1, masked=True)
     # 
     plt.xlim(bbox[-1],bbox[1])
