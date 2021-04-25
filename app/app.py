@@ -12,6 +12,10 @@ __contact__='d.ellis-A-T-leeds.ac.uk'
 imports
 '''
 import sys,os,re,glob
+file = Path(__file__).resolve()
+parent, root = file.parent, file.parents[1] # 1 level up
+sys.path.append(str(root))
+
 import pandas as pd
 import simplejson as json
 from flask import Flask, flash, request, redirect, render_template,url_for,Response,send_from_directory
