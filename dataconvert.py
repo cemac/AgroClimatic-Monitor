@@ -41,7 +41,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     
     #destination = rio.open('./temp.tiff','w')
     reproject(
-        rio.band(ra,0),
+        ra,
         destination,
         # src_transform=src_transform,
         src_crs={'init': input_proj},
