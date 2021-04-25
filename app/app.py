@@ -334,7 +334,7 @@ def upload_file():
 
         psw = str(request.form['psw'])
         
-        print(psw,'aaaasdkjlkj')
+        #         print(psw,'aaaasdkjlkj')
         
         #str(request.args.get('psw'))
         allfiles = request.files
@@ -383,8 +383,9 @@ def upload_file():
 
         flash('File(s) uploaded')
         
-        last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
+#         last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
         
+        print('*(^&*(&*(&*&', filelist)
         
 #         flash('kljlkj')
         
