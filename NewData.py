@@ -11,15 +11,6 @@ written by d.ellis@leeds.ac.uk for CEMAC
 '''
 
 
-
-'''
-Locate Data
-'''
-
-
-
-
-
 from each_h5 import parsefiles  
 import os, multiprocessing
 from params import indicators,iloc
@@ -27,6 +18,7 @@ from params import indicators,iloc
 from config import * 
 
 imageloc = PROCESSED+'plotdata/'
+os.system('mkdir '+imageloc)
 
 
 ''' 
