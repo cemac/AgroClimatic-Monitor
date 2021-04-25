@@ -1,3 +1,5 @@
+import config as cf
+
 indicators = ['VHI','spi_01','spi_03','spi_06','spi_12','IIS3','RZSM']
 
 i_match = 'VHI spi IIS3 RZSM'.split()
@@ -40,11 +42,11 @@ colours = 'whitesmoke whitesmoke #FFFFCC #FED976 #FD8C3C #E2191C #800026'.split(
 print('CHANGE PARAM LOCATION')
 
 iloc={
-'VHI': './data/raster/VHI/VHI_*.tif',
-'spi_03': './data/raster/SPI/SPI03/spi_03_*.tif',
-'spi_06': './data/raster/SPI/SPI06/spi_06_*.tif',
-'spi_01': './data/raster/SPI/SPI01/spi_01_*.tif',
-'spi_12': './data/raster/SPI/SPI12/spi_12_*.tif',
-'IIS3':  './data/raster/IIS3/IIS3_*.tif',
-'RZSM':  './data/raster/RZSM/RZSM_*.tiff'
+'VHI':     'VHI/VHI_*.tif*',
+'spi_03':  'SPI/SPI03/spi_03_*.tif*',
+'spi_06':  'SPI/SPI06/spi_06_*.tif*',
+'spi_01':  'SPI/SPI01/spi_01_*.tif*',
+'spi_12':  'SPI/SPI12/spi_12_*.tif*',
+'IIS3':    'IIS3/IIS3_*.tif*',
+'RZSM':    'RZSM/RZSM_*.tif*'
 }
