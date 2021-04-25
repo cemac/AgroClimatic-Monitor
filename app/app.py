@@ -383,7 +383,7 @@ def upload_file():
                           dest += '/%s%02d'%(dest,int(filesplit[1]))
                           makedir(STORAGE+dest,False)
 
-                    fl = STORAGE+dest+'/'+filename
+                    fl = STORAGE+dest+'/'+filename.replace('.tiff','.tif')
             
                     os.system('cp %s %s'%(saveloc,fl))
                    
@@ -407,13 +407,13 @@ def upload_file():
         
         
         
-        try:fdata = json.load(open(FNEW))
-        except FileNotFoundError: fdata=[]
+#         try:fdata = json.load(open(FNEW))
+#         except FileNotFoundError: fdata=[]
 
-        a_file = open(FNEW, "w")
-        fdata.extend(filelist)
-        json.dump(fdata, a_file)
-        a_file.close()    
+#         a_file = open(FNEW, "w")
+#         fdata.extend(filelist)
+#         json.dump(fdata, a_file)
+#         a_file.close()    
 
         flash('File(s) uploaded')
         
