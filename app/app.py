@@ -11,14 +11,14 @@ __contact__='d.ellis-A-T-leeds.ac.uk'
 ''' 
 imports
 '''
-import sys,os,re,glob
+import sys,os,re,glob,json
 
 ## file processing (uploads)
 from pathlib import Path
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1] # 1 level up
 sys.path.append(str(root))
-import each_h5 as processing
+# import each_h5 as processing
 from params import imatch,indicators
 
 import pandas as pd
@@ -119,8 +119,8 @@ def makedir (dest,upload=True):
 makedir('')# make uploads folder
 
 # create uploads folders if they dont exist
-for i in indicators:
-            makedir(STORAGE+i,False)
+# for i in indicators:
+#             makedir(STORAGE+i,False)
 
 
 
@@ -348,6 +348,8 @@ filelist = []
 def upload_file():
     global filelist
     if request.method == 'POST':
+                        
+        
 
         psw = str(request.form['psw'])
         
@@ -396,13 +398,19 @@ def upload_file():
                 print('Not allowed', file)
                 
         
-            
+        
+        
+        fdata = json.load(open(FNEW))
+        a_file = open(FNEW, "w")
+        fdata.extend(filelist)
+        json.dump(fdata, a_file)
+        a_file.close()    
 
         flash('File(s) uploaded')
         
 #         last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
         
-        print('*(^&*(&*(&*&', filelist)
+        print('*(^&*(&*(&*&', fdata)
         
 #         flash('kljlkj')
         
