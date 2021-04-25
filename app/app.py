@@ -11,7 +11,7 @@ __contact__='d.ellis-A-T-leeds.ac.uk'
 ''' 
 imports
 '''
-import sys,os,re,glob,json
+import sys,os,re,glob
 
 ## file processing (uploads)
 from pathlib import Path
@@ -75,6 +75,7 @@ app.config['DATA_LOCATION'] = PROCESSED
 app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
 
 sqlc = Database(db_loc,app_key)
+
 
 
 db = SQLAlchemy(app)
@@ -400,7 +401,9 @@ def upload_file():
         
         
         
-        fdata = json.load(open(FNEW))
+        try:fdata = json.load(open(FNEW))
+        except FileNotFoundError: fdata=[]
+
         a_file = open(FNEW, "w")
         fdata.extend(filelist)
         json.dump(fdata, a_file)
