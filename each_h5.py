@@ -46,8 +46,10 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
     
     try:
         indicator = h5py.File( thisfile , 'a')
+        basetime = os.path.getmtime(thisfile)
     except:
             # try closing all instances of the file first
+            basetime = -1 
             os.system('rm '+ thisfile )
             # input('deleting ctrl-c to cancel, enter to continue')
             # h5file = h5py.File( datafile, 'w')
@@ -55,7 +57,7 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
             indicator = h5py.File( thisfile , 'a')
             None
     
-    basetime = os.path.getmtime(thisfile)
+    
     
     FILES = glob.glob(FILES)
     nfiles = len(FILES)
