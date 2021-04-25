@@ -14,7 +14,7 @@ imports
 import sys,os,re,glob
 from pathlib import Path
 file = Path(__file__).resolve()
-parent, root = file.parent, file.parents[2] # 1 level up
+parent, root = file.parent, file.parents[1] # 1 level up
 sys.path.append(str(root))
 
 import pandas as pd
@@ -29,8 +29,7 @@ from werkzeug.security import check_password_hash
 # print generate_password_hash("P1ain-text-user-passw@rd", "sha256")
 #print check_password_hash("sha256$lTsEjTVv$c794661e2c734903267fbc39205e53eca607f9ca2f85812c95020fe8afb3bc62", "P1ain-text-user-passw@rd")
 
-
-from .. import each_h5 as processing
+import each_h5 as processing
 
 from serverscripts.get_individual import m_new
 from serverscripts.secure_db import *
