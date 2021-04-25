@@ -120,6 +120,7 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
         '''
         
         if basetime>os.path.getmtime(f):
+            print('£££££££££££££££££££££',f)
             continue # this file is older than the combigned one - ignore. 
         
         data = rasterio.open(f)
