@@ -30,7 +30,7 @@
                         <h8 class="m-0">Upload Code</h8><br>
                         <span> 
                         
-                        <input id='psw' name="psw" type="password" /></span>
+                        <input id='psw' name="psw" type="password" onkeydown="return (event.keyCode!=13);"/></span>
 
                         <br><br>
                         <!-- end content -->
@@ -51,7 +51,7 @@
                 
 
 
-                    <label class="card shadow mb-4 m-0 font-weight-bold text-primary button" for="fileElem">Add files</label>
+                    <label class="card shadow mb-4 m-0 font-weight-bold text-primary button" for="fileElem">Add files one at a time</label>
                         <p id='status'></p>
             
 
@@ -118,6 +118,9 @@
 
 {% endblock content %} {% block scripts %}
 <style>
+.button,p,div{
+font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";}
+
     progress {
         visibility: hidden;
     }
@@ -164,7 +167,7 @@
         /* width: 100%;
         height: 100%!important; */
         font-family: Lato;
-        margin: 100px auto;
+        margin: auto auto;
         padding: 20px;
     color: #222;
         text-align: center;
