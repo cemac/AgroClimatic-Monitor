@@ -39,7 +39,7 @@ def getpng(loc,name,what,cmap,norm,where ='./processed/plotdata/' ):
     #destination = np.zeros(dst_shape, np.uint8)
     
     
-    dst = rio.open('./temp.tiff','w')
+    destination = rio.open('./temp.tiff','w')
     reproject(
         rio.band(ra,1),
         rio.band(destination,1),
