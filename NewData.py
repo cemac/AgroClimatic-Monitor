@@ -10,9 +10,6 @@ Run this to create a HDF5 file for each inidicator.
 written by d.ellis@leeds.ac.uk for CEMAC
 '''
 
-dataloc = './processed/'
-imageloc = './processed/plotdata/'
-
 
 
 '''
@@ -27,6 +24,10 @@ from each_h5 import parsefiles
 import os, multiprocessing
 from params import indicators,iloc
 
+from config import * 
+
+imageloc = PROCESSED+'plotdata/'
+
 
 ''' 
 Parse FILES
@@ -38,7 +39,7 @@ Parse FILES
 # indicators = 'VHI RZSM'.split()
 
 
-args = [(kind,STORAGE+iloc[kind],dataloc,imageloc,) for kind in indicators]
+args = [(kind,STORAGE+iloc[kind],PROCESSED,imageloc,) for kind in indicators]
 
 
 print('### this should be done in a batch script!')
