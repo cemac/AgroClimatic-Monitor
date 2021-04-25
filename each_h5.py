@@ -55,7 +55,7 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
             indicator = h5py.File( thisfile , 'a')
             None
     
-    
+    basetime = os.path.getmtime(thisfile)
     
     FILES = glob.glob(FILES)
     nfiles = len(FILES)
@@ -116,6 +116,10 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
         Iterate over each county for each file
         - less IO overhead this way
         '''
+        
+        if basetime>os.path.getmtime(f):
+            continue # this file is older than the combigned one - ignore. 
+        
         data = rasterio.open(f)
         fname = f.split('/')[-1].replace('.tiff','').replace('.tif','').replace(i_kind+'_','')
         if i_kind == 'VHI' or i_kind == 'IIS3':
@@ -126,7 +130,6 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
             fname = '%s-%s'%(fname[0],fname[1])
         else:
             fname = '%s-%s'%(fname[0:4],fname[4:])
-        
 
 
 
