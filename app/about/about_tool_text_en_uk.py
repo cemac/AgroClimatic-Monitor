@@ -15,11 +15,11 @@ More information of each index and how to interpret their results are given belo
 
  '''
 
-about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indices: '''
+about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indices '''
 
 about_tool_textbox2_text = ''' 
 
-- Standardized Precipitation Index (SPI)
+### Standardized Precipitation Index (SPI)
 
 The Standard Precipitation Index-SPI is a drought index proposed by Mckee et al 
 (1993) to quantify the probability of a precipitation deficit occurrence at a specific 
@@ -39,11 +39,11 @@ by meteorological services (Svoboda et al. 2012).
 
  '''
  
-about_tool_textbox3_title = ''' 2. Vegetation-based drought monitoring indices: '''
+about_tool_textbox3_title = ''' 2. Vegetation-based drought monitoring indices '''
 
 about_tool_textbox3_text  = ''' 
 
-- Vegetation Health Index (VHI) 
+### Vegetation Health Index (VHI) 
 
 VHI is a combination of vegetation condition index (termed VCI) and thermal condition
 index (TCI). VCI is obtained by scaling the Normalized Difference Vegetation
@@ -65,7 +65,7 @@ about_tool_textbox4_title = ''' 3. Soil moisture-based drought monitoring indice
 
 about_tool_textbox4_text = ''' 
 
-- Root Zone Soil Moisture (RZSM)
+### Root Zone Soil Moisture (RZSM):
 
 The soil moisture index is based on the Root Zone Soil Moisture (RZSM) from 
 NASA’s Grace satellite. The raw data which is publicly available consists 
@@ -84,7 +84,7 @@ about_tool_textbox5_title = ''' 4. Combined drought monitoring Indices '''
 
 about_tool_textbox5_text = ''' 
 
-- Integrated Drought Index (IDI)
+### Integrated Drought Index (IDI):
 
 The Integrated Drought Index (IDI) consists of combining the SPI with the VHI and RZSMI.
  Since precipitation is the primary cause of drought development, negative SPI anomalies 
@@ -104,14 +104,9 @@ categories as in Table 1.
 
 about_tool_textbox6_title = ''' Indices Interpretation '''
 
-#class="table table-bordered dataTable"
 about_tool_textbox6_text = ''' 
-Table 1. Drought classification for SPI, VHI and RZSM, ISS3
-
-<table border="1" class="table table-bordered dataTable">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SPI</th>\n      <th>VHI</th>\n      <th>RZSM</th>\n      <th>Drought Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>&gt; -0.5</td>\n      <td>&gt; 40</td>\n      <td>? 30</td>\n      <td>Normal</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>-0.5 to -0.8</td>\n      <td>30 to 40</td>\n      <td>20 to 30</td>\n      <td>Abnormally Dry</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>-0.8 to -1.3</td>\n      <td>20 to 30</td>\n      <td>11 to 20</td>\n      <td>Moderate Drought</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>-1.3 to -1.6</td>\n      <td>12 to 20</td>\n      <td>6 to 11</td>\n      <td>Severe Drought</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>-1.6 to -2.0</td>\n      <td>6 to 12</td>\n      <td>3 to 6</td>\n      <td>Extreme Drought</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>&gt; -2.0</td>\n      <td>&lt; 6</td>\n      <td>&lt; 3</td>\n      <td>Exceptional Drought</td>\n    </tr>\n  </tbody>\n</table>
-
-'''
-
+Table 1. Drought classification for SPI, VHI, RZSM and IDI
+ '''
 #------------#
 #--- Tab1 ---#
 #------------#
@@ -141,13 +136,11 @@ and conditions.
 about_tool_textbox8_title = ''' References '''
 
 about_tool_textbox8_text = ''' 
-- Cunha, Ana Paula M. A., Marcelo Zeri, Karinne Deusdará Leal, Lidiane Costa, Luz Adriana Cuartas, José Antônio Marengo, Javier Tomasella, et al. 2019. “Extreme Drought Events over Brazil from 2011 to 2019.” Atmosphere 10 (11): 642.
-- Cunha, A. P. M., R. C. Alvalá, C. A. Nobre, and M. A. Carvalho. 2015. “Monitoring Vegetative Drought Dynamics in the Brazilian Semiarid Region.” Agricultural and Forest Meteorology 214-215 (December): 494–505.
+Cunha, Ana Paula M. A., Marcelo Zeri, Karinne Deusdará Leal, Lidiane Costa, Luz Adriana Cuartas, José Antônio Marengo, Javier Tomasella, et al. 2019. “Extreme Drought Events over Brazil from 2011 to 2019.” Atmosphere 10 (11): 642.
+Cunha, A. P. M., R. C. Alvalá, C. A. Nobre, and M. A. Carvalho. 2015. “Monitoring Vegetative Drought Dynamics in the Brazilian Semiarid Region.” Agricultural and Forest Meteorology 214-215 (December): 494–505.
 Keyantash, Jncfarse, and Others. 2018. “The Climate Data Guide: Standardized Precipitation Index (SPI).” National Center for Atmospheric Research Staff (Eds) 8.
-- McKee, Thomas B. 1995. “Drought Monitoring with Multiple Time Scales.” In Proceedings of 9th Conference on Applied Climatology, Boston, 1995. https://ci.nii.ac.jp/naid/10028178079/.
-- McKee, Thomas B., Nolan J. Doesken, John Kleist, and Others. 1993. “The Relationship of Drought Frequency and Duration to Time Scales.” In Proceedings of the 8th Conference on Applied Climatology, 17:179–83. Boston.
+McKee, Thomas B. 1995. “Drought Monitoring with Multiple Time Scales.” In Proceedings of 9th Conference on Applied Climatology, Boston, 1995. https://ci.nii.ac.jp/naid/10028178079/.
+McKee, Thomas B., Nolan J. Doesken, John Kleist, and Others. 1993. “The Relationship of Drought Frequency and Duration to Time Scales.” In Proceedings of the 8th Conference on Applied Climatology, 17:179–83. Boston.
 Svoboda, M., M. Hayes, D. Wood, and Others. 2012. “Standardized Precipitation Index User Guide.” World Meteorological Organization Geneva, Switzerland 900.
-
-<img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
  '''
 

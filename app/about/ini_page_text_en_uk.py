@@ -23,7 +23,7 @@ weather stations. A team of scientists and programmers from the University of Le
 and Cemaden regularly update and maintain this web-tool, which was funded by the 
 Met Office CSSP-Brazil programme. For more information please check our “About us” page.
 
-<img src='/data/geojson/ini.jpeg' style="width:100%"></img>
+<img src='/data/geojson/ini2.jpg' style="width:100%"></img>
 
  '''
 

@@ -66,7 +66,7 @@ about_us_textbox6_title = ''' Contact us '''
 about_us_textbox6_text = ''' 
 Address: University of Leeds, School of Earth and Environment. 
 Woodhouse, Leeds LS2 9JT
-Email: m.galdos@leeds.ac.uk
+Email: contact-agclimatebr@leeds.ac.uk
 
  '''
 

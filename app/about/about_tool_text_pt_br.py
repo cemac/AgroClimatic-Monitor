@@ -1,8 +1,6 @@
 # variable name structure:  pagename_pagesection_sectionpart
 # The source of this file is in https://docs.google.com/document/d/1fGuYaJOWJixb99-qZEj_Urqk2wb4JnLupFYybIRu3pw/edit?usp=sharing
 
-import pandas 
-
 about_tool_title = ''' Sobre a ferramenta '''
 
 about_tool_textbox1 = ''' 
@@ -17,11 +15,11 @@ More information of each index and how to interpret their results are given belo
 
  '''
 
-about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indices: '''
+about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indices '''
 
 about_tool_textbox2_text = ''' 
 
-- Índice de precipitação padronizado (SPI)
+### Índice de precipitação padronizado (SPI)
 
 O Standard Precipitation Index-SPI é um índice de seca proposto por Mckee et al (1993) para 
 quantificar a probabilidade de ocorrência de déficit de precipitação em uma escala de tempo 
@@ -42,11 +40,11 @@ operacionalmente por serviços meteorológicos (Svoboda et al. 2012).
 
  '''
  
-about_tool_textbox3_title = ''' 2. Índices de monitoramento de seca com base na vegetação: '''
+about_tool_textbox3_title = ''' 2. Índices de monitoramento de seca com base na vegetação '''
 
 about_tool_textbox3_text  = ''' 
 
-- Índice de saúde vegetal (VHI)
+### Índice de saúde vegetal (VHI)
 
 O VHI é uma combinação de índice de condição de vegetação (denominado VCI) e índice de 
 condição térmica (TCI). O VCI é obtido escalando os valores do Índice de Vegetação por 
@@ -69,7 +67,7 @@ about_tool_textbox4_title = ''' 3. Índices de monitoramento de seca com base na
 
 about_tool_textbox4_text = ''' 
 
-- Umidade do solo da zona raiz (RZSM)
+### Umidade do solo da zona raiz (RZSM)
 
 O índice de umidade do solo é baseado na umidade do solo da zona raiz (RZSM) do satélite 
 Grace da NASA. Os dados brutos, publicamente disponíveis, consistem em produtos semanais 
@@ -87,7 +85,7 @@ about_tool_textbox5_title = ''' 4. Índices combinados de monitoramento de seca 
 
 about_tool_textbox5_text = ''' 
 
-- Índice de Seca Integrado (IDI)
+### Índice de Seca Integrado (IDI)
 
 O Índice de Seca Integrado (IDI) consiste na combinação do SPI com o VHI e o RZSMI. 
 Uma vez que a precipitação é a principal causa do desenvolvimento da seca, as anomalias 
@@ -107,16 +105,12 @@ conforme a Tabela 1.
 
 about_tool_textbox6_title = ''' Interpretação dos índices '''
 
-#class="table table-bordered dataTable"
 about_tool_textbox6_text = ''' 
-Tabela 1. Classificação de seca para SPI, VHI e RZSM, ISS3
-
-<table border="1" class="table table-bordered dataTable">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SPI</th>\n      <th>VHI</th>\n      <th>RZSM</th>\n      <th>Drought Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>&gt; -0.5</td>\n      <td>&gt; 40</td>\n      <td>? 30</td>\n      <td>Normal</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>-0.5 to -0.8</td>\n      <td>30 to 40</td>\n      <td>20 to 30</td>\n      <td>Anormalmente seco</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>-0.8 to -1.3</td>\n      <td>20 to 30</td>\n      <td>11 to 20</td>\n      <td>Moderadamente seco</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>-1.3 to -1.6</td>\n      <td>12 to 20</td>\n      <td>6 to 11</td>\n      <td>Seca severa</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>-1.6 to -2.0</td>\n      <td>6 to 12</td>\n      <td>3 to 6</td>\n      <td>Seca extrema</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>&gt; -2.0</td>\n      <td>&lt; 6</td>\n      <td>&lt; 3</td>\n      <td>Excepcionalmente seco</td>\n    </tr>\n  </tbody>\n</table>
-'''
-
-
-# pd.read_csv('./app/about/tab1_pt_br.csv').html()
-
+Tabela 1. Classificação de seca para SPI, VHI, RZSM e IDI
+ '''
+#------------#
+#--- Tab1 ---#
+#------------#
 
 about_tool_textbox7_title = ''' Como usar '''
 
@@ -140,21 +134,14 @@ customizada como na Tabela 1 de acordo com suas próprias necessidades e condiç
 
  '''
  
-
- 
- 
- 
- 
 about_tool_textbox8_title = ''' Referências '''
 
 about_tool_textbox8_text = ''' 
- - Cunha, Ana Paula M. A., Marcelo Zeri, Karinne Deusdará Leal, Lidiane Costa, Luz Adriana Cuartas, José Antônio Marengo, Javier Tomasella, et al. 2019. “Extreme Drought Events over Brazil from 2011 to 2019.” Atmosphere 10 (11): 642.
- - Cunha, A. P. M., R. C. Alvalá, C. A. Nobre, and M. A. Carvalho. 2015. “Monitoring Vegetative Drought Dynamics in the Brazilian Semiarid Region.” Agricultural and Forest Meteorology 214-215 (December): 494–505.
+Cunha, Ana Paula M. A., Marcelo Zeri, Karinne Deusdará Leal, Lidiane Costa, Luz Adriana Cuartas, José Antônio Marengo, Javier Tomasella, et al. 2019. “Extreme Drought Events over Brazil from 2011 to 2019.” Atmosphere 10 (11): 642.
+Cunha, A. P. M., R. C. Alvalá, C. A. Nobre, and M. A. Carvalho. 2015. “Monitoring Vegetative Drought Dynamics in the Brazilian Semiarid Region.” Agricultural and Forest Meteorology 214-215 (December): 494–505.
 Keyantash, Jncfarse, and Others. 2018. “The Climate Data Guide: Standardized Precipitation Index (SPI).” National Center for Atmospheric Research Staff (Eds) 8.
- - McKee, Thomas B. 1995. “Drought Monitoring with Multiple Time Scales.” In Proceedings of 9th Conference on Applied Climatology, Boston, 1995. https://ci.nii.ac.jp/naid/10028178079/.
- - McKee, Thomas B., Nolan J. Doesken, John Kleist, and Others. 1993. “The Relationship of Drought Frequency and Duration to Time Scales.” In Proceedings of the 8th Conference on Applied Climatology, 17:179–83. Boston.
+McKee, Thomas B. 1995. “Drought Monitoring with Multiple Time Scales.” In Proceedings of 9th Conference on Applied Climatology, Boston, 1995. https://ci.nii.ac.jp/naid/10028178079/.
+McKee, Thomas B., Nolan J. Doesken, John Kleist, and Others. 1993. “The Relationship of Drought Frequency and Duration to Time Scales.” In Proceedings of the 8th Conference on Applied Climatology, 17:179–83. Boston.
 Svoboda, M., M. Hayes, D. Wood, and Others. 2012. “Standardized Precipitation Index User Guide.” World Meteorological Organization Geneva, Switzerland 900.
-
-<img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
  '''
 
