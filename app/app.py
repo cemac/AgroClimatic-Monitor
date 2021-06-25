@@ -155,8 +155,8 @@ def nolang():
 
 @app.route('/<lang>/')
 def home(lang):
-    if lang == 'running':
-            return True
+    if lang == 'status':
+            return 'Live'
     if lang == 'staticpages':
         return None
     if lang == 'upload':
