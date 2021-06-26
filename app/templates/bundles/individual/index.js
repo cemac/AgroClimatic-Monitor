@@ -19,7 +19,11 @@ const dkeys = [
     "Exceptional Drought",
     ""
 ];
-const dnames = [
+
+var lang = window.location.pathname.split('/')[1]
+
+if (lang!='br'){
+var dnames = [
     "",
     "Normal",
     "Dry",
@@ -29,6 +33,21 @@ const dnames = [
     "Exceptional",
     ""
 ];
+}else{
+var dnames = [
+    "",
+    "Normal",
+    "Seco",
+    "Moderado",
+    "Forte",
+    "Extremo",
+    "Exceptional",
+    ""
+];
+
+}
+
+
 
 // Create the map
 var map = L.map("lmap", {
@@ -122,7 +141,7 @@ fetch(`/idata/${hash}/`)
     
     try{
     draw(data, pkeys, psvg);
-    draw(data, skeys, ssvg, true);
+    draw(data, skeys, ssvg, false);
 
     indicators(psvg, pkeys);
     indicators(ssvg, skeys);
@@ -300,7 +319,7 @@ function indicators(svg, ckeys) {
         .attr("text-anchor", "left")
         .style("stroke", "white")
         .style("stroke-width", 0.1)
-        .style("fill", (d, i) => color[i - 1])
+        .style("fill", '#222')//(d, i) => color[i - 1])
         .attr("x", 10)
         .attr("dy", d => d + 10)
         .attr("y", ".35em")
