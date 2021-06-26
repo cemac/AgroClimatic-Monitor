@@ -450,7 +450,7 @@ def data_get(upload_id):
 
 
 @app.route('/vcheck/<ls>')
-def data_get(ls):
+def ask_it(ls):
     return os.popen('ls %s'%ls.replace('-','/')).read().replace('\n','<br>')
         
     
