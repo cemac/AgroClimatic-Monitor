@@ -131,7 +131,7 @@ keys.reverse().map((d,i)=>{
     .attr("x", 0)
     .attr("y", y(i))
     .attr("dy", ".35em")
-    .text(d);
+    .text(d=>d.toUpperCase().replace('_', ' ').replace('0','').replace('IIS3','IDI'));
     
 })
 
