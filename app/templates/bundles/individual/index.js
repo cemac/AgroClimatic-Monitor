@@ -5,7 +5,7 @@ let L = require("leaflet");
 var hash = window.location.pathname.split('/individual/')[1].replace('/','')//'"1100015";
 document.getElementById('downdash', `/idata/file_${hash}.json`)
 
-const pkeys = ["VHI", "SPI", "RZSM",'IIS3']// "spi_01", "spi_03",]// "spi_06", "spi_12","IIS3",'RZSM']
+const pkeys = ["VHI", "spi_03", "RZSM",'IIS3']// "spi_01", "spi_03",]// "spi_06", "spi_12","IIS3",'RZSM']
 const skeys = ["spi_01", "spi_03", "spi_06", "spi_12"];
 const allkeys = pkeys.concat(skeys);
 
