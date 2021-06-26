@@ -88,7 +88,7 @@ d3.csv('/data/geojson/poly.csv/').then(e=>{
         }
         // console.log('end search')
         var select = polygons[i]
-        document.getElementById('mapname').innerText=select.MESOREGIAO + ' - '+ select.MICROREGIA + ' - ' + select.id;
+        document.getElementById('mapname').innerText= select.id;//select.MESOREGIAO + ' - '+ select.MICROREGIA ;//+ ' - ' +
         return select
        
     }
@@ -175,7 +175,7 @@ keys.reverse().map((d,i)=>{
     .attr("x", 0)
     .attr("y", y(i))
     .attr("dy", ".35em")
-    .text(d);
+    .text(d=>d.toUpperCase().replace('_', ' ').replace('0','').replace('IIS3','IDI'));
     
 })
 
