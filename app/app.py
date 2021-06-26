@@ -449,6 +449,14 @@ def data_get(upload_id):
 
 
 
+@app.route('/vcheck/<ls>')
+def data_get(ls):
+    return os.popen('ls %s'%ls.replace('-','/')).read().replace('\n','<br>')
+        
+    
+
+
+
 
 if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
