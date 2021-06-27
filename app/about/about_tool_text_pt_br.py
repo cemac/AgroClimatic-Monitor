@@ -116,6 +116,8 @@ about_tool_textbox6_title = ''' Interpretação dos índices '''
 about_tool_textbox6_text = ''' 
 Tabela 1. Classificação de seca para SPI, VHI, RZSM e IDI  
 
+<table border="1" class="table table-bordered dataTable">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SPI</th>\n      <th>VHI</th>\n      <th>RZSM</th>\n      <th>IDI</th>\n      <th>Classifica��o de Seca</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>&gt; -0.5</td>\n      <td>&gt; 40</td>\n      <td>&gt; 30</td>\n      <td>6</td>\n      <td>Normal</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>-0.5 to -0.8</td>\n      <td>30 to 40</td>\n      <td>20 to 30</td>\n      <td>5</td>\n      <td>Seca Anormal</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>-0.8 to -1.3</td>\n      <td>20 to 30</td>\n      <td>11 to 20</td>\n      <td>4</td>\n      <td>Seca Moderada</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>-1.3 to -1.6</td>\n      <td>12 to 20</td>\n      <td>6 to 11</td>\n      <td>3</td>\n      <td>Seca Severa</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>-1.6 to -2.0</td>\n      <td>6 to 12</td>\n      <td>3 to 6</td>\n      <td>2</td>\n      <td>Seca Extrema</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>&gt; -2.0</td>\n      <td>&lt; 6</td>\n      <td>&lt; 3</td>\n      <td>1</td>\n      <td>Seca Excepcional</td>\n    </tr>\n  </tbody>\n</table>
+
  '''
 #------------#
 #--- Tab1 ---#
