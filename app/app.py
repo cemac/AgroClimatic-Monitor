@@ -304,7 +304,7 @@ def getdatamap(lang):
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
             
-    return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1))
+    return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1),table = f(ov.data_brows_textbox2_text))
 
 
 ''' 
