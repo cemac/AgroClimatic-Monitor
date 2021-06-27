@@ -163,7 +163,11 @@ def home(lang):
         return redirect('/upload')
     if lang == 'br': atext = ini_br
     else: atext = ini_en
-    return render_template('about.html', atext=atext, title='Welcome!')
+   
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'
+            
+    return render_template('about.html',layout=layout, atext=atext, title='Welcome!')
 
 
 @app.route('/<lang>/about')
