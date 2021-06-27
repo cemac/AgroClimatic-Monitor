@@ -168,12 +168,17 @@ def home(lang):
 
 @app.route('/<lang>/about')
 def about(lang):
+           
     if lang == 'staticpages':
         return None
     if lang == 'br': atext = about_br
     else: atext = about_uk
+    
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'
+    
 
-    return render_template('about.html', layout='layout_br.html', atext=atext, title='About Us')
+    return render_template('about.html', layout=layout, atext=atext, title='About Us')
 
 
 
@@ -183,8 +188,11 @@ def tool(lang):
         return None
     if lang == 'br': atext = tool_br
     else: atext = tool_uk
+            
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'          
         
-    return render_template('about.html', atext=atext, title='Using the Tool')
+    return render_template('about.html', layout=layout, atext=atext, title='Using the Tool')
 
 
 
@@ -194,8 +202,11 @@ def disc(lang):
         return None
     if lang == 'br': atext = disc_br
     else: atext = disc_uk
-        
-    return render_template('about.html', atext=atext, title='Disclaimer')
+
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'
+                        
+    return render_template('about.html',layout = layout,  atext=atext, title='Disclaimer')
 
 
 @app.errorhandler(404)
@@ -260,7 +271,11 @@ def getover(lang,what):
         ov = index_anim_text_en_uk
     
     page = 'overview.html'
-    return render_template(page, title=ov.index_anim_title,textbox1=f(ov.index_anim_textbox1),indicator=what)
+
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'
+            
+    return render_template(page, layout=layout, title=ov.index_anim_title,textbox1=f(ov.index_anim_textbox1),indicator=what)
 
 
 
@@ -281,7 +296,11 @@ def getdatamap(lang):
         ov = data_brows_text_en_uk
     
     page = 'databrowser.html'
-    return render_template(page, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1))
+
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html'
+            
+    return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1))
 
 
 ''' 
@@ -299,8 +318,11 @@ def getindi(lang,geoid):
     else: 
         ov = data_brows_text_en_uk
     
+    layout = 'layout.html'
+    if lang == 'br': layout = 'layout_br.html' 
+            
     page = 'individual.html'
-    return render_template(page, title=ov.data_brows_title,hash=geoid)
+    return render_template(page, layout=layout,  title=ov.data_brows_title,hash=geoid)
 
 
 @app.route('/idata/<item>/')
