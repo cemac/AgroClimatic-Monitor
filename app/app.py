@@ -173,7 +173,7 @@ def about(lang):
     if lang == 'br': atext = about_br
     else: atext = about_uk
 
-    return render_template('about.html', atext=atext, title='About Us')
+    return render_template('about.html', layout='layout_br.html' atext=atext, title='About Us')
 
 
 
