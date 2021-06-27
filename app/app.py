@@ -270,11 +270,11 @@ def noover(lang):
 def getover(lang,what):
     if lang =='br':
         ov = index_anim_text_pt_br
-        table = f(about_br.about_tool_textbox6_text)
+        table = f(about_tool_text_pt_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
     else: 
         ov = index_anim_text_en_uk
-        table = f(about_uk.about_tool_textbox6_text)
+        table = f(about_tool_text_en_uk.about_tool_textbox6_text)
     
     page = 'overview.html'
 
@@ -297,11 +297,11 @@ Data Browser
 def getdatamap(lang):
     if lang =='br':
         ov = data_brows_text_pt_br
-        table = f(about_br.about_tool_textbox6_text)
+        table = f(about_tool_text_pt_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
     else: 
         ov = data_brows_text_en_uk
-        table = f(about_uk.about_tool_textbox6_text)
+        table = f(about_tool_text_en_uk.about_tool_textbox6_text)
     
     page = 'databrowser.html'
 
