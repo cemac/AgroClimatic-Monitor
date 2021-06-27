@@ -116,8 +116,68 @@ about_tool_textbox6_text = '''
 
 Table 1. Drought classification for SPI, VHI, RZSM and IDI  
 
-<table border="1" class="table table-bordered dataTable">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>SPI</th>\n      <th>VHI</th>\n      <th>RZSM</th>\n      <th>Drought Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>&gt; -0.5</td>\n      <td>&gt; 40</td>\n      <td>? 30</td>\n      <td>Normal</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>-0.5 to -0.8</td>\n      <td>30 to 40</td>\n      <td>20 to 30</td>\n      <td>Abnormally Dry</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>-0.8 to -1.3</td>\n      <td>20 to 30</td>\n      <td>11 to 20</td>\n      <td>Moderate Drought</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>-1.3 to -1.6</td>\n      <td>12 to 20</td>\n      <td>6 to 11</td>\n      <td>Severe Drought</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>-1.6 to -2.0</td>\n      <td>6 to 12</td>\n      <td>3 to 6</td>\n      <td>Extreme Drought</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>&gt; -2.0</td>\n      <td>&lt; 6</td>\n      <td>&lt; 3</td>\n      <td>Exceptional Drought</td>\n    </tr>\n  </tbody>\n</table>
-
+<table border="1" class="table table-bordered dataTable">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SPI</th>
+      <th>VHI</th>
+      <th>RZSM</th>
+      <th>IDI</th>
+      <th>Classifica��o de Seca</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>&gt; -0.5</td>
+      <td>&gt; 40</td>
+      <td>&gt; 30</td>
+      <td>6</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th bgcolor='whitesmoke'>1</th>
+      <td>-0.5 to -0.8</td>
+      <td>30 to 40</td>
+      <td>20 to 30</td>
+      <td>5</td>
+      <td>Abnormally Dry</td>
+    </tr>
+    <tr>
+      <th bgcolor = "#FFFFCC">2</th>
+      <td>-0.8 to -1.3</td>
+      <td>20 to 30</td>
+      <td>11 to 20</td>
+      <td>4</td>
+      <td>Moderate Drought</td>
+    </tr>
+    <tr>
+      <th  bgcolor = "#FD8C3C" >3</th>
+      <td>-1.3 to -1.6</td>
+      <td>12 to 20</td>
+      <td>6 to 11</td>
+      <td>3</td>
+      <td>Severe Drought</td>
+    </tr>
+    <tr>
+      <th bgcolor = "#E2191C" >4</th>
+      <td>-1.6 to -2.0</td>
+      <td>6 to 12</td>
+      <td>3 to 6</td>
+      <td>2</td>
+      <td>Extreme Drought</td>
+    </tr>
+    <tr>
+      <th bgcolor = "#800026" >5</th>
+      <td>&gt; -2.0</td>
+      <td>&lt; 6</td>
+      <td>&lt; 3</td>
+      <td>1</td>
+      <td>Exceptional Drought</td>
+    </tr>
+  </tbody>
+</table>
  '''
 # pd.read_csv('csvfile').html
 #------------#
