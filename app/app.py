@@ -270,16 +270,18 @@ def noover(lang):
 def getover(lang,what):
     if lang =='br':
         ov = index_anim_text_pt_br
+        table = f(about_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
     else: 
         ov = index_anim_text_en_uk
+        table = f(about_uk.about_tool_textbox6_text)
     
     page = 'overview.html'
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
             
-    return render_template(page, layout=layout, title=ov.index_anim_title,textbox1=f(ov.index_anim_textbox1),indicator=what)
+    return render_template(page, layout=layout, title=ov.index_anim_title, table=table, textbox1=f(ov.index_anim_textbox1),indicator=what)
 
 
 
@@ -295,16 +297,18 @@ Data Browser
 def getdatamap(lang):
     if lang =='br':
         ov = data_brows_text_pt_br
+        table = f(about_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
     else: 
         ov = data_brows_text_en_uk
+        table = f(about_uk.about_tool_textbox6_text)
     
     page = 'databrowser.html'
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
             
-    return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1),table = f(ov.data_brows_textbox2_text))
+    return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1),table = table)
 
 
 ''' 
