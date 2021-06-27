@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <!-- <meta charset="utf-8"> -->
+    <!-- <meta charset=“iso-8859-1”> -->
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CEMAC">
+    <meta name="author" content="D. Ellis">
+
+    
+
+    <title> Agroclimatic Monitor </title>
+
+    <!-- Custom fonts for this template-->
+    <link href="./vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+
+    <style>
+        a.scroll-to-top {
+            right: auto;
+            left: 1rem;
+            background: gray;
+            opacity: 0.7;
+            animation: blinker 3.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0.05;
+            }
+            ;
+        }
+        
+    .dataframe{width:100%;
+    color:#222;}
+    </style>
+
+</head>
+
+
+
+
+
+
+
+
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" onclick="change('/')">
+                <!-- <div class="sidebar-brand-icon rotate-n-15">
+                    CSSP 
+                </div> -->
+                <div class="sidebar-brand-text mx-3" id='title' style='font-family: Arial,Nunito'> Agroclimatic Monitor </div>
+                <!-- mx-3 -->
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Information
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" onclick="change('about')">
+                    <i class="fas fa-fw fa-globe-europe"></i>
+                    <span>About Us</span>
+                </a>
+
+            </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" onclick="change('tool')">
+                    <i class="fas fa-fw fa-globe-europe"></i>
+                    <span>Using the Tool</span>
+                </a>
+
+            </li>
+
+
+
+            <!-- <li class="nav-item">
+                <a class="nav-link collapsed" onclick="change('about/indicators.html')">
+                    <i class="fas fa-fw fa-chart-line"></i>
+                    <span>Index</span>
+                </a>
+
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" onclick="change('about/tables.html')">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Index Keys</span></a>
+            </li> -->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Data
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" onclick="change('databrowser')">
+                    <i class="fas fa-fw fa-braille"></i>
+                    <span>DataBrowser</span></a>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Index Maps</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+
+                        <h6 class="collapse-header">Vegetation Based</h6>
+
+                        <a class="collapse-item" onclick="change('overview/VHI')">VHI</a>
+
+                        <h6 class="collapse-header">Soil Moisture Based</h6>
+
+                        <a class="collapse-item" onclick="change('overview/RZSM')">RZSM</a>
+
+                        <h6 class="collapse-header">Combined Index</h6>
+
+                        <a class="collapse-item" onclick="change('overview/IDI')">IDI</a>
+
+
+                        <div class="collapse-divider"></div>
+
+                        <h6 class="collapse-header">Precipitation Based</h6>
+
+                        <a class="collapse-item" onclick="change('overview/spi_01')">SPI 01</a>
+                        <a class="collapse-item" onclick="change('overview/spi_03')">SPI 03</a>
+                        <a class="collapse-item" onclick="change('overview/spi_06')">SPI 06</a>
+                        <a class="collapse-item" onclick="change('overview/spi_12')">SPI 12</a>
+
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+                    <i class="fas fa-search fa-sm"></i>
+                    <span>Municipality</span></a>
+<div id="collapseSearch" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    
+    <div class="bg-light py-2 collapse-inner rounded">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" autocomplete="off"
+                >
+                    
+                    <div class="input-group bg-light">
+                        <input type="text" id='isearch' class="form-control bg-white border-0 small rounded"
+                    style='margin:10px;margin-left:0;border:steelblue;position:flex;'    
+                     placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <br>
+                        </div>
+            </div>
+            
+                    </div>
+                    </div>
+                </form>
+
+
+
+
+            </li>
+
+
+
+
+
+            <hr class="sidebar-divider d-none d-md-block">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" onclick='change("disclaimer")'>
+                    <i class="fas fa-fw fa-check-circle"></i>
+                    <span>Disclaimer</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+
+            <!-- <div style='position:absolute;bottom:90vh;margin-bottom:2px'> -->
+
+            <div class="sidebar-heading">
+
+                <i class="fas fa-fw fa-globe-europe"></i> Change the Language
+            </div>
+            <li class="nav-item" style='display:inline'>
+                <a class="nav-link collapsed" onclick="setlang('en')" style='display:inline'>
+                    <span>English</span>
+                </a>
+                |
+                <a class="nav-link collapsed" onclick="setlang('br')" style='display:inline'>
+                    <span>Portuguese</span>
+                </a>
+
+            </li>
+
+
+
+            <!-- </div> -->
+
+        </ul>
+        <!-- End of Sidebar -->
+
+
+
+
+
+
+
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <!-- <iframe id="content" src='https://www.metoffice.gov.uk/research/approach/collaboration/newton/cssp-brazil/index'>
+
+            </iframe> -->
+
+
+            {% block content %} {% endblock content %}
+
+
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; CEMAC 2021</span> ||  
+                        <img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+    </div>
+    </div>
+    <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    </script>
+
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script async src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script async src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script async src="js/sb-admin-2.min.js"></script>
+
+    {% block scripts %} {% endblock scripts %}
+
+
+    <script>
+        function change(url) {
+            window.location.href = `/${window.location.pathname.split('/')[1]}/${url}`
+        }
+
+        function setlang(lang) {
+            var path = window.location.pathname.split('/')
+            path[1] = lang
+            window.location.href = path.join('/')
+        }
+        
+
+        
+    // console.clear()
+    </script>
+
+
+
+    <script src='/bundles/fuzzymatching/'></script>
+
+    
+
+
+
+</body>
+
+</html>
