@@ -254,4 +254,3 @@ dependencies:
     - wcwidth
     - werkzeug
     - zipp
-prefix: /home/earde/miniconda3/envs/cssp
