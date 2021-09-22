@@ -20,9 +20,7 @@
 
 1. clone this repository
 2. check and install the requirements
-3. `cd app/ && python app.py` 
-
-
+3. `cd app/ && python wsgi.py` 
 
 # Requirements
 
