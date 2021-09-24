@@ -16,15 +16,19 @@
 
 <hr>
 
-# Running the app locally
+# QuickStart - Running the app locally
 
 1. clone this repository
 2. check and install the requirements
-3. `cd app/ && python wsgi.py` 
+3. to run the app
+`cd app/ && python wsgi.py`
+**or**
+`cd app/ && gunicorn -w 4 -b 0.0.0.0:5000 --access-logfile=~/logs/app/access.log
+--error-logfile=~/logs/app/error.log --access-logformat='%({x-forwarded-for}i)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"' wsgi:app `
 
 # Requirements
 
-## pipenv
+## pipenv (recommended)
 
 `pipenv`
 `python3-distutils`
@@ -68,8 +72,8 @@ conda env update --file local.yml
 
 
 ## Bundles
-This should only be needed if developing new scripts.
 
+This should only be needed if developing new scripts.
 
 ### Global NPM
 ```
@@ -80,15 +84,14 @@ npm install
 
 ```
 ### Compilation (if changes are made)
+
 ```
 conda activate cssp
 cd app/templates/bundles/
 python webpack.py
 ```
 
-
 ## Shapefile
-
 
 
 ## User Credentials
@@ -96,20 +99,23 @@ These are contained within an encrypted sqlite database. (Note that the code for
 
 
 ### Adding a new user
+
 From the main directory
+
 ```
 python -m app.serverscripts.new_user UserName SecretCodeToEnter
 ```
+
 If a password has already been used you will get an error containing
 `UNIQUE constraint failed`
 
 
 ### When initiating we need to build the database.
+
 ```
 python -m app.serverscripts.secure_db --wipe
 ```
 
-
-
 # template_br
+
 These are identical to the normal template, except that they have
