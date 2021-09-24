@@ -4,7 +4,7 @@ The main CSSP-Brazil flask app
 '''
 __author__ = 'D.Ellis'
 __organisation__= 'CEMAC'
-__contact__='d.ellis-A-T-leeds.ac.uk'
+__contact__=''
 
 
 
@@ -18,20 +18,11 @@ from pathlib import Path
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1] # 1 level up
 sys.path.append(str(root))
-# import each_h5 as processing
 from params import indicators
 
 import pandas as pd
 import simplejson as json
 from flask import Flask, flash, request, redirect, render_template,url_for,Response,send_from_directory
-# from flask_login import (LoginManager, login_required, login_user, 
-#                          current_user, logout_user, UserMixin)
-# from itsdangerous import URLSafeTimedSerializer
-from werkzeug.utils import secure_filename
-from werkzeug.security import check_password_hash
-# from werkzeug.security import generate_password_hash
-# print generate_password_hash("P1ain-text-user-passw@rd", "sha256")
-#print check_password_hash("sha256$lTsEjTVv$c794661e2c734903267fbc39205e53eca607f9ca2f85812c95020fe8afb3bc62", "P1ain-text-user-passw@rd")
 
 
 
@@ -491,4 +482,5 @@ def ask_it(ls):
 if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
-    socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
+    #socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
+    app.run()
