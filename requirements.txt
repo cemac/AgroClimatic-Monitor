@@ -1,0 +1,11 @@
+# Requirements file for AgroClimatic-Monitor
+
+gunicorn
+pandas
+simplejson
+flask
+h5py
+markdown
+flask-sqlalchemy
+flask-statistics
+flask-socketio
