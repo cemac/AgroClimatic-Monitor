@@ -8,11 +8,11 @@
 1. Navigate to https://vwd.leeds.ac.uk/ and log into the virtual desktop
 2. open chrome
 3. navigate to http://129.11.78.152:57263
+4. 
 
-# VM
+# Developer Guide
 
-1. Login to the see gateway
-2. ssh 129.11.78.152
+Information for developers is found in our [wiki](https://github.com/cemac/AgroClimatic-Monitor/wiki/Developer-Guide)
 
 <hr>
 
@@ -28,15 +28,15 @@
 
 # Requirements
 
-## pipenv (recommended)
+## pip
 
-`pipenv`
-`python3-distutils`
+Recomended pip install using system python to create virtual environment
 
-The `Pipfile` should install automatically when the following commands are run
-
-`pipenv shell`
-`pipenv install`
+```bash
+python -m venv agro-python
+source agro-python/bin/activate
+pip install -r requirements.txt
+```
 
 ## conda
 
