@@ -5,6 +5,8 @@ with open(activate_this) as file_:
 import sys
 sys.path.insert(0, '/var/www/AgroClimatic-Monitor/')
 sys.path.insert(0, '/var/www/AgroClimatic-Monitor/app')
+sys.path.insert(0, '/var/www/AgroClimatic-Monitor/about')
+sys.path.insert(0, '/var/www/AgroClimatic-Monitor/serverscripts')
 
 from app import app
 if __name__ == "__main__":
