@@ -26,6 +26,7 @@ prev_length = len(sys.path)
 for lib in "lib/python3.8/site-packages/".split(os.pathsep):
     path = os.path.realpath(os.path.join(base_dir, lib))
     print(path)
+    print(lib)
     site.addsitedir(path)
 sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]
 
