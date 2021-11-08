@@ -17,7 +17,6 @@ import sys,os,re,glob
 from pathlib import Path
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1] # 1 level up
-print(file,root, parent)
 sys.path.append(str(root))
 from params import indicators
 
@@ -32,7 +31,7 @@ from serverscripts.secure_db import *
 from serverscripts.config import *
 # import the about scripts
 import serverscripts.importdir as importdir
-importdir.do(parent+'/about',globals())
+importdir.do(str(parent) + '/about',globals())
 f = parsetext.f
 about_br = parsetext.about(about_us_text_pt_br)
 about_uk = parsetext.about(about_us_text_en_uk)
