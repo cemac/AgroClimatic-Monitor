@@ -24,6 +24,7 @@ os.environ["VIRTUAL_ENV"] = base  # virtual env is right above bin directory
 prev_length = len(sys.path)
 for lib in "__LIB_FOLDERS__".split(os.pathsep):
     path = os.path.realpath(os.path.join(bin_dir, lib))
+    print(path)
     site.addsitedir(path)
 sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]
 
