@@ -14,8 +14,8 @@ except NameError:
     raise AssertionError("You must use exec(open(this_file).read(), {'__file__': this_file}))")
 
 bin_dir = os.path.dirname(abs_file)
-base = bin_dir[: -len("__BIN_NAME__") - 1]  # strip away the bin part from the __file__, plus the path separator
-base_dir = bin_dir[: -len("__BIN_NAME__") ]  # strip away the bin part from the __file__, 
+base = bin_dir[: -len("bin") - 1]  # strip away the bin part from the __file__, plus the path separator
+base_dir = bin_dir[: -len("bin") ]  # strip away the bin part from the __file__, 
 
 # prepend bin to PATH (this file is inside the bin directory)
 os.environ["PATH"] = os.pathsep.join([bin_dir] + os.environ.get("PATH", "").split(os.pathsep))
