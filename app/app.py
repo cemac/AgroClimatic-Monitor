@@ -31,7 +31,6 @@ from serverscripts.secure_db import *
 from serverscripts.config import *
 # import the about scripts
 import serverscripts.importdir as importdir
-print(globals())
 importdir.do('about',globals())
 f = parsetext.f
 about_br = parsetext.about(about_us_text_pt_br)
