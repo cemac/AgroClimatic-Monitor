@@ -15,7 +15,6 @@ def do(path, env):
         (usually the callers environment). A typical call:
         importdir.do("example_dir", globals())
     """
-    print(path)
     __do(path, env)
 
 
