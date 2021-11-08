@@ -24,7 +24,7 @@ os.environ["VIRTUAL_ENV"] = base  # virtual env is right above bin directory
 prev_length = len(sys.path)
 for lib in "__LIB_FOLDERS__".split(os.pathsep):
     path = os.path.realpath(os.path.join(bin_dir, lib))
-    site.addsitedir(path.decode("utf-8") if "__DECODE_PATH__" else path)
+    site.addsitedir(path)
 sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]
 
 sys.real_prefix = sys.prefix
