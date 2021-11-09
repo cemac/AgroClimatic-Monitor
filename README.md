@@ -1,7 +1,8 @@
 # CSSP-Brazil
 
 <img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
-
+ 
+ [![GitHub release](https://img.shields.io/github/release/cemac/AgroClimatic-Monitor.svg)](https://github.com/cemac/AgroClimatic-Monitor/releases) [![GitHub top language](https://img.shields.io/github/languages/top/cemac/AgroClimatic-Monitor.svg)](https://github.com/cemac/AgroClimatic-Monitor) [![GitHub issues](https://img.shields.io/github/issues/cemac/AgroClimatic-Monitor.svg)](https://github.com/cemac/AgroClimatic-Monitor/issues) [![GitHub last commit](https://img.shields.io/github/last-commit/cemac/AgroClimatic-Monitor.svg)](https://github.com/cemac/AgroClimatic-Monitor/commits/agr) [![GitHub All Releases](https://img.shields.io/github/downloads/cemac/AgroClimatic-Monitor/total.svg)](https://github.com/cemac/AgroClimatic-Monitor/releases)![GitHub](https://img.shields.io/github/license/cemac/AgroClimatic-Monitor.svg)
 
 
 # Viewing the machine (pre global or VPN release)
