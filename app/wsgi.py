@@ -7,6 +7,8 @@ with open(activate_this) as file_:
 # Tell mod_wsgi the root dir of the app        
 import sys
 sys.path.insert(0, '/var/www/AgroClimatic-Monitor/')
-
+import os
+print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
+print("PATH:", os.environ.get('PATH'))
 # The standard wgsi import
 from app import app as application
