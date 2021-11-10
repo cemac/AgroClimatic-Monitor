@@ -106,6 +106,7 @@ def makedir (dest,upload=True):
     else:
             fullpath = dest
     if not os.path.isdir(fullpath):
+        print(fullpath)
         os.mkdir(fullpath)
 # 
 makedir('')# make uploads folder
