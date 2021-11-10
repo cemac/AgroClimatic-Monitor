@@ -105,6 +105,7 @@ def makedir (dest,upload=True):
             fullpath = '%s%s'%(STAGING,dest)
     else:
             fullpath = dest
+    print('read full: ', fullpath)
     if not os.path.isdir(fullpath):
         print(fullpath)
         os.mkdir(fullpath)
