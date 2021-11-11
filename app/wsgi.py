@@ -18,18 +18,20 @@ site.addsitedir(site_packages)
 
 # Reorder sys.path so new directories at the front.
 
-#new_sys_path = []
-#
-#for item in list(sys.path):
-#    if item not in prev_sys_path:
-#        new_sys_path.append(item)
-#        sys.path.remove(item)
-#
-#sys.path[:0] = new_sys_path
+new_sys_path = []
+
+for item in list(sys.path):
+    if item not in prev_sys_path:
+        new_sys_path.append(item)
+        sys.path.remove(item)
+
+sys.path[:0] = new_sys_path
 
 # Tell mod_wsgi the root dir of the app  
 sys.path.insert(0, '/var/www/AgroClimatic-Monitor/')
 import os
+os.environ["TMPDIR"] = "/var/www/tmp/"
+os.environ["TMP"] = "/var/www/tmp/"
 print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
 print("PATH:", os.environ.get('PATH'))
 # The standard wgsi import
