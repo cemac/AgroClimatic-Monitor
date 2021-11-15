@@ -30,6 +30,7 @@ sys.path[:0] = new_sys_path
 
 # Tell mod_wsgi the root dir of the app
 sys.path.insert(0, '/var/www/AgroClimatic-Monitor/')
+sys.path.insert(0, '/var/www/AgroClimatic-Monitor/app/')
 import os
 os.environ["TMPDIR"] = "/var/www/tmp/"
 os.environ["TMP"] = "/var/www/tmp/"
