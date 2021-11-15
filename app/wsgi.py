@@ -4,7 +4,8 @@
 #
 #with open(activate_this) as file_:
 #       exec(file_.read(), dict(__file__=activate_this))
-python_home='/var/www/miniconda3/envs/agro-python/'
+#python_home='/var/www/miniconda3/envs/agro-python/'
+python_home='/var/www/agro-python/'
 import sys
 import site
 # Calculate path to site-packages directory.
