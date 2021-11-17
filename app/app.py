@@ -60,7 +60,7 @@ app.secret_key = app_key
 
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///var/www/AgroClimatic-Montior/statslog.sqlite3'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///statslog.sqlite3'
 
 app.config['DATA_LOCATION'] = PROCESSED
 app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
