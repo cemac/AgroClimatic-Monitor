@@ -51,7 +51,7 @@ rootdir='/var/www/AgroClimatic-Monitor/app/'
 app=Flask('AGROCLIM_SERVER', 
             static_url_path='', # removes path prefix requirement 
             static_folder=os.path.abspath(rootdir+'templates/static/'),# static file location
-            template_folder='templates' # template file location
+            template_folder=rootdir+'templates' # template file location
             )
             
             
