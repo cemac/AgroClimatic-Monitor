@@ -47,7 +47,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
 from flask_socketio import SocketIO
 
-rootdir=/var/www/AgroClimatic-Monitor/app/
+rootdir='/var/www/AgroClimatic-Monitor/app/'
 app=Flask('AGROCLIM_SERVER', 
             static_url_path='', # removes path prefix requirement 
             static_folder=os.path.abspath(rootdir+'templates/static/'),# static file location
