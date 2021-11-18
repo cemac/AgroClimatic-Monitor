@@ -5,7 +5,7 @@ import os, sqlite3
 try: from .config import app_key, db_loc, STAGING
 except: from config import app_key, db_loc, STAGING
 
-
+print(db_loc)
 from datetime import datetime
 
 class Database(object):
@@ -14,6 +14,7 @@ class Database(object):
         self.apkey  = appkey
 
     def conndb(self):
+        print('dbname: ', self.dbname)
         self.conn = sqlite3.connect(self.dbname)
         self.cursor = self.conn.cursor()
         self.cursor.execute("PRAGMA key='%s'"%self.apkey)
