@@ -47,10 +47,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
 from flask_socketio import SocketIO
 
-
+rootdir=/var/www/AgroClimatic-Monitor/app/
 app=Flask('AGROCLIM_SERVER', 
             static_url_path='', # removes path prefix requirement 
-            static_folder=os.path.abspath('templates/static/'),# static file location
+            static_folder=os.path.abspath(rootdir+'templates/static/'),# static file location
             template_folder='templates' # template file location
             )
             
@@ -61,7 +61,6 @@ app.secret_key = app_key
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///var/www/AgroClimatic-Monitor/statslog.sqlite3'
-
 app.config['DATA_LOCATION'] = PROCESSED
 app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
 
@@ -107,7 +106,6 @@ def makedir (dest,upload=True):
             fullpath = dest
     print('read full: ', fullpath)
     if not os.path.isdir(fullpath):
-        print(fullpath)
         os.mkdir(fullpath)
 # 
 makedir('')# make uploads folder
