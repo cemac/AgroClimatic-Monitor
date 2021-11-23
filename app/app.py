@@ -108,7 +108,12 @@ def makedir (dest,upload=True):
     if not os.path.isdir(fullpath):
         os.mkdir(fullpath)
 # 
-makedir('')# make uploads folder
+try:
+    makedir('')# make uploads folder
+except PermissionError:
+    print('ERROR: STORAGE Not Readable by Apache')
+    print('PermissionError: [Errno 13] Permission denied: /var/www/AgroClimatic-Monitor/uolstorage/Data/upload')
+
 
 # create uploads folders if they dont exist
 # for i in indicators:
