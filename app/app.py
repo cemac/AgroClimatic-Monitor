@@ -8,7 +8,7 @@ __contact__=''
 
 
 
-''' 
+'''
 imports
 '''
 import sys,os,re,glob
@@ -48,13 +48,13 @@ from flask_statistics import Statistics
 from flask_socketio import SocketIO
 
 rootdir='/var/www/AgroClimatic-Monitor/app/'
-app=Flask('AGROCLIM_SERVER', 
-            static_url_path='', # removes path prefix requirement 
+app=Flask('AGROCLIM_SERVER',
+            static_url_path='', # removes path prefix requirement
             static_folder=os.path.abspath(rootdir+'templates/static/'),# static file location
             template_folder=rootdir+'templates' # template file location
             )
-            
-            
+
+
 app.secret_key = app_key
 
 
@@ -107,7 +107,7 @@ def makedir (dest,upload=True):
     print('read full: ', fullpath)
     if not os.path.isdir(fullpath):
         os.mkdir(fullpath)
-# 
+#
 try:
     makedir('')# make uploads folder
 except PermissionError:
@@ -134,7 +134,7 @@ serve static
 # def serve_static(filename):
 #     root_dir = os.path.dirname(os.getcwd())
 #     return send_from_directory(app.static_folder, filename)
-# 
+#
 
 
 
@@ -159,24 +159,24 @@ def home(lang):
         return redirect('/upload')
     if lang == 'br': atext = ini_br
     else: atext = ini_en
-   
+
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
-            
+
     return render_template('about.html',layout=layout, atext=atext, title='Welcome!')
 
 
 @app.route('/<lang>/about')
 def about(lang):
-           
+
     if lang == 'staticpages':
         return None
     if lang == 'br': atext = about_br
     else: atext = about_uk
-    
+
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
-    
+
 
     return render_template('about.html', layout=layout, atext=atext, title='About Us')
 
@@ -188,10 +188,10 @@ def tool(lang):
         return None
     if lang == 'br': atext = tool_br
     else: atext = tool_uk
-            
+
     layout = 'layout.html'
-    if lang == 'br': layout = 'layout_br.html'          
-        
+    if lang == 'br': layout = 'layout_br.html'
+
     return render_template('about.html', layout=layout, atext=atext, title='Using the Tool')
 
 
@@ -205,7 +205,7 @@ def disc(lang):
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
-                        
+
     return render_template('about.html',layout = layout,  atext=atext, title='Disclaimer')
 
 
@@ -216,7 +216,7 @@ def not_found(e):
 
 @app.errorhandler(500)
 def not_found500(e):
-  return render_template("404.html", number = 500)
+  return render_template("500.html", number = 500)
 
 @app.route('/error/<number>/<message>/')
 def not_foundcustom(number,message):
@@ -246,11 +246,11 @@ def getallfiles():
 
 @app.route('/data/<folder>/<item>/')
 def getdata(folder,item):
-    
+
     print('%s%s/'%(PROCESSED,folder),folder,item,'\n\n\n')
 
     return send_from_directory('%s%s/'%(PROCESSED,folder), item, as_attachment=True)
-    
+
 
 
 '''
@@ -268,21 +268,21 @@ def getover(lang,what):
         ov = index_anim_text_pt_br
         table = f(about_tool_text_pt_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
-    else: 
+    else:
         ov = index_anim_text_en_uk
         table = f(about_tool_text_en_uk.about_tool_textbox6_text)
-    
+
     page = 'overview.html'
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
-            
+
     return render_template(page, layout=layout, title=ov.index_anim_title, table=table, textbox1=f(ov.index_anim_textbox1),indicator=what)
 
 
 
 
-''' 
+'''
 Data Browser
 '''
 # @app.route('/<lang>/dataview/')
@@ -295,19 +295,19 @@ def getdatamap(lang):
         ov = data_brows_text_pt_br
         table = f(about_tool_text_pt_br.about_tool_textbox6_text)
         #page = 'overview_br.html'
-    else: 
+    else:
         ov = data_brows_text_en_uk
         table = f(about_tool_text_en_uk.about_tool_textbox6_text)
-    
+
     page = 'databrowser.html'
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
-            
+
     return render_template(page, layout=layout, title=ov.data_brows_title,textbox1=f(ov.data_brows_textbox1),table = table)
 
 
-''' 
+'''
 Individual
 '''
 # @app.route('/<lang>/dataview/')
@@ -319,12 +319,12 @@ def getindi(lang,geoid):
     if lang =='br':
         ov = data_brows_text_pt_br
         #page = 'overview_br.html'
-    else: 
+    else:
         ov = data_brows_text_en_uk
-    
+
     layout = 'layout.html'
-    if lang == 'br': layout = 'layout_br.html' 
-            
+    if lang == 'br': layout = 'layout_br.html'
+
     page = 'individual.html'
     return render_template(page, layout=layout,  title=ov.data_brows_title,hash=geoid)
 
@@ -335,14 +335,14 @@ def getidata(item):
     fitem = 'file_%s.json'%item
     jsn = '%s%s/%s'%(PROCESSED,folder,fitem)
     updated = max([os.path.getmtime(i) for i in h5locs])
-    
+
     try:
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
             assert False
     except FileNotFoundError:
         m_new(item)
-    
+
     print('%s%s/'%(PROCESSED,folder),'\n\n\n')
 
     return send_from_directory('%s%s/'%(PROCESSED,folder), fitem, as_attachment=True)
@@ -359,7 +359,7 @@ UPLOAD
 ## on upload end
 @socketio.on('upload_disconnect')
 def process(data):
-    global filelist 
+    global filelist
     print(data,'\n\nUPLOAD END\n\n')
     print(filelist)
 
@@ -372,18 +372,18 @@ def upload_form():
 
 filelist = []
 
-## on a POST request of data 
+## on a POST request of data
 @app.route('/upload', methods=['POST'])
 def upload_file():
     global filelist
     if request.method == 'POST':
-                        
-        
+
+
 
         psw = str(request.form['psw'])
-        
+
         #         print(psw,'aaaasdkjlkj')
-        
+
         #str(request.args.get('psw'))
         allfiles = request.files
 
@@ -397,13 +397,13 @@ def upload_file():
             print (file)
             if file.mimetype in extensions:
                 filename = secure_filename(file.filename)
-                
+
                 check = sqlc.writefile(psw,filename)
                 if (check):
                     makedir(check,False)
                     saveloc = os.path.join(STAGING,check, filename)
                     file.save(saveloc)
-                    
+
                     filesplit = filename.upper().split('_')
                     dest = filesplit[0]
                     makedir(STORAGE+dest,False)
@@ -412,45 +412,45 @@ def upload_file():
                           makedir(STORAGE+dest,False)
 
                     fl = STORAGE+dest+'/'+filename.replace('.tiff','.tif')
-            
+
                     os.system('cp %s %s'%(saveloc,fl))
-                   
-            
-            
-            
+
+
+
+
 #                     os.system('/bin/gdalwarp -s_srs EPSG:4326 -t_srs EPSG:3857 -r cubicpline %s %s'%(saveloc,fl))
                     filelist.append(fl)
 
                     print('-----------------',saveloc,fl)
 
 
-                        
+
                 else:
                     print( 'Wrong Credentials! ')
-                    flash('Wrong Credentials!') 
+                    flash('Wrong Credentials!')
                     return redirect('/upload')
             else:
                 print('Not allowed', file)
-                
-        
-        
-        
+
+
+
+
 #         try:fdata = json.load(open(FNEW))
 #         except FileNotFoundError: fdata=[]
 
 #         a_file = open(FNEW, "w")
 #         fdata.extend(filelist)
 #         json.dump(fdata, a_file)
-#         a_file.close()    
+#         a_file.close()
 
         flash('File(s) uploaded')
-        
+
 #         last = pd.DataFrame([[i.replace(STAGING,''),os.path.getmtime(i)] for i in glob.glob(STAGING+check+'/*')], columns=['filename','created']).to_markdown(tablefmt="grid")
-        
+
         print('*(^&*(&*(&*&', fdata)
-        
+
 #         flash('kljlkj')
-        
+
         return redirect('/processing')
         #render_template('upload.html', uploads = f(last))
 
@@ -459,18 +459,18 @@ def upload_file():
 ## what have I updated? Return a list of updated files
 @app.route('/uploaded/<upload_id>', methods=['GET','POST'])
 def data_get(upload_id):
-    
+
     if request.method == 'POST': # POST request
         print(request.get_text())  # parse as text
-        
-        
+
+
         return 'OK', 200
-    
+
     else: # GET request
         print('%s/%s/*'%(STAGING,sqlc.writefile(upload_id)))
-        files = glob.glob('%s/%s/*'%(STAGING,sqlc.writefile(upload_id)) ) 
+        files = glob.glob('%s/%s/*'%(STAGING,sqlc.writefile(upload_id)) )
         print ('------',upload_id,files)
-        
+
         return ','.join([i.rsplit('/',1)[1] for i in files])
 
 
@@ -478,8 +478,8 @@ def data_get(upload_id):
 @app.route('/vcheck/<ls>')
 def ask_it(ls):
     return os.popen('ls %s'%ls.replace('-','/')).read().replace('\n','<br>')
-        
-    
+
+
 
 
 
