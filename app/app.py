@@ -366,8 +366,9 @@ def process(data):
 ## on page load display the upload file
 @app.route('/upload')
 def upload_form():
+    layout = 'layout.html'
     # flash('Drag files to upload here.')
-    return render_template('upload.html',uploads = 'This populates on sucessful submission...')
+    return render_template('upload.html',layout=layout, uploads = 'This populates on sucessful submission...')
 
 
 filelist = []
