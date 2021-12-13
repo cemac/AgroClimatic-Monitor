@@ -23,9 +23,7 @@ from params import indicators
 import pandas as pd
 import simplejson as json
 from flask import Flask, flash, request, redirect, render_template,url_for,Response,send_from_directory
-
-
-
+from werkzeug.utils import secure_filename
 from serverscripts.get_individual import m_new
 from serverscripts.secure_db import *
 from serverscripts.config import *
