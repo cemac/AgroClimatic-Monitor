@@ -11,14 +11,14 @@ app_key = 'CSSP'
 extensions = set(['txt', 'pdf', 'image/png', 'image/tiff','image/gtiff'])
 #text/html 
 
-
+apphome = '/var/www/AgroClimatic-Monitor/'
 
 ### if change set in main/config.py too
-STORAGE = __file__.replace('app/serverscripts/config.py','uolstorage/Data/') #symbolic link in main repo level 1
-PROCESSED = __file__.replace('app/serverscripts/config.py','processed/')
-DATA = STORAGE+'data/' #__file__.replace('app/serverscripts/config.py',STORAGE+'data/')
+STORAGE = apphome + 'uolstorage/Data/' #symbolic link in main repo level 1
+PROCESSED = apphome + 'processed/'
+DATA = STORAGE+'data/'
 STAGING = STORAGE+'upload'
-db_loc = os.path.join(__file__.replace('app/serverscripts/config.py','app/'), 'upload.db')
+db_loc = apphome+'upload.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 FNEW = PROCESSED + 'filelist.json'
 

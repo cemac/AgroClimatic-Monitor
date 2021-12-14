@@ -399,7 +399,7 @@ def upload_file():
 
                 check = sqlc.writefile(psw,filename)
                 if (check):
-                    makedir(check,False)
+                    makedir(os.path.join(STAGING,check),False)
                     saveloc = os.path.join(STAGING,check, filename)
                     file.save(saveloc)
 
