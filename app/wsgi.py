@@ -5,7 +5,7 @@
 #with open(activate_this) as file_:
 #       exec(file_.read(), dict(__file__=activate_this))
 #python_home='/var/www/miniconda3/envs/agro-python/'
-python_home='/var/www/agro-python/'
+python_home='/var/www/dev-agro-python/'
 import sys
 import site
 # Calculate path to site-packages directory.
@@ -29,8 +29,9 @@ for item in list(sys.path):
 sys.path[:0] = new_sys_path
 
 # Tell mod_wsgi the root dir of the app
-sys.path.insert(0, '/var/www/AgroClimatic-Monitor/')
-sys.path.insert(0, '/var/www/AgroClimatic-Monitor/app/')
+app_home='/var/www/dev-AgroClimatic-Monitor/'
+sys.path.insert(0, app_home)
+sys.path.insert(0, app_home + 'app/')
 import os
 os.environ["TMPDIR"] = "/var/www/tmp/"
 os.environ["TMP"] = "/var/www/tmp/"

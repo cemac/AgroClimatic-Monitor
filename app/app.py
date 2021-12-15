@@ -45,7 +45,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
 from flask_socketio import SocketIO
 
-rootdir='/var/www/AgroClimatic-Monitor/app/'
+rootdir = apphome # taken from config settings
 app=Flask('AGROCLIM_SERVER',
             static_url_path='', # removes path prefix requirement
             static_folder=os.path.abspath(rootdir+'templates/static/'),# static file location
@@ -54,11 +54,7 @@ app=Flask('AGROCLIM_SERVER',
 
 
 app.secret_key = app_key
-
-
-
-
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///var/www/AgroClimatic-Monitor/statslog.sqlite3'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite://'+rootdir'/statslog.sqlite3'
 app.config['DATA_LOCATION'] = PROCESSED
 app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
 
@@ -110,32 +106,11 @@ try:
     makedir('')# make uploads folder
 except PermissionError:
     print('ERROR: STORAGE Not Readable by Apache')
-    print('PermissionError: [Errno 13] Permission denied: /var/www/AgroClimatic-Monitor/uolstorage/Data/upload')
-
-
-# create uploads folders if they dont exist
-# for i in indicators:
-#             makedir(STORAGE+i,False)
-
-
 
 
 '''
 serve static
 '''
-
-#app.add_url_rule('/favicon.ico', redirect_to=flask.url_for('static', filename='favicon.ico'))
-# @app.route('/counties.json')
-# def favicon():
-#     return redirect(url_for('static', filename='counties.json'))
-# @app.route('/<path:filename>')
-# def serve_static(filename):
-#     root_dir = os.path.dirname(os.getcwd())
-#     return send_from_directory(app.static_folder, filename)
-#
-
-
-
 
 
 '''

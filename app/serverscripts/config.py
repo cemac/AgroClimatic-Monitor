@@ -1,4 +1,4 @@
-import os, glob 
+import os, glob
 '''
 Global arguments
 '''
@@ -9,9 +9,9 @@ app_key = 'CSSP'
 
 # list of allowed allowed extensions
 extensions = set(['txt', 'pdf', 'image/png', 'image/tiff','image/gtiff'])
-#text/html 
+#text/html
 
-apphome = '/var/www/AgroClimatic-Monitor/'
+apphome = '/var/www/dev-AgroClimatic-Monitor/'
 
 ### if change set in main/config.py too
 STORAGE = apphome + 'uolstorage/Data/' #symbolic link in main repo level 1
