@@ -5,13 +5,13 @@ about_tool_title = ''' Sobre a ferramenta '''
 
 about_tool_textbox1 = ''' 
 
-Agricultural drought indices are calculated from in situ-observed precipitation data, 
-remote sensing, and satellite-derived soil moisture to indicate whether agricultural 
-lands are subjected to drought stress over Brazil. Using more than one type of index 
-provides more reliable indication of droughts. Therefore, three types of indices are 
-presented in this tool, accordingly with the data source it was generated. An 
-integrated index is also presented, which is a combination of all the three indices. 
-More information of each index and how to interpret their results are given below:
+Os índices de seca agrícola são calculados a partir de dados de precipitação observados in situ,
+sensoriamento remoto e umidade do solo derivada de satélite para indicar se as áreas agrícolas estão
+sujeitas ao estresse hídrico no Brasil. O uso de mais de um tipo de índice fornece uma indicação 
+mais confiável de secas. Portanto, três tipos de índices são apresentados nesta ferramenta, 
+separados de acordo com a fonte de dados em que foram gerados. Também é apresentado um índice 
+integrado, que é uma combinação de todos os três índices. Mais informações de cada índice e 
+como interpretar seus resultados são fornecidas abaixo:
 
  '''
 

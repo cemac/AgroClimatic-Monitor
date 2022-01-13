@@ -108,7 +108,7 @@ def makedir (dest,upload=True):
 #
 try:
     makedir('')# make uploads folder
-except PermissionError:
+except (PermissionError, FileNotFoundError) as e:
     print('ERROR: STORAGE Not Readable by Apache')
     print('PermissionError: [Errno 13] Permission denied: /var/www/AgroClimatic-Monitor/uolstorage/Data/upload')
 
