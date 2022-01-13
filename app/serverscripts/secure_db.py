@@ -21,7 +21,7 @@ class Database(object):
 
     def close(self):
         self.conn.close()
-    
+
     def createDB(self):
         self.conndb()
         self.cursor.execute(
@@ -33,7 +33,7 @@ class Database(object):
             );
             '''
         )
-        
+
         self.cursor.execute(
             '''
             CREATE TABLE IF NOT EXISTS log (
@@ -57,11 +57,11 @@ class Database(object):
             VALUES ("%s", "%s")
             '''%(user,keycode)
         )
-        os.system('mkdir %s%s'%(STAGING,user))
-        print('Save location at %s%s'%(STAGING,user))
-        
+        os.system('mkdir %s/%s'%(STAGING,user))
+        print('Save location at %s/%s'%(STAGING,user))
+
         self.conn.commit()
-        self.conn.close()        
+        self.conn.close()
 
 
 
@@ -83,9 +83,9 @@ class Database(object):
         self.cursor.execute('select * from upload where uploadcode="%s"'%user_code)
 
         result = self.cursor.fetchall()
-        
-        
-        if len(result)<0: 
+
+
+        if len(result)<0:
             passed = False
         elif not file:
             ## just getting directory
@@ -98,19 +98,19 @@ class Database(object):
                 '''%(user_code,file,datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
             )
             passed = result[0][2]##'directory'
-            
+
         self.conn.commit()
         self.conn.close()
 
         return result[0][1]
-        
+
     def printlog(self):
         self.conndb()
         self.cursor.execute('select * from log'%user_code)
 
-        for i in self.cursor.fetchall(): 
+        for i in self.cursor.fetchall():
             print (i)
-        
+
         self.conn.commit()
         self.conn.close()
 
@@ -118,19 +118,15 @@ class Database(object):
 
 
 
-            
+
 if __name__ == '__main__':
     import sys,os
     ## you can use arg parse if you want a neater interface
-    
+
     print(db_loc)
-    
+
     if '--wipe' in sys.argv:
         print('making new db')
         os.system('rm '+db_loc)
         sqlc = Database(db_loc,app_key)
         sqlc.createDB()
-        
-    
-        
-        
