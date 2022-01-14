@@ -169,14 +169,18 @@ def about(lang):
 
     if lang == 'staticpages':
         return None
-    if lang == 'br': atext = about_br
-    else: atext = about_uk
+    if lang == 'br':
+        atext = about_br
+        title='Sobre Nós'
+    else:
+        atext = about_uk
+        title='About Us'
 
     layout = 'layout.html'
     if lang == 'br': layout = 'layout_br.html'
 
 
-    return render_template('about.html', layout=layout, atext=atext, title='About Us')
+    return render_template('about.html', layout=layout, atext=atext, title=title)
 
 
 
