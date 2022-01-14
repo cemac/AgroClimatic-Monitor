@@ -19,7 +19,7 @@ about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indice
 
 about_tool_textbox2_text = '''
 
-### Índice de precipitação padronizado (SPI):  
+##Índice de precipitação padronizado (SPI):##
 
 O Standard Precipitation Index-SPI é um índice de seca proposto por Mckee et al (1993) para
 quantificar a probabilidade de ocorrência de déficit de precipitação em uma escala de tempo
@@ -44,7 +44,7 @@ about_tool_textbox3_title = ''' 2. Índices de monitoramento de seca com base na
 
 about_tool_textbox3_text  = '''
 
-### Índice de saúde vegetal (VHI):
+##Índice de saúde vegetal (VHI):##
 
 O VHI é uma combinação de índice de condição de vegetação (denominado VCI) e índice de
 condição térmica (TCI). O VCI é obtido escalando os valores do Índice de Vegetação por
@@ -67,7 +67,7 @@ about_tool_textbox4_title = ''' 3. Índices de monitoramento de seca com base na
 
 about_tool_textbox4_text = '''
 
-### Umidade do solo da zona raiz (RZSM):
+##Umidade do solo da zona raiz (RZSM):##
 
 O índice de umidade do solo é baseado na umidade do solo da zona raiz (RZSM) do satélite
 Grace da NASA. Os dados brutos, publicamente disponíveis, consistem em produtos semanais
@@ -85,7 +85,7 @@ about_tool_textbox5_title = ''' 4. Índices combinados de monitoramento de seca 
 
 about_tool_textbox5_text = '''
 
-### Índice de Seca Integrado (IDI):
+##Índice de Seca Integrado (IDI):##
 
 O Índice de Seca Integrado (IDI) consiste na combinação do SPI com o VHI e o RZSMI.
 Uma vez que a precipitação é a principal causa do desenvolvimento da seca, as anomalias
