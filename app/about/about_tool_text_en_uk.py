@@ -19,7 +19,7 @@ about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indice
 
 about_tool_textbox2_text = '''
 
-## Standardized Precipitation Index (SPI): ##
+** Standardized Precipitation Index (SPI): **
 
 The Standard Precipitation Index-SPI is a drought index proposed by Mckee et al
 (1993) to quantify the probability of a precipitation deficit occurrence at a specific
@@ -43,7 +43,7 @@ about_tool_textbox3_title = ''' 2. Vegetation-based drought monitoring indices '
 
 about_tool_textbox3_text  = '''
 
-### Vegetation Health Index (VHI):
+** Vegetation Health Index (VHI): **
 
 VHI is a combination of vegetation condition index (termed VCI) and thermal condition
 index (TCI). VCI is obtained by scaling the Normalized Difference Vegetation
@@ -65,7 +65,7 @@ about_tool_textbox4_title = ''' 3. Soil moisture-based drought monitoring indice
 
 about_tool_textbox4_text = '''
 
-### Root Zone Soil Moisture (RZSM):
+** Root Zone Soil Moisture (RZSM): **
 
 The soil moisture index is based on the Root Zone Soil Moisture (RZSM) from
 NASA’s Grace satellite. The raw data which is publicly available consists
@@ -84,7 +84,7 @@ about_tool_textbox5_title = ''' 4. Combined drought monitoring Indices '''
 
 about_tool_textbox5_text = '''
 
-### Integrated Drought Index (IDI):
+** Integrated Drought Index (IDI): **
 
 The Integrated Drought Index (IDI) consists of combining the SPI with the VHI and RZSMI.
  Since precipitation is the primary cause of drought development, negative SPI anomalies
