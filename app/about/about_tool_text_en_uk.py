@@ -19,7 +19,7 @@ about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indice
 
 about_tool_textbox2_text = '''
 
-**Standardized Precipitation Index (SPI): **
+## Standardized Precipitation Index (SPI): ##
 
 The Standard Precipitation Index-SPI is a drought index proposed by Mckee et al
 (1993) to quantify the probability of a precipitation deficit occurrence at a specific
