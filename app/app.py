@@ -328,7 +328,7 @@ def getindi(lang,geoid):
     if lang == 'br': layout = 'layout_br.html'
 
     page = 'individual.html'
-    return render_template(page, layout=layout,  title=ov.data_brows_title,hash=geoid)
+    return render_template(page, layout=layout,  title=ov.data_brows_title, hash=geoid)
 
 
 @app.route('/idata/<item>/')
@@ -341,7 +341,10 @@ def getidata(item):
     try:
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
-            assert False
+            print(jsn)
+            print(updated)
+            m_new(item)
+            # assert False
     except FileNotFoundError:
         m_new(item)
 
