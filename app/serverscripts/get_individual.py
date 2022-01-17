@@ -72,6 +72,7 @@ def m_new(code):
         h5file = h5py.File(hf, 'r')
         print(hf)
         print(PROCESSED)
+        print(code)
         jsn={}
         try:
             selection = h5file[code]
