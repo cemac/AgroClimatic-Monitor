@@ -342,6 +342,7 @@ def getidata(item):
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
             print(jsn)
+            print(os.path.getmtime(jsn))
             print(updated)
             m_new(item)
             # assert False
