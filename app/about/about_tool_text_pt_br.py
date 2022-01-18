@@ -116,7 +116,7 @@ Tabela 1. Classificação de seca para SPI, VHI, RZSM e IDI
       <th>VHI</th>
       <th>RZSM</th>
       <th>IDI</th>
-      <th>Classifica��o de Seca</th>
+      <th>Classificação de Seca</th>
     </tr>
   </thead>
   <tbody>
