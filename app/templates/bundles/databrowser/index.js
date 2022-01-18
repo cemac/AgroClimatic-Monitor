@@ -53,7 +53,7 @@ var bounds = L.latLngBounds([
 ]);
 
 
-currentfile= '/processed/plotdata/'+fall[keys[0]][0]+'/'
+currentfile= '/data/plotdata/'+fall[keys[0]][0]+'/'
 const image = L.imageOverlay(currentfile,bounds,{preserveAspectRatio:"none",
 opacity:.8})
 image.addTo(map);
