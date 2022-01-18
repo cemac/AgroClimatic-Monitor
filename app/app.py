@@ -299,10 +299,20 @@ def getdatamap(lang):
     if lang == 'br':
         ov = data_brows_text_pt_br
         table = f(about_tool_text_pt_br.about_tool_textbox6_text)
+        button="Baixe a imagem atual"
+        subtitle1="Instruções"
+        subtitle2="Gráfico resumido"
+        subtitle3="Mapa"
+        subtitle4="Classificação"
         #page = 'overview_br.html'
     else:
         ov = data_brows_text_en_uk
         table = f(about_tool_text_en_uk.about_tool_textbox6_text)
+        button="Download Current Image"
+        subtitle1="Instructions"
+        subtitle2="Summary Plot"
+        subtitle3="Map"
+        subtitle4="Classification"
 
     page = 'databrowser.html'
 
@@ -311,7 +321,10 @@ def getdatamap(lang):
         layout = 'layout_br.html'
 
     return render_template(page, layout=layout, title=ov.data_brows_title,
-                           textbox1=f(ov.data_brows_textbox1), table=table)
+                           textbox1=f(ov.data_brows_textbox1), table=table,
+                           button=button, subtitle1=subtitle1,
+                           subtitle2=subtitle2, subtitle3=subtitle3,
+                           subtitle4=subtitle4)
 
 
 '''
