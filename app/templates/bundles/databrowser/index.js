@@ -37,7 +37,7 @@ var w = L.tileLayer(
     }
 );
 map.addLayer(w);
-// 
+//
 
 
 // [5.2842873,-33.8689056,-35.6341164,-73.9830625]
@@ -53,7 +53,7 @@ var bounds = L.latLngBounds([
 ]);
 
 
-currentfile= '/data/plotdata/'+fall[keys[0]][0]+'/'
+currentfile= '/processed/plotdata/'+fall[keys[0]][0]+'/'
 const image = L.imageOverlay(currentfile,bounds,{preserveAspectRatio:"none",
 opacity:.8})
 image.addTo(map);
@@ -68,21 +68,21 @@ d3.csv('/data/geojson/poly.csv/').then(e=>{
     // window.e = e
     // console.log(e)
     // d3.polygonHull(points);
-    
+
     polygons = e.map(q=>{
         var i = eval(q.poly)
         q.poly = d3.polygonHull(d3.zip(i[0],i[1]))
-        return q    
+        return q
     })
     // window.p = polygons
 
-    
+
     function find(ev) {
        lat = ev.latlng.lat;
        lng = ev.latlng.lng;
        console.log(lat,lng)
        for (i = 0; i < polygons.length; i++) {
-       if (d3.polygonContains(polygons[i].poly,    [lng,lat]) ) { 
+       if (d3.polygonContains(polygons[i].poly,    [lng,lat]) ) {
               console.log('found',i,polygons[i])
               break; }
         }
@@ -90,7 +90,7 @@ d3.csv('/data/geojson/poly.csv/').then(e=>{
         var select = polygons[i]
         document.getElementById('mapname').innerText= select.id;//select.MESOREGIAO + ' - '+ select.MICROREGIA ;//+ ' - ' +
         return select
-       
+
     }
 
     map.addEventListener('click', find);
@@ -98,9 +98,9 @@ d3.csv('/data/geojson/poly.csv/').then(e=>{
         console.log('DOUBLE')
         window.location.href = `/${window.location.pathname.split('/')[1]}/individual/${find(ev).GEOCODIGO}`
         ;})
-    
-    
-    
+
+
+
 })
 
 
@@ -130,10 +130,10 @@ var y = d3.scaleLinear().range([allsize.height-50,0]).domain([0,7])
 
     var bisect = d3.bisector(d => d).right;
     // psvg.on("touchmove mousemove", mousemove);
-    
-    
-    
-    
+
+
+
+
     psvg
         .append("g")
         .attr("class", "axis axis--x")
@@ -142,7 +142,7 @@ var y = d3.scaleLinear().range([allsize.height-50,0]).domain([0,7])
 
 
 keys.reverse().map((d,i)=>{
-    
+
     psvg.append('g')
    .selectAll("d")
    .data(fall[d])
@@ -160,23 +160,23 @@ keys.reverse().map((d,i)=>{
          console.log(d.target.__data__)
          currentfile = '/data/plotdata/'+d.target.__data__+'/'
          image.setUrl(currentfile)
-         
+
          d3.select('#imlink').attr('href',currentfile)
-         
+
          document.getElementById('sp').innerText= d.target.__data__.replace('.png','').replace('_',' ')
-         
+
          d3.selectAll('.circle').style('stroke','whitesmoke')
          d3.select(d.target).style('stroke','red')
      })
-     
-     
+
+
 
     psvg.append("text")
     .attr("x", 0)
     .attr("y", y(i))
     .attr("dy", ".35em")
     .text(d.toUpperCase().replace('_', ' ').replace('0','').replace('IIS3','IDI'));
-    
+
 })
 
 
