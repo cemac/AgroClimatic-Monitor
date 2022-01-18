@@ -116,7 +116,7 @@ Table 1. Drought classification for SPI, VHI, RZSM and IDI
       <th>VHI</th>
       <th>RZSM</th>
       <th>IDI</th>
-      <th>Classifica��o de Seca</th>
+      <th>Drought rating</th>
     </tr>
   </thead>
   <tbody>
