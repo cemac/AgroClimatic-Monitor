@@ -70,11 +70,6 @@ def m_new(code):
     for hf in h5locs:
         indicate = hf.replace(PROCESSED+'data_','').replace('.h5','')
         h5file = h5py.File(hf, 'r')
-        print(hf)
-        print(h5file)
-        print(indicate)
-        print(PROCESSED)
-        print(code)
         jsn={}
         try:
             selection = h5file[code]

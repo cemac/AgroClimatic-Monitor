@@ -1,5 +1,5 @@
 '''
-CSSP Brazil 
+CSSP Brazil
 
 ################
 Main Data Script
@@ -11,17 +11,17 @@ written by d.ellis@leeds.ac.uk for CEMAC
 '''
 
 
-from each_h5 import parsefiles  
+from each_h5 import parsefiles
 import os, multiprocessing
 from params import indicators,iloc
 
-from config import * 
+from config import *
 
 imageloc = PROCESSED+'plotdata/'
 os.system('mkdir '+imageloc)
 
 
-''' 
+'''
 Parse FILES
 '''
 #
