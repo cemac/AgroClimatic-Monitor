@@ -25,8 +25,7 @@ warnings.filterwarnings('ignore', category=RuntimeWarning)
 Load Shapefiles
 '''
 brazil = gpd.read_file(cf.DATA+'shapefile/BR_borders/BR_MUN_WGS84.shp')
-print(cf.DATA+'shapefile/BR_borders/BR_MUN_WGS84.shp')
-breakearly = True
+breakearly = False
 
 
 
@@ -153,7 +152,7 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
 
             selection = shape[1].geometry
             sname = str(shape[1].GEOCODIGO)
-
+            print(sname)
             name = shape[1].NOME
             if not name: continue
 
