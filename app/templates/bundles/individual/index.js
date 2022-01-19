@@ -104,7 +104,8 @@ fetch(`/idata/${hash}/`)
   return response.json();
 }).then(function(data) {
     window.d = data;
-    
+    console.err('data')
+    console.err(data)
     console.log(data)
 
     document.getElementById('dashname').innerText=data.id;
@@ -125,7 +126,7 @@ fetch(`/idata/${hash}/`)
     // console.log(data,d3.extent(dates))
 
     var lscale = [];
-    
+
     // leaflet
     var polygonPoints = data.geox.map((d, i) => {
         return new L.LatLng(data.geoy[i], d);
@@ -134,11 +135,11 @@ fetch(`/idata/${hash}/`)
     var polymap = map.addLayer(polygon);
     // map.setView(data.center.reverse())
     map.fitBounds(polygon.getBounds(), { padding: [50, 50] });
-    
-    
-    
 
-    
+
+
+
+
     try{
     draw(data, pkeys, psvg);
     draw(data, skeys, ssvg, false);
