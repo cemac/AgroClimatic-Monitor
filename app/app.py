@@ -366,7 +366,7 @@ def getidata(item):
             print(os.path.getmtime(jsn))
             print(updated)
             m_new(item)
-            assert False
+            #assert False
     except FileNotFoundError:
         m_new(item)
 
