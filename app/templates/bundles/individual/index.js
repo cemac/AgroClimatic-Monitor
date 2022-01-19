@@ -104,8 +104,8 @@ fetch(`/idata/${hash}/`)
   return response.json();
 }).then(function(data) {
     window.d = data;
-    console.err('data')
-    console.err(data)
+    console.error('data')
+    console.error(data)
     console.log(data)
 
     document.getElementById('dashname').innerText=data.id;
