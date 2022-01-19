@@ -357,19 +357,20 @@ def getidata(item):
     fitem = 'file_%s.json' % item
     jsn = '%s%s/%s' % (PROCESSED, folder, fitem)
     updated = max([os.path.getmtime(i) for i in h5locs])
-
     try:
+        # for some reasone try except was failing
         test=os.path.getmtime(jsn)
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
-            print(jsn)
-            print(os.path.getmtime(jsn))
-            print(updated)
             m_new(item)
+            # Not sure what the assert false was about
             #assert False
     except FileNotFoundError:
+        print('no json file found. Generating...')
         m_new(item)
 
+    print('getidata')
+    print(fitem)
     print('%s%s/' % (PROCESSED, folder), '\n\n\n')
 
     return send_from_directory('%s%s/' % (PROCESSED, folder), fitem, as_attachment=True)
