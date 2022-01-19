@@ -123,9 +123,9 @@ def parsefiles(i_kind,FILES,dataloc,imageloc):
         - less IO overhead this way
         '''
 
-        if basetime>os.path.getmtime(f):
-            print('Skipping:',f ,basetime, os.path.getmtime(f) )
-            continue # this file is older than the combigned one - ignore.
+        #if basetime>os.path.getmtime(f):
+        #    print('Skipping:',f ,basetime, os.path.getmtime(f) )
+        #    continue # this file is older than the combigned one - ignore.
 
         data = rasterio.open(f)
         fname = f.split('/')[-1].replace('.tiff','').replace('.tif','').replace(i_kind+'_','')
