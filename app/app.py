@@ -359,13 +359,14 @@ def getidata(item):
     updated = max([os.path.getmtime(i) for i in h5locs])
 
     try:
+        test=os.path.getmtime(jsn)
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
             print(jsn)
             print(os.path.getmtime(jsn))
             print(updated)
             m_new(item)
-            # assert False
+            assert False
     except FileNotFoundError:
         m_new(item)
 
