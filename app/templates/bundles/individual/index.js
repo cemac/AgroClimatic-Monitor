@@ -104,9 +104,7 @@ fetch(`/idata/${hash}/`)
   return response.json();
 }).then(function(data) {
     window.d = data;
-    console.error('data')
-    console.error(data)
-    console.log(data)
+    console.log(data);
 
     document.getElementById('dashname').innerText=data.id;
     document.getElementById('region').innerText=data.macro + ' - '+ data.micro + ' - ' + data.id;
@@ -138,12 +136,12 @@ fetch(`/idata/${hash}/`)
 
 
 
-
+  console.error(data)
 
     try{
     draw(data, pkeys, psvg);
     draw(data, skeys, ssvg, false);
-
+    console.error('not in draw')
     indicators(psvg, pkeys);
     indicators(ssvg, skeys);
     }
@@ -197,6 +195,7 @@ function mousemove(event) {
 function draw(data, keys, svg, smooth = false) {
     keys.forEach(name => {
         console.log(name);
+        console.error(name);
         data[name].t = parseDate(data[name].x);
         var item = data[name];
         data[name].t = parseDate(item.x);
