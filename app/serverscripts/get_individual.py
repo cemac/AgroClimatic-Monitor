@@ -27,8 +27,11 @@ polydata.GEOCODIGO = polydata.GEOCODIGO.astype(str)
 
 
 def categorize(x, idn):
+    print('x','ind')
+    print(x, idn)
     lims = cat_lims[idn]
     arr = []
+    last = False
     if lims[1][0] > lims[1][1]:
         for i in x:
             counter = 0
@@ -97,10 +100,12 @@ def m_new(code):
         jsn['y'] = df.values
 
         for i in jsn:
+            print('jsn i')
             print(jsn[i])
             jsn[i] = list(jsn[i])
 
         if jsn != {}:
+            print('indicate:')
             print(indicate)
             jsn_grp[indicate] = jsn
 
