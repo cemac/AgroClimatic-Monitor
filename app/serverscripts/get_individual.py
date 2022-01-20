@@ -31,7 +31,7 @@ def categorize(x, idn):
     print(x, idn)
     lims = cat_lims[idn]
     arr = []
-    last = True
+    last = False
     if lims[1][0] > lims[1][1]:
         for i in x:
             counter = 0
