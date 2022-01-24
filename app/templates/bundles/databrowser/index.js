@@ -561,7 +561,7 @@ d3.json('/allfiles').then(fall => {
             }).then(() => {
                 self.canvas.toBlob(function (blob) {
                     let link = document.createElement('a');
-                    link.download = "bigImage.png";
+                    link.download = "download.png";
                     link.href = URL.createObjectURL(blob);
                     link.click();
                 });
@@ -576,7 +576,7 @@ d3.json('/allfiles').then(fall => {
     };
 }, window));
 
-  L.control.bigImage({position: 'topright'}).addTo(mymap)
+  L.control.bigImage({position: 'topright', printControlLabel: 'Download'}).addTo(mymap)
 
 
 
