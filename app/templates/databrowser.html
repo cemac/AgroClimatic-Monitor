@@ -67,9 +67,13 @@
 {% endblock content %}
 
 {% block scripts %}
+
 <script src='/bundles/databrowser/'></script>
-<script src="js/Leaflet.BigImage.min.js"></script>
-<<script type="text/javascript">
+<script type="text/javascript" src="/bundles/Leaflet.BigImage.min.js">
+
+</script>
+
+<script type="text/javascript">
   L.control.bigImage({
     position: 'topright'
   }).addTo(map);
