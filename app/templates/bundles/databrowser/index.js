@@ -1,5 +1,5 @@
 let d3 = require("d3");
-let L = require("databrowser_framework.js");
+let L = require("./databrowser_framework.js");
 
 var currentfile = ''
 var last;
