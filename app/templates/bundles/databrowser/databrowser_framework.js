@@ -1,4 +1,4 @@
 module.exports = {
- leaf : require(leaflet),
- big : require(leafletbigimage),
+ leaf : require('leaflet'),
+ big : require('leafletbigimage'),
 }
