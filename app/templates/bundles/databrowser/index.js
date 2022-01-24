@@ -1,6 +1,6 @@
 let d3 = require("d3");
-let L = require("./databrowser_framework.js");
-
+let Leaf = require("leaflet");
+let L = require("leaflet.bigimage")
 var currentfile = ''
 var last;
 // const fall = require('/allfiles')
@@ -11,13 +11,13 @@ d3.json('/allfiles').then(fall => {
   //// leaflet
   //////////////////
   // Create the map
-  var map = L.leaf.map("lmap", {
+  var map = Leaf.map("lmap", {
     center: [-62.31994628906251, -24.23757312392183].reverse(),
     zoom: 4
     // dragging:false
   });
 
-  var w = L.leaf.tileLayer(
+  var w = Leaf.tileLayer(
     //'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
     "https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
@@ -28,17 +28,17 @@ d3.json('/allfiles').then(fall => {
   map.addLayer(w);
   //
   // [5.2842873,-33.8689056,-35.6341164,-73.9830625]
-  // var bounds = L.latLngBounds([
+  // var bounds = Leaf.latLngBounds([
   //     [-33.8689056, 5.2842873].reverse(),
   //     [-73.9830625, -35.6341164].reverse()
   // ]);
-  var bounds = L.leaf.latLngBounds([
+  var bounds = Leaf.latLngBounds([
     [-33.8689056, 5.2842873].reverse(),
     [-73.9700625, -35.6331164].reverse()
   ]);
 
   currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
-  const image = L.leaf.imageOverlay(currentfile, bounds, {
+  const image = Leaf.imageOverlay(currentfile, bounds, {
     preserveAspectRatio: "none",
     opacity: .8
   })
@@ -149,10 +149,7 @@ d3.json('/allfiles').then(fall => {
 
   })
 
-
-map.addControl(L.big.bigImage({
-    position: 'topright'
-  }));
+  L.control.bigImage({position: 'topright'}).addTo(map)
 
   window.onresize = reload
   window.onhashchange = reload
