@@ -147,9 +147,7 @@ d3.json('/allfiles').then(fall => {
       .text(d.toUpperCase().replace('_', ' ').replace('0', '').replace('IIS3', 'IDI'));
 
   })
-  L.control.bigImage({
-    position: 'topright'
-  }).addTo(map);
+
   window.onresize = reload
   window.onhashchange = reload
 
