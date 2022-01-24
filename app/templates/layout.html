@@ -12,7 +12,7 @@
     <meta name="description" content="CEMAC">
     <meta name="author" content="D. Ellis">
 
-    
+
 
     <title> Agroclimatic Monitor </title>
 
@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="index.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/Leaflet.BigImage.min.css">
 
     <style>
         a.scroll-to-top {
@@ -39,7 +40,7 @@
             }
             ;
         }
-        
+
     .dataframe{width:100%;
     color:#222;}
     </style>
@@ -66,7 +67,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" onclick="change('/')">
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
-                    CSSP 
+                    CSSP
                 </div> -->
                 <div class="sidebar-brand-text mx-3" id='title' style='font-family: Arial,Nunito'> Agroclimatic Monitor </div>
                 <!-- mx-3 -->
@@ -173,20 +174,20 @@
                     <i class="fas fa-search fa-sm"></i>
                     <span>Municipality</span></a>
 <div id="collapseSearch" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-    
+
     <div class="bg-light py-2 collapse-inner rounded">
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" autocomplete="off"
                 >
-                    
+
                     <div class="input-group bg-light">
                         <input type="text" id='isearch' class="form-control bg-white border-0 small rounded"
-                    style='margin:10px;margin-left:0;border:steelblue;position:flex;'    
+                    style='margin:10px;margin-left:0;border:steelblue;position:flex;'
                      placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <br>
                         </div>
             </div>
-            
+
                     </div>
                     </div>
                 </form>
@@ -269,7 +270,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; CEMAC 2021</span> ||  
+                        <span>Copyright &copy; CEMAC 2021</span> ||
                         <img data-toggle="modal" data-target="[data-modal='10.5281-zenodo.4644359']" src="https://zenodo.org/badge/301839203.svg" alt="10.5281/zenodo.4644359">
                     </div>
                 </div>
@@ -316,9 +317,9 @@
             path[1] = lang
             window.location.href = path.join('/')
         }
-        
 
-        
+
+
     // console.clear()
     </script>
 
@@ -326,7 +327,7 @@
 
     <script src='/bundles/fuzzymatching/'></script>
 
-    
+
 
 
 
