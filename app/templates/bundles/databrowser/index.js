@@ -148,6 +148,10 @@ d3.json('/allfiles').then(fall => {
 
   })
 
+L.control.bigImage({
+    position: 'topright'
+  }).addTo(map);
+
   window.onresize = reload
   window.onhashchange = reload
 
