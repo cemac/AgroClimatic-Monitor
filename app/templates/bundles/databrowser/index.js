@@ -1,5 +1,5 @@
 let d3 = require("d3");
-let L = require("leaflet.bigImage");
+let L = require("leaflet.bigimage");
 var currentfile = ''
 var last;
 // const fall = require('/allfiles')
