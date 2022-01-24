@@ -10,7 +10,7 @@ d3.json('/allfiles').then(fall => {
   //// leaflet
   //////////////////
   // Create the map
-  var map = L.map("lmap", {
+  var mymap = L.map("lmap", {
     center: [-62.31994628906251, -24.23757312392183].reverse(),
     zoom: 4
     // dragging:false
@@ -24,7 +24,7 @@ d3.json('/allfiles').then(fall => {
       opacity: 0.8
     }
   );
-  map.addLayer(w);
+  mymap.addLayer(w);
   //
   // [5.2842873,-33.8689056,-35.6341164,-73.9830625]
   // var bounds = L.latLngBounds([
@@ -41,10 +41,10 @@ d3.json('/allfiles').then(fall => {
     preserveAspectRatio: "none",
     opacity: .8
   })
-  image.addTo(map);
-  map.doubleClickZoom.disable()
-  map.options.minZoom = 3;
-  map.options.maxZoom = 8;
+  image.addTo(mymap);
+  mymap.doubleClickZoom.disable()
+  mymap.options.minZoom = 3;
+  mymap.options.maxZoom = 8;
   d3.csv('/data/geojson/poly.csv/').then(e => {
     // window.d3 = d3
     // window.e = e
@@ -76,8 +76,8 @@ d3.json('/allfiles').then(fall => {
 
     }
 
-    map.addEventListener('click', find);
-    map.addEventListener('dblclick', (ev) => {
+    mymap.addEventListener('click', find);
+    mymap.addEventListener('dblclick', (ev) => {
       console.log('DOUBLE')
       window.location.href = `/${window.location.pathname.split('/')[1]}/individual/${find(ev).GEOCODIGO}`;
     })
@@ -147,6 +147,14 @@ d3.json('/allfiles').then(fall => {
       .text(d.toUpperCase().replace('_', ' ').replace('0', '').replace('IIS3', 'IDI'));
 
   })
+
+  window.onresize = reload
+  window.onhashchange = reload
+
+  function reload() {
+    window.location.reload();
+  };
+
   /*
  Leaflet.BigImage (https://github.com/pasichnykvasyl/Leaflet.BigImage).
  (c) 2020, Vasyl Pasichnyk, pasichnykvasyl (Oswald)
@@ -567,13 +575,9 @@ d3.json('/allfiles').then(fall => {
         return new L.Control.BigImage(options);
     };
 }, window));
-  L.control.bigImage({position: 'topright'}).addTo(map)
 
-  window.onresize = reload
-  window.onhashchange = reload
+  L.control.bigImage({position: 'topright'}).addTo(mymap)
 
-  function reload() {
-    window.location.reload();
-  };
+
 
 })
