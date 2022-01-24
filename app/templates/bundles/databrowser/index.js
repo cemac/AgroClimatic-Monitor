@@ -53,7 +53,7 @@ var bounds = L.latLngBounds([
     [-73.9700625, -35.6331164].reverse()
 ]);
 
-var dbutton L.control.BigImage().addTo(map);
+bigimage.L.control.BigImage().addTo(map);
 
 currentfile= '/data/plotdata/'+fall[keys[0]][0]+'/'
 const image = L.imageOverlay(currentfile,bounds,{preserveAspectRatio:"none",
