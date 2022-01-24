@@ -150,7 +150,7 @@ d3.json('/allfiles').then(fall => {
   })
 
 
-L.big.control.bigImage({
+L.leaf.control.L.big.bigImage({
     position: 'topright'
   }).addTo(map);
 
