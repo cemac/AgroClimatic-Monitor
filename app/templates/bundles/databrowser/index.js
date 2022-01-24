@@ -2,7 +2,8 @@
 
 
 let d3 = require("d3");
-let L = require("leaflet","leaflet.bigimage");
+let L = require("leaflet");
+var dbutton = require("leaflet.bigimage")
 var currentfile=''
 var last;
 // const fall = require('/allfiles')
@@ -52,7 +53,7 @@ var bounds = L.latLngBounds([
     [-73.9700625, -35.6331164].reverse()
 ]);
 
-L.control.BigImage().addTo(map);
+L.control.dbutton.BigImage().addTo(map);
 
 currentfile= '/data/plotdata/'+fall[keys[0]][0]+'/'
 const image = L.imageOverlay(currentfile,bounds,{preserveAspectRatio:"none",
