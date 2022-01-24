@@ -1,5 +1,6 @@
 let d3 = require("d3");
-let L = require("leaflet.bigimage");
+let L = require("leaflet");
+
 var currentfile = ''
 var last;
 // const fall = require('/allfiles')
@@ -147,6 +148,7 @@ d3.json('/allfiles').then(fall => {
       .text(d.toUpperCase().replace('_', ' ').replace('0', '').replace('IIS3', 'IDI'));
 
   })
+
 
 L.control.bigImage({
     position: 'topright'
