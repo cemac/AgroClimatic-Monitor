@@ -181,7 +181,7 @@ d3.json('/allfiles').then(fall => {
         options: {
             position: 'topright',
             title: 'Get image',
-            printControlLabel: '&#128438;',
+            printControlLabel: '&#128190;',
             printControlClasses: [],
             printControlTitle: 'Get image',
             _unicodeClass: 'bigimage-unicode-icon',
@@ -576,7 +576,7 @@ d3.json('/allfiles').then(fall => {
     };
 }, window));
 
-  L.control.bigImage({position: 'topright', printControlLabel: 'Download'}).addTo(mymap)
+  L.control.bigImage({position: 'topright'}).addTo(mymap)
 
 
 
