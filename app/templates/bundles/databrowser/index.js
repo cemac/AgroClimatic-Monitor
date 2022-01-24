@@ -150,9 +150,9 @@ d3.json('/allfiles').then(fall => {
   })
 
 
-L.leaf.control.L.big.bigImage({
+map.addControl(L.big.bigImage({
     position: 'topright'
-  }).addTo(map);
+  }));
 
   window.onresize = reload
   window.onhashchange = reload
