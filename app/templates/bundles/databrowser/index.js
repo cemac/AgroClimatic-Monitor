@@ -44,13 +44,15 @@ d3.json('/allfiles').then(fall => {
     opacity: .3
   })
   image.addTo(mymap);
-
+  /*
+  add boarders
   currentfile2 = '/data/plotdata/br-02.png'
   const image2 = L.imageOverlay(currentfile2, bounds, {
     preserveAspectRatio: "none",
     opacity: .9
   })
   image2.addTo(mymap);
+  */
   mymap.doubleClickZoom.disable()
   mymap.options.minZoom = 3;
   mymap.options.maxZoom = 8;
