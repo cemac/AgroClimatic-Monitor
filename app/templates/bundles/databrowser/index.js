@@ -22,7 +22,7 @@ d3.json('/allfiles').then(fall => {
     "https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
       subdomains: "abcd",
-      opacity: 0.8#,
+      opacity: 0.8,
       crossOrigin: "use-credentials"
     }
   );
