@@ -19,10 +19,10 @@ d3.json('/allfiles').then(fall => {
   // added crossOrigin anonymous use-credentials null/false
   var w = L.tileLayer(
     //'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    //opacity: 0.9,//
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
       subdomains: "abcd",
-      opacity: 0.9,
       crossOrigin: "anonymous"
     }
   );
