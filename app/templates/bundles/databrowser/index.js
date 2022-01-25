@@ -168,430 +168,458 @@ d3.json('/allfiles').then(fall => {
 
   I've altered to code to pick up svg images as well
 */
+var domtoimage = require('dom-to-image');
+var fileSaver = require('file-saver');
 
-/*
- Leaflet.BigImage (https://github.com/pasichnykvasyl/Leaflet.BigImage).
- (c) 2020, Vasyl Pasichnyk, pasichnykvasyl (Oswald)
-*/
-
-(function (factory, window) {
-
-    // define an AMD module that relies on 'leaflet'
-    if (typeof define === 'function' && define.amd) {
-        define(['leaflet'], factory);
-
-        // define a Common JS module that relies on 'leaflet'
-    } else if (typeof exports === 'object') {
-        module.exports = factory(require('leaflet'));
+L.Control.EasyPrint = L.Control.extend({
+  options: {
+    title: 'Print map',
+    position: 'topleft',
+    sizeModes: ['Current'],
+    filename: 'map',
+    exportOnly: false,
+    hidden: false,
+    tileWait: 500,
+    hideControlContainer: true,
+    hideClasses: [],
+    customWindowTitle: window.document.title,
+    spinnerBgCOlor: '#0DC5C1',
+    customSpinnerClass: 'epLoader',
+    defaultSizeTitles: {
+      Current: 'Current Size',
+      A4Landscape: 'A4 Landscape',
+      A4Portrait: 'A4 Portrait'
     }
-
-    // attach your plugin to the global 'L' variable
-    if (typeof window !== 'undefined' && window.L) {
-        window.L.YourPlugin = factory(L);
-    }
-}(function (L) {
-
-    L.Control.BigImage = L.Control.extend({
-        options: {
-            position: 'topright',
-            title: 'Get image',
-            printControlLabel: '&#128190;',
-            printControlClasses: [],
-            printControlTitle: 'Get image',
-            _unicodeClass: 'bigimage-unicode-icon',
-            maxScale: 10,
-            minScale: 1,
-            inputTitle: 'Choose scale:',
-            downloadTitle: 'Download'
-        },
-
-        onAdd: function (map) {
-            this._map = map;
-
-            const title = this.options.printControlTitle;
-            const label = this.options.printControlLabel;
-            let classes = this.options.printControlClasses;
-
-            if (label.indexOf('&') != -1) classes.push(this.options._unicodeClass);
-
-            return this._createControl(label, title, classes, this._click, this);
-        },
-
-        _click: function (e) {
-            this._container.classList.add('leaflet-control-layers-expanded');
-            this._containerParams.style.display = '';
-            this._controlPanel.classList.add('bigimage-unicode-icon-disable');
-        },
-
-        _createControl: function (label, title, classesToAdd, fn, context) {
-
-            this._container = document.createElement('div');
-            this._container.id = 'print-container';
-            this._container.classList.add('leaflet-bar');
-
-            this._containerParams = document.createElement('div');
-            this._containerParams.id = 'print-params';
-            this._containerParams.style.display = 'none';
-
-            this._createCloseButton();
-
-            let containerTitle = document.createElement('h6');
-            containerTitle.style.width = '100%';
-            containerTitle.innerHTML = this.options.inputTitle;
-            this._containerParams.appendChild(containerTitle);
-
-            this._createScaleInput();
-            this._createDownloadButton();
-            this._container.appendChild(this._containerParams);
-
-            this._createControlPanel(classesToAdd, context, label, title, fn);
-
-            L.DomEvent.disableScrollPropagation(this._container);
-            L.DomEvent.disableClickPropagation(this._container);
-
-            return this._container;
-        },
-
-        _createDownloadButton: function () {
-            this._downloadBtn = document.createElement('div');
-            this._downloadBtn.classList.add('download-button');
-
-            this._downloadBtn = document.createElement('div');
-            this._downloadBtn.classList.add('download-button');
-            this._downloadBtn.innerHTML = this.options.downloadTitle;
-
-            this._downloadBtn.addEventListener('click', () => {
-                let scale_value = this._scaleInput.value;
-                if (!scale_value || scale_value < this.options.minScale || scale_value > this.options.maxScale) {
-                    this._scaleInput.value = this.options.minScale;
-                    return;
-                }
-
-                this._containerParams.classList.add('print-disabled');
-                this._loader.style.display = 'block';
-                this._print();
-            });
-            this._containerParams.appendChild(this._downloadBtn);
-        },
-
-        _createScaleInput: function () {
-            this._scaleInput = document.createElement('input');
-            this._scaleInput.style.width = '100%';
-            this._scaleInput.type = 'number';
-            this._scaleInput.value = this.options.minScale;
-            this._scaleInput.min = this.options.minScale;
-            this._scaleInput.max = this.options.maxScale;
-            this._scaleInput.id = 'scale';
-            this._containerParams.appendChild(this._scaleInput);
-
-        },
-
-        _createCloseButton: function () {
-            let span = document.createElement('div');
-            span.classList.add('close');
-            span.innerHTML = '&times;';
-
-            span.addEventListener('click', () => {
-                this._container.classList.remove('leaflet-control-layers-expanded');
-                this._containerParams.style.display = 'none';
-                this._controlPanel.classList.remove('bigimage-unicode-icon-disable');
-            });
-
-            this._containerParams.appendChild(span);
-        },
-
-        _createControlPanel: function (classesToAdd, context, label, title, fn) {
-            let controlPanel = document.createElement('a');
-            controlPanel.innerHTML = label;
-            controlPanel.id = 'print-btn';
-            controlPanel.setAttribute('title', title);
-            classesToAdd.forEach(function (c) {
-                controlPanel.classList.add(c);
-            });
-            L.DomEvent.on(controlPanel, 'click', fn, context);
-            this._container.appendChild(controlPanel);
-            this._controlPanel = controlPanel;
-
-            this._loader = document.createElement('div');
-            this._loader.id = 'print-loading';
-            this._container.appendChild(this._loader);
-        },
-
-        _getLayers: function (resolve) {
-            let self = this;
-            let promises = [];
-            self._map.eachLayer(function (layer) {
-                promises.push(new Promise((new_resolve) => {
-                    try {
-                        if (layer instanceof L.Marker && layer._icon && layer._icon.src) {
-                            self._getMarkerLayer(layer, new_resolve)
-                        } else if (layer instanceof L.TileLayer) {
-                            self._getTileLayer(layer, new_resolve);
-                        } else if (layer instanceof L.Circle) {
-                            if (!self.circles[layer._leaflet_id]) {
-                                self.circles[layer._leaflet_id] = layer;
-                            }
-                            new_resolve();
-                        } else if (layer instanceof L.Path) {
-                            self._getPathLayer(layer, new_resolve);
-                        } else {
-                            new_resolve();
-                        }
-                    } catch (e) {
-                        console.log(e);
-                        new_resolve();
-                    }
-                }));
-            });
-
-            Promise.all(promises).then(() => {
-                resolve()
-            });
-        },
-
-        _getTileLayer: function (layer, resolve) {
-            let self = this;
-
-            self.tiles = [];
-            self.tileSize = layer._tileSize.x;
-            self.tileBounds = L.bounds(self.bounds.min.divideBy(self.tileSize)._floor(), self.bounds.max.divideBy(self.tileSize)._floor());
-
-            for (let j = self.tileBounds.min.y; j <= self.tileBounds.max.y; j++)
-                for (let i = self.tileBounds.min.x; i <= self.tileBounds.max.x; i++)
-                    self.tiles.push(new L.Point(i, j));
-
-            let promiseArray = [];
-            self.tiles.forEach(tilePoint => {
-                let originalTilePoint = tilePoint.clone();
-                if (layer._adjustTilePoint) layer._adjustTilePoint(tilePoint);
-
-                let tilePos = originalTilePoint.scaleBy(new L.Point(self.tileSize, self.tileSize)).subtract(self.bounds.min);
-
-                if (tilePoint.y < 0) return;
-
-                promiseArray.push(new Promise(resolve => {
-                    self._loadTile(tilePoint, tilePos, layer, resolve);
-                }));
-            });
-
-            Promise.all(promiseArray).then(() => {
-                resolve();
-            });
-        },
-
-        _loadTile: function (tilePoint, tilePos, layer, resolve) {
-            let self = this;
-            let imgIndex = tilePoint.x + ':' + tilePoint.y + ':' + self.zoom;
-            self.tilesImgs[layer._leaflet_id] = {};
-            let image = new Image();
-            image.crossOrigin = 'Anonymous';
-            image.onload = function () {
-                if (!self.tilesImgs[layer._leaflet_id][imgIndex]) self.tilesImgs[layer._leaflet_id][imgIndex] = {img: image, x: tilePos.x, y: tilePos.y};
-                resolve();
-            };
-            image.src = layer.getTileUrl(tilePoint);
-        },
-
-        _getMarkerLayer: function (layer, resolve) {
-            let self = this;
-
-            if (self.markers[layer._leaflet_id]) {
-                resolve();
-                return;
-            }
-
-            let pixelPoint = self._map.project(layer._latlng);
-            pixelPoint = pixelPoint.subtract(new L.Point(self.bounds.min.x, self.bounds.min.y));
-
-            if (layer.options.icon && layer.options.icon.options && layer.options.icon.options.iconAnchor) {
-                pixelPoint.x -= layer.options.icon.options.iconAnchor[0];
-                pixelPoint.y -= layer.options.icon.options.iconAnchor[1];
-            }
-
-            if (!self._pointPositionIsNotCorrect(pixelPoint)) {
-                let image = new Image();
-                image.crossOrigin = 'Anonymous';
-                image.onload = function () {
-                    self.markers[layer._leaflet_id] = {img: image, x: pixelPoint.x, y: pixelPoint.y};
-                    resolve();
-                };
-                image.src = layer._icon.src;
-            } else {
-                resolve();
-            }
-        },
-
-        _pointPositionIsNotCorrect: function (point) {
-            return (point.x < 0 || point.y < 0 || point.x > this.canvas.width || point.y > this.canvas.height);
-        },
-
-        _getPathLayer: function (layer, resolve) {
-            let self = this;
-
-            let correct = 0;
-            let parts = [];
-
-            if (layer._mRadius || !layer._latlngs) {
-                resolve();
-                return;
-            }
-
-            let latlngs = layer.options.fill ? layer._latlngs[0] : layer._latlngs;
-            latlngs.forEach((latLng) => {
-                let pixelPoint = self._map.project(latLng);
-                pixelPoint = pixelPoint.subtract(new L.Point(self.bounds.min.x, self.bounds.min.y));
-                parts.push(pixelPoint);
-                if (pixelPoint.x < self.canvas.width && pixelPoint.y < self.canvas.height) correct = 1;
-            });
-
-            if (correct) self.path[layer._leaflet_id] = {
-                parts: parts,
-                closed: layer.options.fill,
-                options: layer.options
-            };
-            resolve();
-        },
-
-        _changeScale: function (scale) {
-            if (!scale || scale <= 1) return 0;
-
-            let addX = (this.bounds.max.x - this.bounds.min.x) / 2 * (scale - 1);
-            let addY = (this.bounds.max.y - this.bounds.min.y) / 2 * (scale - 1);
-
-            this.bounds.min.x -= addX;
-            this.bounds.min.y -= addY;
-            this.bounds.max.x += addX;
-            this.bounds.max.y += addY;
-
-            this.canvas.width *= scale;
-            this.canvas.height *= scale;
-        },
-
-        _drawPath: function (value) {
-            let self = this;
-
-            self.ctx.beginPath();
-            let count = 0;
-            let options = value.options;
-            value.parts.forEach((point) => {
-                self.ctx[count++ ? 'lineTo' : 'moveTo'](point.x, point.y);
-            });
-
-            if (value.closed) self.ctx.closePath();
-
-            this._feelPath(options);
-        },
-
-        _drawCircle: function (layer, resolve) {
-
-            if (layer._empty()) {
-                return;
-            }
-
-            let point = this._map.project(layer._latlng);
-            point = point.subtract(new L.Point(this.bounds.min.x, this.bounds.min.y));
-
-            let r = Math.max(Math.round(layer._radius), 1),
-                s = (Math.max(Math.round(layer._radiusY), 1) || r) / r;
-
-            if (s !== 1) {
-                this.ctx.save();
-                this.scale(1, s);
-            }
-
-            this.ctx.beginPath();
-            this.ctx.arc(point.x, point.y / s, r, 0, Math.PI * 2, false);
-
-            if (s !== 1) {
-                this.ctx.restore();
-            }
-
-            this._feelPath(layer.options);
-        },
-
-        _feelPath: function (options) {
-
-            if (options.fill) {
-                this.ctx.globalAlpha = options.fillOpacity;
-                this.ctx.fillStyle = options.fillColor || options.color;
-                this.ctx.fill(options.fillRule || 'evenodd');
-            }
-
-            if (options.stroke && options.weight !== 0) {
-                if (this.ctx.setLineDash) {
-                    this.ctx.setLineDash(options && options._dashArray || []);
-                }
-                this.ctx.globalAlpha = options.opacity;
-                this.ctx.lineWidth = options.weight;
-                this.ctx.strokeStyle = options.color;
-                this.ctx.lineCap = options.lineCap;
-                this.ctx.lineJoin = options.lineJoin;
-                this.ctx.stroke();
-            }
-        },
-
-        _print: function () {
-            let self = this;
-
-            self.tilesImgs = {};
-            self.markers = {};
-            self.path = {};
-            self.circles = {};
-
-            let dimensions = self._map.getSize();
-
-            self.zoom = self._map.getZoom();
-            self.bounds = self._map.getPixelBounds();
-
-            self.canvas = document.createElement('canvas');
-            self.canvas.width = dimensions.x;
-            self.canvas.height = dimensions.y;
-            self.ctx = self.canvas.getContext('2d');
-
-            this._changeScale(document.getElementById('scale').value);
-
-            let promise = new Promise(function (resolve, reject) {
-                self._getLayers(resolve);
-            });
-
-            promise.then(() => {
-                return new Promise(((resolve, reject) => {
-                    for (const [key, layer] of Object.entries(self.tilesImgs)) {
-                        for (const [key, value] of Object.entries(layer)) {
-                            self.ctx.drawImage(value.img, value.x, value.y, self.tileSize, self.tileSize);
-                        }
-                    }
-                    for (const [key, value] of Object.entries(self.path)) {
-                        self._drawPath(value);
-                    }
-                    for (const [key, value] of Object.entries(self.markers)) {
-                        self.ctx.drawImage(value.img, value.x, value.y);
-                    }
-                    for (const [key, value] of Object.entries(self.circles)) {
-                        self._drawCircle(value);
-                    }
-                    resolve();
-                }));
-            }).then(() => {
-                self.canvas.toBlob(function (blob) {
-                    let link = document.createElement('a');
-                    link.download = "download.png";
-                    link.href = URL.createObjectURL(blob);
-                    link.click();
-                });
-                self._containerParams.classList.remove('print-disabled');
-                self._loader.style.display = 'none';
-            });
+  },
+
+  onAdd: function () {
+    this.mapContainer = this._map.getContainer();
+    this.options.sizeModes = this.options.sizeModes.map(function (sizeMode) {
+      if (sizeMode === 'Current') {
+        return {
+          name: this.options.defaultSizeTitles.Current,
+          className: 'CurrentSize'
         }
-    });
+      }
+      if (sizeMode === 'A4Landscape') {
+        return {
+          height: this._a4PageSize.height,
+          width: this._a4PageSize.width,
+          name: this.options.defaultSizeTitles.A4Landscape,
+          className: 'A4Landscape page'
+        }
+      }
+      if (sizeMode === 'A4Portrait') {
+        return {
+          height: this._a4PageSize.width,
+          width: this._a4PageSize.height,
+          name: this.options.defaultSizeTitles.A4Portrait,
+          className: 'A4Portrait page'
+        }
+      };
+      return sizeMode;
+    }, this);
 
-    L.control.bigImage = function (options) {
-        return new L.Control.BigImage(options);
+    var container = L.DomUtil.create('div', 'leaflet-control-easyPrint leaflet-bar leaflet-control');
+    if (!this.options.hidden) {
+      this._addCss();
+
+      L.DomEvent.addListener(container, 'mouseover', this._togglePageSizeButtons, this);
+      L.DomEvent.addListener(container, 'mouseout', this._togglePageSizeButtons, this);
+
+      var btnClass = 'leaflet-control-easyPrint-button'
+      if (this.options.exportOnly) btnClass = btnClass + '-export'
+
+      this.link = L.DomUtil.create('a', btnClass, container);
+      this.link.id = "leafletEasyPrint";
+      this.link.title = this.options.title;
+      this.holder = L.DomUtil.create('ul', 'easyPrintHolder', container);
+
+      this.options.sizeModes.forEach(function (sizeMode) {
+        var btn = L.DomUtil.create('li', 'easyPrintSizeMode', this.holder);
+        btn.title = sizeMode.name;
+        var link = L.DomUtil.create('a', sizeMode.className, btn);
+        L.DomEvent.addListener(btn, 'click', this.printMap, this);
+      }, this);
+
+      L.DomEvent.disableClickPropagation(container);
+    }
+    return container;
+  },
+
+  printMap: function (event, filename) {
+    if (filename) {
+      this.options.filename = filename
+    }
+    if (!this.options.exportOnly) {
+      this._page = window.open("", "_blank", 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10, top=10, width=200, height=250, visible=none');
+      this._page.document.write(this._createSpinner(this.options.customWindowTitle, this.options.customSpinnerClass, this.options.spinnerBgCOlor));
+    }
+    this.originalState = {
+      mapWidth: this.mapContainer.style.width,
+      widthWasAuto: false,
+      widthWasPercentage: false,
+      mapHeight: this.mapContainer.style.height,
+      zoom: this._map.getZoom(),
+      center: this._map.getCenter()
     };
-}, window));
+    if (this.originalState.mapWidth === 'auto') {
+      this.originalState.mapWidth = this._map.getSize().x  + 'px'
+      this.originalState.widthWasAuto = true
+    } else if (this.originalState.mapWidth.includes('%')) {
+      this.originalState.percentageWidth = this.originalState.mapWidth
+      this.originalState.widthWasPercentage = true
+      this.originalState.mapWidth = this._map.getSize().x  + 'px'
+    }
+    this._map.fire("easyPrint-start", { event: event });
+    if (!this.options.hidden) {
+      this._togglePageSizeButtons({type: null});
+    }
+    if (this.options.hideControlContainer) {
+      this._toggleControls();
+    }
+    if (this.options.hideClasses) {
+      this._toggleClasses(this.options.hideClasses);
+    }
+    var sizeMode = typeof event !== 'string' ? event.target.className : event;
+    if (sizeMode === 'CurrentSize') {
+      return this._printOpertion(sizeMode);
+    }
+    this.outerContainer = this._createOuterContainer(this.mapContainer)
+    if (this.originalState.widthWasAuto) {
+      this.outerContainer.style.width = this.originalState.mapWidth
+    }
+    this._createImagePlaceholder(sizeMode)
+  },
 
-  L.control.bigImage({position: 'topright'}).addTo(mymap)
+  _createImagePlaceholder: function (sizeMode) {
+    var plugin = this;
+    domtoimage.toPng(this.mapContainer, {
+        width: parseInt(this.originalState.mapWidth.replace('px')),
+        height: parseInt(this.originalState.mapHeight.replace('px'))
+      })
+      .then(function (dataUrl) {
+        plugin.blankDiv = document.createElement("div");
+        var blankDiv = plugin.blankDiv;
+        plugin.outerContainer.parentElement.insertBefore(blankDiv, plugin.outerContainer);
+        blankDiv.className = 'epHolder';
+        blankDiv.style.backgroundImage = 'url("' + dataUrl + '")';
+        blankDiv.style.position = 'absolute';
+        blankDiv.style.zIndex = 1011;
+        blankDiv.style.display = 'initial';
+        blankDiv.style.width = plugin.originalState.mapWidth;
+        blankDiv.style.height = plugin.originalState.mapHeight;
+        plugin._resizeAndPrintMap(sizeMode);
+      })
+      .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+      });
+  },
 
+  _resizeAndPrintMap: function (sizeMode) {
+    this.outerContainer.style.opacity = 0;
+    var pageSize = this.options.sizeModes.filter(function (item) {
+      return item.className.indexOf(sizeMode) > -1;
+    });
+    pageSize = pageSize[0]
+    this.mapContainer.style.width = pageSize.width + 'px';
+    this.mapContainer.style.height = pageSize.height + 'px';
+    if (this.mapContainer.style.width > this.mapContainer.style.height) {
+      this.orientation = 'portrait';
+    } else {
+      this.orientation = 'landscape';
+    }
+    this._map.setView(this.originalState.center);
+    this._map.setZoom(this.originalState.zoom);
+    this._map.invalidateSize();
+    if (this.options.tileLayer) {
+      this._pausePrint(sizeMode)
+    } else {
+      this._printOpertion(sizeMode)
+    }
+  },
 
+  _pausePrint: function (sizeMode) {
+    var plugin = this
+    var loadingTest = setInterval(function () {
+      if(!plugin.options.tileLayer.isLoading()) {
+        clearInterval(loadingTest);
+        plugin._printOpertion(sizeMode)
+      }
+    }, plugin.options.tileWait);
+  },
 
+  _printOpertion: function (sizemode) {
+    var plugin = this;
+    var widthForExport = this.mapContainer.style.width
+    if (this.originalState.widthWasAuto && sizemode === 'CurrentSize' || this.originalState.widthWasPercentage && sizemode === 'CurrentSize') {
+      widthForExport = this.originalState.mapWidth
+    }
+    domtoimage.toPng(plugin.mapContainer, {
+        width: parseInt(widthForExport),
+        height: parseInt(plugin.mapContainer.style.height.replace('px'))
+      })
+      .then(function (dataUrl) {
+          var blob = plugin._dataURItoBlob(dataUrl);
+          if (plugin.options.exportOnly) {
+            fileSaver.saveAs(blob, plugin.options.filename + '.png');
+          } else {
+            plugin._sendToBrowserPrint(dataUrl, plugin.orientation);
+          }
+          plugin._toggleControls(true);
+          plugin._toggleClasses(plugin.options.hideClasses, true);
+
+          if (plugin.outerContainer) {
+            if (plugin.originalState.widthWasAuto) {
+              plugin.mapContainer.style.width = 'auto'
+            } else if (plugin.originalState.widthWasPercentage) {
+              plugin.mapContainer.style.width = plugin.originalState.percentageWidth
+            }
+            else {
+              plugin.mapContainer.style.width = plugin.originalState.mapWidth;
+            }
+            plugin.mapContainer.style.height = plugin.originalState.mapHeight;
+            plugin._removeOuterContainer(plugin.mapContainer, plugin.outerContainer, plugin.blankDiv)
+            plugin._map.invalidateSize();
+            plugin._map.setView(plugin.originalState.center);
+            plugin._map.setZoom(plugin.originalState.zoom);
+          }
+          plugin._map.fire("easyPrint-finished");
+      })
+      .catch(function (error) {
+          console.error('Print operation failed', error);
+      });
+  },
+
+  _sendToBrowserPrint: function (img, orientation) {
+    this._page.resizeTo(600, 800);
+    var pageContent = this._createNewWindow(img, orientation, this)
+    this._page.document.body.innerHTML = ''
+    this._page.document.write(pageContent);
+    this._page.document.close();
+  },
+
+  _createSpinner: function (title, spinnerClass, spinnerColor) {
+    return `<html><head><title>`+ title + `</title></head><body><style>
+      body{
+        background: ` + spinnerColor + `;
+      }
+      .epLoader,
+      .epLoader:before,
+      .epLoader:after {
+        border-radius: 50%;
+      }
+      .epLoader {
+        color: #ffffff;
+        font-size: 11px;
+        text-indent: -99999em;
+        margin: 55px auto;
+        position: relative;
+        width: 10em;
+        height: 10em;
+        box-shadow: inset 0 0 0 1em;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+      .epLoader:before,
+      .epLoader:after {
+        position: absolute;
+        content: '';
+      }
+      .epLoader:before {
+        width: 5.2em;
+        height: 10.2em;
+        background: #0dc5c1;
+        border-radius: 10.2em 0 0 10.2em;
+        top: -0.1em;
+        left: -0.1em;
+        -webkit-transform-origin: 5.2em 5.1em;
+        transform-origin: 5.2em 5.1em;
+        -webkit-animation: load2 2s infinite ease 1.5s;
+        animation: load2 2s infinite ease 1.5s;
+      }
+      .epLoader:after {
+        width: 5.2em;
+        height: 10.2em;
+        background: #0dc5c1;
+        border-radius: 0 10.2em 10.2em 0;
+        top: -0.1em;
+        left: 5.1em;
+        -webkit-transform-origin: 0px 5.1em;
+        transform-origin: 0px 5.1em;
+        -webkit-animation: load2 2s infinite ease;
+        animation: load2 2s infinite ease;
+      }
+      @-webkit-keyframes load2 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes load2 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      </style>
+    <div class="`+spinnerClass+`">Loading...</div></body></html>`;
+  },
+
+  _createNewWindow: function (img, orientation, plugin) {
+    return `<html><head>
+        <style>@media print {
+          img { max-width: 98%!important; max-height: 98%!important; }
+          @page { size: ` + orientation + `;}}
+        </style>
+        <script>function step1(){
+        setTimeout('step2()', 10);}
+        function step2(){window.print();window.close()}
+        </script></head><body onload='step1()'>
+        <img src="` + img + `" style="display:block; margin:auto;"></body></html>`;
+  },
+
+  _createOuterContainer: function (mapDiv) {
+    var outerContainer = document.createElement('div');
+    mapDiv.parentNode.insertBefore(outerContainer, mapDiv);
+    mapDiv.parentNode.removeChild(mapDiv);
+    outerContainer.appendChild(mapDiv);
+    outerContainer.style.width = mapDiv.style.width;
+    outerContainer.style.height = mapDiv.style.height;
+    outerContainer.style.display = 'inline-block'
+    outerContainer.style.overflow = 'hidden';
+    return outerContainer;
+  },
+
+  _removeOuterContainer: function (mapDiv, outerContainer, blankDiv) {
+    if (outerContainer.parentNode) {
+      outerContainer.parentNode.insertBefore(mapDiv, outerContainer);
+      outerContainer.parentNode.removeChild(blankDiv);
+      outerContainer.parentNode.removeChild(outerContainer);
+    }
+  },
+
+  _addCss: function () {
+    var css = document.createElement("style");
+    css.type = "text/css";
+    css.innerHTML = `.leaflet-control-easyPrint-button {
+      background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNMTI4LDMyaDI1NnY2NEgxMjhWMzJ6IE00ODAsMTI4SDMyYy0xNy42LDAtMzIsMTQuNC0zMiwzMnYxNjBjMCwxNy42LDE0LjM5OCwzMiwzMiwzMmg5NnYxMjhoMjU2VjM1Mmg5NiAgIGMxNy42LDAsMzItMTQuNCwzMi0zMlYxNjBDNTEyLDE0Mi40LDQ5Ny42LDEyOCw0ODAsMTI4eiBNMzUyLDQ0OEgxNjBWMjg4aDE5MlY0NDh6IE00ODcuMTk5LDE3NmMwLDEyLjgxMy0xMC4zODcsMjMuMi0yMy4xOTcsMjMuMiAgIGMtMTIuODEyLDAtMjMuMjAxLTEwLjM4Ny0yMy4yMDEtMjMuMnMxMC4zODktMjMuMiwyMy4xOTktMjMuMkM0NzYuODE0LDE1Mi44LDQ4Ny4xOTksMTYzLjE4Nyw0ODcuMTk5LDE3NnoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+      background-size: 16px 16px;
+      cursor: pointer;
+    }
+    .leaflet-control-easyPrint-button-export {
+      background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQzMy41IDQzMy41IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MzMuNSA0MzMuNTsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8Zz4KCTxnIGlkPSJmaWxlLWRvd25sb2FkIj4KCQk8cGF0aCBkPSJNMzk1LjI1LDE1M2gtMTAyVjBoLTE1M3YxNTNoLTEwMmwxNzguNSwxNzguNUwzOTUuMjUsMTUzeiBNMzguMjUsMzgyLjV2NTFoMzU3di01MUgzOC4yNXoiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+      background-size: 16px 16px;
+      cursor: pointer;
+    }
+    .easyPrintHolder a {
+      background-size: 16px 16px;
+      cursor: pointer;
+    }
+    .easyPrintHolder .CurrentSize{
+      background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTZweCIgdmVyc2lvbj0iMS4xIiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNjQgNjQiPgogIDxnPgogICAgPGcgZmlsbD0iIzFEMUQxQiI+CiAgICAgIDxwYXRoIGQ9Ik0yNS4yNTUsMzUuOTA1TDQuMDE2LDU3LjE0NVY0Ni41OWMwLTEuMTA4LTAuODk3LTIuMDA4LTIuMDA4LTIuMDA4QzAuODk4LDQ0LjU4MiwwLDQ1LjQ4MSwwLDQ2LjU5djE1LjQwMiAgICBjMCwwLjI2MSwwLjA1MywwLjUyMSwwLjE1NSwwLjc2N2MwLjIwMywwLjQ5MiwwLjU5NCwwLjg4MiwxLjA4NiwxLjA4N0MxLjQ4Niw2My45NDcsMS43NDcsNjQsMi4wMDgsNjRoMTUuNDAzICAgIGMxLjEwOSwwLDIuMDA4LTAuODk4LDIuMDA4LTIuMDA4cy0wLjg5OC0yLjAwOC0yLjAwOC0yLjAwOEg2Ljg1NWwyMS4yMzgtMjEuMjRjMC43ODQtMC43ODQsMC43ODQtMi4wNTUsMC0yLjgzOSAgICBTMjYuMDM5LDM1LjEyMSwyNS4yNTUsMzUuOTA1eiIgZmlsbD0iIzAwMDAwMCIvPgogICAgICA8cGF0aCBkPSJtNjMuODQ1LDEuMjQxYy0wLjIwMy0wLjQ5MS0wLjU5NC0wLjg4Mi0xLjA4Ni0xLjA4Ny0wLjI0NS0wLjEwMS0wLjUwNi0wLjE1NC0wLjc2Ny0wLjE1NGgtMTUuNDAzYy0xLjEwOSwwLTIuMDA4LDAuODk4LTIuMDA4LDIuMDA4czAuODk4LDIuMDA4IDIuMDA4LDIuMDA4aDEwLjU1NmwtMjEuMjM4LDIxLjI0Yy0wLjc4NCwwLjc4NC0wLjc4NCwyLjA1NSAwLDIuODM5IDAuMzkyLDAuMzkyIDAuOTA2LDAuNTg5IDEuNDIsMC41ODlzMS4wMjctMC4xOTcgMS40MTktMC41ODlsMjEuMjM4LTIxLjI0djEwLjU1NWMwLDEuMTA4IDAuODk3LDIuMDA4IDIuMDA4LDIuMDA4IDEuMTA5LDAgMi4wMDgtMC44OTkgMi4wMDgtMi4wMDh2LTE1LjQwMmMwLTAuMjYxLTAuMDUzLTAuNTIyLTAuMTU1LTAuNzY3eiIgZmlsbD0iIzAwMDAwMCIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==)
+    }
+    .easyPrintHolder .page {
+      background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ0NC44MzMgNDQ0LjgzMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgzMyA0NDQuODMzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTUuMjUsNDQ0LjgzM2gzMzQuMzMzYzkuMzUsMCwxNy03LjY1LDE3LTE3VjEzOS4xMTdjMC00LjgxNy0xLjk4My05LjM1LTUuMzgzLTEyLjQ2N0wyNjkuNzMzLDQuNTMzICAgIEMyNjYuNjE3LDEuNywyNjIuMzY3LDAsMjU4LjExNywwSDU1LjI1Yy05LjM1LDAtMTcsNy42NS0xNywxN3Y0MTAuODMzQzM4LjI1LDQzNy4xODMsNDUuOSw0NDQuODMzLDU1LjI1LDQ0NC44MzN6ICAgICBNMzcyLjU4MywxNDYuNDgzdjAuODVIMjU2LjQxN3YtMTA4LjhMMzcyLjU4MywxNDYuNDgzeiBNNzIuMjUsMzRoMTUwLjE2N3YxMzAuMzMzYzAsOS4zNSw3LjY1LDE3LDE3LDE3aDEzMy4xNjd2MjI5LjVINzIuMjVWMzR6ICAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+    }
+    .easyPrintHolder .A4Landscape {
+      transform: rotate(-90deg);
+    }
+    .leaflet-control-easyPrint-button{
+      display: inline-block;
+    }
+    .easyPrintHolder{
+      margin-top:-31px;
+      margin-bottom: -5px;
+      margin-left: 30px;
+      padding-left: 0px;
+      display: none;
+    }
+    .easyPrintSizeMode {
+      display: inline-block;
+    }
+    .easyPrintHolder .easyPrintSizeMode a {
+      border-radius: 0px;
+    }
+    .easyPrintHolder .easyPrintSizeMode:last-child a{
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+      margin-left: -1px;
+    }
+    .easyPrintPortrait:hover, .easyPrintLandscape:hover{
+      background-color: #757570;
+      cursor: pointer;
+    }`;
+    document.body.appendChild(css);
+  },
+
+  _dataURItoBlob: function (dataURI) {
+    var byteString = atob(dataURI.split(',')[1]);
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var dw = new DataView(ab);
+    for(var i = 0; i < byteString.length; i++) {
+        dw.setUint8(i, byteString.charCodeAt(i));
+    }
+    return new Blob([ab], {type: mimeString});
+  },
+
+  _togglePageSizeButtons: function (e) {
+    var holderStyle = this.holder.style
+    var linkStyle = this.link.style
+    if (e.type === 'mouseover') {
+      holderStyle.display = 'block';
+      linkStyle.borderTopRightRadius = '0'
+      linkStyle.borderBottomRightRadius = '0'
+    } else {
+      holderStyle.display = 'none';
+      linkStyle.borderTopRightRadius = '2px'
+      linkStyle.borderBottomRightRadius = '2px'
+    }
+  },
+
+  _toggleControls: function (show) {
+    var controlContainer = document.getElementsByClassName("leaflet-control-container")[0];
+    if (show) return controlContainer.style.display = 'block';
+    controlContainer.style.display = 'none';
+  },
+  _toggleClasses: function (classes, show) {
+    classes.forEach(function (className) {
+      var div = document.getElementsByClassName(className)[0];
+      if (show) return div.style.display = 'block';
+      div.style.display = 'none';
+    });
+  },
+
+  _a4PageSize: {
+    height: 715,
+    width: 1045
+  }
+
+});
+
+L.easyPrint = function(options) {
+  return new L.Control.EasyPrint(options);
+};
+
+var printer = L.easyPrint({
+      		tileLayer: tiles,
+      		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+      		filename: 'myMap',
+      		exportOnly: true,
+      		hideControlContainer: true
+		}).addTo(map);
+
+		function manualPrint () {
+			printer.printMap('CurrentSize', 'MyManualPrint')
+		}
 })
