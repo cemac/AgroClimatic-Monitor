@@ -611,11 +611,12 @@ L.easyPrint = function(options) {
   return new L.Control.EasyPrint(options);
 };
 
-var printer = L.easyPrint({
+L.easyPrint({
       		tileLayer: w,
-      		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
+      		sizeModes: ['Current'],
       		filename: 'myMap',
       		exportOnly: true,
+          position: 'topleft'
 		}).addTo(mymap);
 
 })
