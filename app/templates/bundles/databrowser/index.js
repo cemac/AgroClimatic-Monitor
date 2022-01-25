@@ -45,7 +45,7 @@ d3.json('/allfiles').then(fall => {
   })
   image.addTo(mymap);
 
-  currentfile2 = '/data/br-02.png'
+  currentfile2 = '/br-02.png'
   const image2 = L.imageOverlay(currentfile2, bounds, {
     preserveAspectRatio: "none",
     opacity: .9
