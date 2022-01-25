@@ -23,7 +23,7 @@ d3.json('/allfiles').then(fall => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
       subdomains: "abcd",
       opacity: 0.8,
-      crossOrigin: "use-credentials"
+      crossOrigin: "anonymous"
     }
   );
   mymap.addLayer(w);
@@ -612,7 +612,7 @@ L.easyPrint = function(options) {
 };
 
 var printer = L.easyPrint({
-      		tileLayer: tiles,
+      		tileLayer: w,
       		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
       		filename: 'myMap',
       		exportOnly: true,
