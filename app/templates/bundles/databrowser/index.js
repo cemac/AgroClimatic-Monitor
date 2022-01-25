@@ -19,7 +19,7 @@ d3.json('/allfiles').then(fall => {
   // added crossOrigin anonymous use-credentials null/false
   var w = L.tileLayer(
     //'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    "https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png", {
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="https://carto.com/attributions">CARTO</a>|CEMAC',
       subdomains: "abcd",
       opacity: 0.8,
@@ -158,15 +158,16 @@ d3.json('/allfiles').then(fall => {
   };
 
 /*
-  NOTE ON BIG IMAGE
+  NOTE ON Easy Print
 
   The code below adds a save image button to the leadlet map
 
-  I've had to dump the whole of bigImage into the code here in order to load
+  I've had to dump the whole of easy print code into the code here in order to load
   in the code because it rewrites leaflets L function. so L would require two
   modules and I couldn't find a smoother way to to get this to work
 
-  I've altered to code to pick up svg images as well
+  Code from
+  https://github.com/rowanwins/leaflet-easyPrint
 */
 var domtoimage = require('dom-to-image');
 var fileSaver = require('file-saver');
@@ -614,9 +615,9 @@ L.easyPrint = function(options) {
 L.easyPrint({
       		tileLayer: w,
       		sizeModes: ['Current'],
-      		filename: 'myMap',
+      		filename: 'AgroClimaticMontitor',
       		exportOnly: true,
-          position: 'topleft'
+          position: 'topright'
 		}).addTo(mymap);
 
 })
