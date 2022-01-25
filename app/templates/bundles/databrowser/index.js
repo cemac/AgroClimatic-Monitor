@@ -41,9 +41,16 @@ d3.json('/allfiles').then(fall => {
   currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
   const image = L.imageOverlay(currentfile, bounds, {
     preserveAspectRatio: "none",
-    opacity: .5
+    opacity: .3
   })
   image.addTo(mymap);
+
+  currentfile2 = '/data/br-02.png'
+  const image2 = L.imageOverlay(currentfile2, bounds, {
+    preserveAspectRatio: "none",
+    opacity: .9
+  })
+  image2.addTo(mymap);
   mymap.doubleClickZoom.disable()
   mymap.options.minZoom = 3;
   mymap.options.maxZoom = 8;
