@@ -616,10 +616,6 @@ var printer = L.easyPrint({
       		sizeModes: ['Current', 'A4Landscape', 'A4Portrait'],
       		filename: 'myMap',
       		exportOnly: true,
-      		hideControlContainer: true
-		}).addTo(map);
+		}).addTo(mymap);
 
-		function manualPrint () {
-			printer.printMap('CurrentSize', 'MyManualPrint')
-		}
 })
