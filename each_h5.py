@@ -140,7 +140,6 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
 
             selection = shape[1].geometry
             sname = str(shape[1].GEOCODIGO)
-            print(sname)
             name = shape[1].NOME
             if not name:
                 continue
