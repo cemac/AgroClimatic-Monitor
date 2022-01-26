@@ -41,7 +41,7 @@ d3.json('/allfiles').then(fall => {
   currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
   const image = L.imageOverlay(currentfile, bounds, {
     preserveAspectRatio: "none",
-    opacity: .3
+    opacity: .8
   })
   image.addTo(mymap);
   /*
