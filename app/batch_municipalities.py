@@ -7,4 +7,7 @@ from serverscripts.get_individual import m_new
 df = pd.read_csv(PROCESSED+'geojson/search.csv')
 for key in df.iterrows():
     code = key[1].val
-    m_new(code)
+    try:
+        m_new(code)
+    except IndexError:
+        print('skipping '+ code)
