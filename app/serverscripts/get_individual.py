@@ -86,7 +86,7 @@ def m_new(code):
         df = pd.Series([selection[i].attrs['median'] for i in selection],
                        index=pd.to_datetime(dtstr).to_period('M')
                        )
-
+        df.dropna(inplace=True)
         try:
             jsn['cat'], jsn['lim'] = categorize(df.values, indicate)
             jsn['catlims'] = cat_lims[indicate][0]
