@@ -1,10 +1,13 @@
 import rasterio as rio
 from rasterio.plot import show
-from rasterio.warp import reproject, Resampling
+from rasterio.crs import CRS
+import rioxarray as rxr
 import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import os
+
+bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
@@ -12,15 +15,23 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
     #    return None  # exists
 
     plt.cla()
-    ra = rio.open(loc)
-    bounds = ra.bounds
-    ratio = ra.width / ra.height
+    ra = rxr.open_rasterio(loc,masked=True).squeeze()
+    projection = str(ra.rio.crs)
+    if projection == 'EPSG:3857':
+        print('reprojecting from EPSG:3857 to EPSG:4326')
+        # Create a rasterio crs object for wgs 84 crs - lat / lon
+        crs_wgs84 = CRS.from_string('EPSG:4326')
+        # reproject to EPSG:4326
+        ra = ra.rio.reproject(crs_wgs84)
+    bounds = ra.rio.bounds
+    ratio = ra.rio.width / ra.rio.height
     my_dpi = 70
     width = 400
     height = int(.85 * width * ratio)
     plt.figure(figsize=(width / my_dpi, height / my_dpi), dpi=70)
     ax=plt.gca()
     plt.axis('off')
+    #ra.plot.imshow(ax=ax, cmap=cmap, norm=norm)
     show(ra, cmap=cmap, norm=norm, with_bounds=True,ax=ax)
     plt.tight_layout()
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
