@@ -10,4 +10,4 @@ for key in df.iterrows():
     try:
         m_new(code)
     except IndexError:
-        print('skipping '+ code)
+        print('skipping '+ str(code))
