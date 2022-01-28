@@ -6,6 +6,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import os
+import rasterio
 
 bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
 
@@ -23,6 +24,12 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         crs_wgs84 = CRS.from_string('EPSG:4326')
         # reproject to EPSG:4326
         ra = ra.rio.reproject(crs_wgs84)
+        ra.rio.to_raster('./temp.tif')
+        data = rasterio.open('./temp.tif')
+        os.system('rm ./temp.tif')
+    else:
+        data = rasterio.open(loc)
+    ra = rxr.open_rasterio(loc,masked=True).squeeze()
     bounds = ra.rio.bounds
     ratio = ra.rio.width / ra.rio.height
     my_dpi = 70
@@ -32,7 +39,9 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
     ax=plt.gca()
     plt.axis('off')
     #ra.plot.imshow(ax=ax, cmap=cmap, norm=norm)
-    show(ra, cmap=cmap, norm=norm, with_bounds=True,ax=ax)
+    show(data, cmap=cmap, norm=norm, with_bounds=True,ax=ax)
+    plt.xlim(bbox[-1], bbox[1])
+    plt.ylim(bbox[-2], bbox[0])
     plt.tight_layout()
     plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
     plt.text(.95, .95, '-'.join(name.split('-')[::-1]), horizontalalignment='center',
