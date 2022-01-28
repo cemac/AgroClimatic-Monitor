@@ -27,8 +27,6 @@ polydata.GEOCODIGO = polydata.GEOCODIGO.astype(str)
 
 
 def categorize(x, idn):
-    print('x','ind')
-    print(x, idn)
     lims = cat_lims[idn]
     arr = []
     last = False
@@ -93,6 +91,7 @@ def m_new(code):
             jsn['cat'], jsn['lim'] = categorize(df.values, indicate)
             jsn['catlims'] = cat_lims[indicate][0]
         except Exception as p:
+            print('error')
             print(p, code, indicate)
             continue
 
@@ -105,8 +104,6 @@ def m_new(code):
             jsn[i] = list(jsn[i])
 
         if jsn != {}:
-            print('indicate:')
-            print(indicate)
             jsn_grp[indicate] = jsn
 
         h5file.close()
