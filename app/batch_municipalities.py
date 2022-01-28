@@ -8,6 +8,6 @@ df = pd.read_csv(PROCESSED+'geojson/search.csv')
 for key in df.iterrows():
     code = key[1].val
     try:
-        m_new(code)
-    except IndexError:
+        m_new(str(code))
+    except:
         print('skipping '+ str(code))
