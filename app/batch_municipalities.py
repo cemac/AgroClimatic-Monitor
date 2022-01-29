@@ -9,5 +9,5 @@ for key in codelist.iterrows():
     code = str(key[1].val)
     try:
         m_new(code)
-    except PermissionError:
+    except:
         continue
