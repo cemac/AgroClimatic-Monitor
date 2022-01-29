@@ -93,7 +93,7 @@ def m_new(code):
             print('error')
             print(p, code, indicate)
             continue
-
+        print(df)
         jsn['x'] = df.index.astype('str')
         jsn['y'] = df.values
 
