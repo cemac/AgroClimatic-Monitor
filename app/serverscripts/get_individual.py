@@ -69,11 +69,11 @@ def m_new(code):
     # code = code.replace('file_','').replace('.json')
     global polydata
     print(polydata.GEOCODIGO.values, code, '\n\n\n\n\n\n\n\n')
-
     start = time.time()
     jsn_grp = {}
     for hf in h5locs:
         indicate = hf.replace(PROCESSED + 'data_', '').replace('.h5', '')
+        print(indicate)
         h5file = h5py.File(hf, 'r')
         jsn = {}
         try:
@@ -99,8 +99,6 @@ def m_new(code):
         jsn['y'] = df.values
 
         for i in jsn:
-            print('jsn i')
-            print(jsn[i])
             jsn[i] = list(jsn[i])
 
         if jsn != {}:
@@ -145,7 +143,6 @@ def m_new(code):
         jsn = {}
 
     jsn_grp['SPI'] = jsn
-
     json.dump(jsn_grp, open(location + 'file_%s.json' % code, 'w'))
 
     print(time.time() - start)
