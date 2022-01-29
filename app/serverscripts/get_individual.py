@@ -65,7 +65,6 @@ Open HDF5 datafile
 
 
 def m_new(code):
-
     # code = code.replace('file_','').replace('.json')
     global polydata
     print(polydata.GEOCODIGO.values, code, '\n\n\n\n\n\n\n\n')
@@ -73,19 +72,19 @@ def m_new(code):
     jsn_grp = {}
     for hf in h5locs:
         indicate = hf.replace(PROCESSED + 'data_', '').replace('.h5', '')
-        print(indicate)
         h5file = h5py.File(hf, 'r')
         jsn = {}
         try:
             selection = h5file[code]
             dtstr = [i + '-01 00:00:00' for i in selection]
         except Exception as e:
+            'failed to select'
             print(e)
             continue
 
         df = pd.Series([selection[i].attrs['median'] for i in selection],
-                       index=pd.to_datetime(dtstr).to_period('M')
-                       )
+               index=pd.to_datetime(dtstr).to_period('M')
+               )
         df.dropna(inplace=True)
         try:
             jsn['cat'], jsn['lim'] = categorize(df.values, indicate)
@@ -136,7 +135,6 @@ def m_new(code):
             yv[i].append(0)
 
     if len(yv) > 0:
-
         jsn['y'] = list(np.array(yv).mean(axis=0))
         jsn['cat'], jsn['lim'] = categorize(jsn['y'], indicate)
     else:
