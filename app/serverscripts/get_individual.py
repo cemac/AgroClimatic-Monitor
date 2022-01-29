@@ -140,8 +140,7 @@ def m_new(code):
         jsn = {}
 
     jsn_grp['SPI'] = jsn
-    print(jsn_grp)
-    json.dump(jsn_grp, open(location + 'file_%s.json' % code, 'w'))
+    json.dump(str(jsn_grp), open(location + 'file_%s.json' % code, 'w'))
 
     print(time.time() - start)
     return True
