@@ -93,7 +93,6 @@ def m_new(code):
             print('error')
             print(p, code, indicate)
             continue
-        print(df)
         jsn['x'] = df.index.astype('str')
         jsn['y'] = df.values
 
@@ -141,6 +140,7 @@ def m_new(code):
         jsn = {}
 
     jsn_grp['SPI'] = jsn
+    print(jsn_grp)
     json.dump(jsn_grp, open(location + 'file_%s.json' % code, 'w'))
 
     print(time.time() - start)
