@@ -65,6 +65,7 @@ Open HDF5 datafile
 
 
 def m_new(code):
+
     # code = code.replace('file_','').replace('.json')
     global polydata
     print(polydata.GEOCODIGO.values, code, '\n\n\n\n\n\n\n\n')
@@ -78,13 +79,12 @@ def m_new(code):
             selection = h5file[code]
             dtstr = [i + '-01 00:00:00' for i in selection]
         except Exception as e:
-            'failed to select'
             print(e)
             continue
 
         df = pd.Series([selection[i].attrs['median'] for i in selection],
-               index=pd.to_datetime(dtstr).to_period('M')
-               )
+                       index=pd.to_datetime(dtstr).to_period('M')
+                       )
         df.dropna(inplace=True)
         try:
             jsn['cat'], jsn['lim'] = categorize(df.values, indicate)
@@ -93,6 +93,7 @@ def m_new(code):
             print('error')
             print(p, code, indicate)
             continue
+
         jsn['x'] = df.index.astype('str')
         jsn['y'] = df.values
 
@@ -110,11 +111,9 @@ def m_new(code):
 
     jsn_grp['geox'] = poly[0]
     jsn_grp['geoy'] = poly[1]
-
     jsn_grp['micro'] = it['MICROREGIA'].values[0]
     jsn_grp['macro'] = it['MESOREGIAO'].values[0]
     jsn_grp['id'] = it['id'].values[0]
-
     jsn = {}
     yv = []
     maxl = 0
@@ -127,7 +126,6 @@ def m_new(code):
             #jsn['lim'] = spd['lim']
             jsn['catlims'] = spd['catlims']
             maxl = max(maxl, len(jsn['x']))
-
     # lazily expand array
     for i in range(len(yv)):
         for j in range(maxl - len(yv[i])):
@@ -140,8 +138,7 @@ def m_new(code):
         jsn = {}
 
     jsn_grp['SPI'] = jsn
-    json.dump(str(jsn_grp), open(location + 'file_%s.json' % code, 'w'))
-
+    json.dump(jsn_grp, open(location + 'file_%s.json' % code, 'w'))
     print(time.time() - start)
     return True
 
