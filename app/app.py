@@ -375,7 +375,9 @@ def getidata(item):
     except FileNotFoundError:
         print('no json file found. Generating...')
         m_new(item)
-
+        
+    print('getidata')
+    print(fitem)
     print('%s%s/' % (PROCESSED, folder), '\n\n\n')
 
     return send_from_directory('%s%s/' % (PROCESSED, folder), fitem, as_attachment=True)
