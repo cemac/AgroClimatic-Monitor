@@ -17,23 +17,37 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         return None  # exists
 
     plt.cla()
-    try:
-        ra = rxr.open_rasterio(loc,masked=True).squeeze()
-    except ValueError:
-        ra= rxr.open_rasterio(loc, decode_times=False).squeeze()
 
-    projection = str(ra.rio.crs)
-    if projection == 'EPSG:3857':
-        print('reprojecting from EPSG:3857 to EPSG:4326')
-        # Create a rasterio crs object for wgs 84 crs - lat / lon
-        crs_wgs84 = CRS.from_string('EPSG:4326')
-        # reproject to EPSG:4326
-        ra = ra.rio.reproject(crs_wgs84)
-        ra.rio.to_raster('./temp.tif')
-        data = rasterio.open('./temp.tif')
-        os.system('rm ./temp.tif')
-    else:
-        data = rasterio.open(loc)
+    try:
+        ra=rxr.open_rasterio(loc, masked=True).squeeze()
+        # check projection
+        projection = str(ra.rio.crs)
+        if projection == 'EPSG:3857':
+            print('reprojecting from EPSG:3857 to EPSG:4326')
+            crs_wgs84 = CRS.from_string('EPSG:4326')
+            # reproject to EPSG:4326
+            ra = ra.rio.reproject(crs_wgs84)
+            ra.rio.to_raster('./temp.tif')
+            data = rasterio.open('./temp.tif')
+            os.system('rm ./temp.tif')
+        else:
+            data = rasterio.open(loc)
+    except ValueError:
+        'Strang Mask or time values'
+        ra=rxr.open_rasterio(loc, decode_times=False).squeeze()
+        # check projection
+        projection = str(ra.rio.crs)
+        if projection == 'EPSG:3857':
+            print('reprojecting from EPSG:3857 to EPSG:4326')
+            crs_wgs84 = CRS.from_string('EPSG:4326')
+            # reproject to EPSG:4326
+            ra = ra.rio.reproject(crs_wgs84)
+            ra.rio.to_raster('./temp.tif')
+            data = rasterio.open('./temp.tif')
+            os.system('rm ./temp.tif')
+        else:
+            data = rasterio.open(loc)
+
 
     try:
         ra = rxr.open_rasterio(loc,masked=True).squeeze()

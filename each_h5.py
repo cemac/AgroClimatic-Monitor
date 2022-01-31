@@ -119,22 +119,34 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
         #    continue # this file is older than the combigned one - ignore.
         #data = rasterio.open(f)
         try:
-            ra= rxr.open_rasterio(f, masked=True).squeeze()
+            ra=rxr.open_rasterio(f, masked=True).squeeze()
+            # check projection
+            projection = str(ra.rio.crs)
+            if projection == 'EPSG:3857':
+                print('reprojecting from EPSG:3857 to EPSG:4326')
+                crs_wgs84 = CRS.from_string('EPSG:4326')
+                # reproject to EPSG:4326
+                ra = ra.rio.reproject(crs_wgs84)
+                ra.rio.to_raster('./temp.tif')
+                data = rasterio.open('./temp.tif')
+                os.system('rm ./temp.tif')
+            else:
+                data = rasterio.open(f)
         except ValueError:
-            ra= rxr.open_rasterio(f, decode_times=False).squeeze()
-
-        # check projection
-        projection = str(ra.rio.crs)
-        if projection == 'EPSG:3857':
-            print('reprojecting from EPSG:3857 to EPSG:4326')
-            crs_wgs84 = CRS.from_string('EPSG:4326')
-            # reproject to EPSG:4326
-            ra = ra.rio.reproject(crs_wgs84)
-            ra.rio.to_raster('./temp.tif')
-            data = rasterio.open('./temp.tif')
-            os.system('rm ./temp.tif')
-        else:
-            data = rasterio.open(f)
+            'Strang Mask or time values'
+            ra=rxr.open_rasterio(f, decode_times=False).squeeze()
+            # check projection
+            projection = str(ra.rio.crs)
+            if projection == 'EPSG:3857':
+                print('reprojecting from EPSG:3857 to EPSG:4326')
+                crs_wgs84 = CRS.from_string('EPSG:4326')
+                # reproject to EPSG:4326
+                ra = ra.rio.reproject(crs_wgs84)
+                ra.rio.to_raster('./temp.tif')
+                data = rasterio.open('./temp.tif')
+                os.system('rm ./temp.tif')
+            else:
+                data = rasterio.open(f)
 
         fname = f.split('/')[-1].replace('.tiff',
                                          '').replace('.tif', '').replace(i_kind + '_', '')
@@ -153,7 +165,7 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
         #  getpng(loc, name, what, cmap, norm, where='./processed/plotdata/')
 
         dc.getpng(f, fname, i_kind, cmap, norm, imageloc)
-
+        
         for shape in brazil.iterrows():
             # polygon shapes
             selection = shape[1].geometry
