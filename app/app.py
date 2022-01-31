@@ -369,7 +369,8 @@ def getidata(item):
         test=os.path.getmtime(jsn)
         if (os.path.getmtime(jsn) < updated):
             print('NEW DATA AVAILABLE')
-            m_new(item)
+            print('gateway time out means done do anything')
+            #m_new(item)
             # Not sure what the assert false was about
             #assert False
     except FileNotFoundError:
