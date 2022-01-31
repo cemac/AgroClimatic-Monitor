@@ -24,11 +24,11 @@ programadores da University of Leeds e Cemaden regularmente atualiza e mantém e
 ferramenta da web, que foi financiada pelo programa Met Office CSSP-Brasil. Para
 obter mais informações, consulte nossa página “Sobre nós”.
 
-<h3>Infomation Pages</h3>
+<h3>Páginas Informativas</h3>
  <ul>
-  <li>Apresentacao <a href="/data/pdfs/1_Apresentacao_PT.pdf" target="_blank">baixar</a></li>
-  <li>Plataforma_Agroclimatic <a href="/data/pdfs/2_Plataforma_Agroclimatic_PT.pdf" target="_blank">baixar</a></li>
-  <li>Recomendacoes_Adaptacao <a href="/data/pdfs/4_Recomendacoes_Adaptacao_PT.pdf" target="_blank">baixar</a></li>
+  <li>Apresentação <a href="/data/pdfs/1_Apresentacao_PT.pdf" target="_blank">baixar</a></li>
+  <li>A Plataforma <a href="/data/pdfs/2_Plataforma_Agroclimatic_PT.pdf" target="_blank">baixar</a></li>
+  <li>Recomendações de Adaptação <a href="/data/pdfs/4_Recomendacoes_Adaptacao_PT.pdf" target="_blank">baixar</a></li>
 </ul>
 
 <img src='/data/geojson/ini2.jpg' style="width:100%"></img>
