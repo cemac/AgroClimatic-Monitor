@@ -346,8 +346,9 @@ def getindi(lang, geoid):
     layout = 'layout.html'
     if lang == 'br':
         layout = 'layout_br.html'
-
-    page = 'individual.html'
+        page = 'individual_br.html'
+    else:
+        page = 'individual.html'
     return render_template(page, layout=layout,  title=ov.data_brows_title, hash=geoid)
 
 
