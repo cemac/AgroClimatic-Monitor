@@ -11,8 +11,8 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Index Animation for {{indicator}}</h1>
-                        <a id='movielink' href='/data/movies/{{indicator}}.webm' class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Download Movie</a>
+                      <!--   <a id='movielink' href='/data/movies/{{indicator}}.webm' class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Download Movie</a>-->
                     </div>
 
 
@@ -22,13 +22,13 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
-                                
+
                                 </div>
                                 <div style="width:auto;height:auto;margin:20px">
-                        
+
                                         {{textbox1}}
-                            
-                                    
+
+
                                     <!-- end content -->
                                 </div>
                             </div>
@@ -47,11 +47,11 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary" id='mapname'>Map - {{indicator}}</h6>
-                                
+
                                 </div>
-                                
+
                                 <div id='lmap' style="width:auto;height:700px">
-                                    
+
                                 </div>
                             </div>
 
@@ -62,14 +62,14 @@
 
 
 
-    
-    
+
+
 
 
 
 {% endblock content %}
 
-{% block scripts %} 
+{% block scripts %}
 <style>
     button[class='leaflet-control']{width:8rem}
 </style>
