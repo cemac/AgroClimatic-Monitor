@@ -226,6 +226,9 @@ def not_found(e):
 def not_found500(e):
     return render_template("500.html", number=500)
 
+@app.errorhandler(504)
+def not_found504(e):
+    return render_template("504.html", number=504)
 
 @app.route('/error/<number>/<message>/')
 def not_foundcustom(number, message):
