@@ -12,8 +12,9 @@ bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
-    #if os.path.isfile('%s%s_%s.png' % (where, name, what)):
-    #    return None  # exists
+    if os.path.isfile('%s%s_%s.png' % (where, name, what)):
+        print('png already exists skipping ', where, ' ', name,' ', what)
+        return None  # exists
 
     plt.cla()
     ra = rxr.open_rasterio(loc,masked=True).squeeze()
