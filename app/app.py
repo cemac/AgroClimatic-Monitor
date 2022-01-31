@@ -150,14 +150,16 @@ def home(lang):
         return redirect('/upload')
     if lang == 'br':
         atext = ini_br
+        Title='Bem vindo!'
     else:
         atext = ini_en
+        Title='Welcome!'
 
     layout = 'layout.html'
     if lang == 'br':
         layout = 'layout_br.html'
 
-    return render_template('about.html', layout=layout, atext=atext, title='Welcome!')
+    return render_template('about.html', layout=layout, atext=atext, title=Title)
 
 
 @app.route('/<lang>/about')
@@ -185,14 +187,16 @@ def tool(lang):
         return None
     if lang == 'br':
         atext = tool_br
+        Title = "Usando a ferramenta"
     else:
         atext = tool_uk
+        Title = 'Using the Tool'
 
     layout = 'layout.html'
     if lang == 'br':
         layout = 'layout_br.html'
 
-    return render_template('about.html', layout=layout, atext=atext, title='Using the Tool')
+    return render_template('about.html', layout=layout, atext=atext, title=Title)
 
 
 @app.route('/<lang>/disclaimer')
@@ -201,14 +205,16 @@ def disc(lang):
         return None
     if lang == 'br':
         atext = disc_br
+        Title = "Informação Legal"
     else:
         atext = disc_uk
+        Title = "Disclaimer"
 
     layout = 'layout.html'
     if lang == 'br':
         layout = 'layout_br.html'
 
-    return render_template('about.html', layout=layout,  atext=atext, title='Disclaimer')
+    return render_template('about.html', layout=layout,  atext=atext, title=Title)
 
 
 @app.errorhandler(404)
