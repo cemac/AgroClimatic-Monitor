@@ -25,9 +25,9 @@ Met Office CSSP-Brazil programme. For more information please check our “About
 
 <h3>Infomation Pages</h3>
  <ul>
-  <li>Project Presentation <a href="/data/pdfs/1_Project_Presentation_EN.pdf">download</a></li>
-  <li>Platform AgroClimatic Monitor <a href="/data/pdfs/2_Platform_Agroclimatic_Monitor_EN.pdf">download</a></li>
-  <li>Modelling <a href="/data/pdfs/4_Modelling_EN.pdf">download</a></li>
+  <li>Project Presentation <a href="/data/pdfs/1_Project_Presentation_EN.pdf" target="_blank">download</a></li>
+  <li>Platform AgroClimatic Monitor <a href="/data/pdfs/2_Platform_Agroclimatic_Monitor_EN.pdf" target="_blank">download</a></li>
+  <li>Modelling <a href="/data/pdfs/4_Modelling_EN.pdf" target="_blank">download</a></li>
 </ul>
 
 
