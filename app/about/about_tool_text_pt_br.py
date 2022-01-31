@@ -15,7 +15,7 @@ como interpretar seus resultados são fornecidas abaixo:
 
  '''
 
-about_tool_textbox2_title = ''' 1. Precipitation-based drought monitoring indices '''
+about_tool_textbox2_title = ''' 1. Índices de monitoramento de seca baseados em precipitação '''
 
 about_tool_textbox2_text = '''
 
