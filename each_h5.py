@@ -121,7 +121,7 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
         try:
             ra= rxr.open_rasterio(f, masked=True).squeeze()
         except ValueError:
-            ra= rxr.open_rasterio(f, masked=True, decode_times=False).squeeze()
+            ra= rxr.open_rasterio(f, decode_times=False).squeeze()
 
         # check projection
         projection = str(ra.rio.crs)

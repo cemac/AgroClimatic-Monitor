@@ -20,7 +20,7 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
     try:
         ra = rxr.open_rasterio(loc,masked=True).squeeze()
     except ValueError:
-        ra= rxr.open_rasterio(loc, masked=True, decode_times=False).squeeze()
+        ra= rxr.open_rasterio(loc, decode_times=False).squeeze()
 
     projection = str(ra.rio.crs)
     if projection == 'EPSG:3857':
@@ -35,10 +35,10 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
     else:
         data = rasterio.open(loc)
 
-    try:    
+    try:
         ra = rxr.open_rasterio(loc,masked=True).squeeze()
     except ValueError:
-        ra = rxr.open_rasterio(loc,masked=True, decode_times=False).squeeze()
+        ra = rxr.open_rasterio(loc, decode_times=False).squeeze()
 
     bounds = ra.rio.bounds
     ratio = ra.rio.width / ra.rio.height
