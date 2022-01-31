@@ -17,7 +17,11 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         return None  # exists
 
     plt.cla()
-    ra = rxr.open_rasterio(loc,masked=True).squeeze()
+    try:
+        ra = rxr.open_rasterio(loc,masked=True).squeeze()
+    except ValueError:
+        ra= rxr.open_rasterio(loc, masked=True, decode_times=False).squeeze()
+
     projection = str(ra.rio.crs)
     if projection == 'EPSG:3857':
         print('reprojecting from EPSG:3857 to EPSG:4326')
@@ -30,7 +34,12 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         os.system('rm ./temp.tif')
     else:
         data = rasterio.open(loc)
-    ra = rxr.open_rasterio(loc,masked=True).squeeze()
+
+    try:    
+        ra = rxr.open_rasterio(loc,masked=True).squeeze()
+    except ValueError:
+        ra = rxr.open_rasterio(loc,masked=True, decode_times=False).squeeze()
+
     bounds = ra.rio.bounds
     ratio = ra.rio.width / ra.rio.height
     my_dpi = 70

@@ -118,7 +118,10 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
         #    print('Skipping:',f ,basetime, os.path.getmtime(f) )
         #    continue # this file is older than the combigned one - ignore.
         #data = rasterio.open(f)
-        ra= rxr.open_rasterio(f, masked=True).squeeze()
+        try:
+            ra= rxr.open_rasterio(f, masked=True).squeeze()
+        except ValueError:
+            ra= rxr.open_rasterio(f, masked=True, decode_times=False).squeeze()
 
         # check projection
         projection = str(ra.rio.crs)
