@@ -1,7 +1,7 @@
 
 from serverscripts.config import *
 import pandas as pd
-from serverscripts.get_individual_bactch import m_new
+from serverscripts.get_individual_batch import m_new
 
 
 codelist = pd.read_csv(PROCESSED+'geojson/search.csv')
