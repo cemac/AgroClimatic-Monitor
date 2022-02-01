@@ -5,9 +5,12 @@
     <br><br>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800" style='margin-left:10px'>Data Portal</h1>
-	    <p> This is the upload page. <br> Make sure to enter the unique user ID before uploading files.  <br> <b> Files uploaded should be in the EPSG:3857 projection! </b>  <br> All uploads override previous ones, so new files can correct (or corrupt) older ones.
+	    <p> This is the upload page. <br> Make sure to enter the unique user ID before uploading files.  <br> <b> Files uploaded should be in the EPSG:3857 or EPSG:4326 projection</b>  <br> All uploads override previous ones, so new files can correct (or corrupt) older ones.
 	    </p>
-
+<p><b>please use the following file name convention:</b>
+<br>
+    index_name_YYYY_MM.tif (where index_name can take: IIS3, RZSM, SPI01, SPI03, SPI06 and SPI12)
+</p>
     </div>
 
 
@@ -28,8 +31,8 @@
 
 
                         <h8 class="m-0">Upload Code</h8><br>
-                        <span> 
-                        
+                        <span>
+
                         <input id='psw' name="psw" type="password" onkeydown="return (event.keyCode!=13);"/></span>
 
                         <br><br>
@@ -48,12 +51,12 @@
 
             <div class="col-xl-12 col-lg-0">
                 <div class="card shadow mb-4" id="drop-area">
-                
+
 
 
                     <label class="card shadow mb-4 m-0 font-weight-bold text-primary button" for="fileElem">Add files one at a time</label>
                         <p id='status'></p>
-            
+
 
 
 
@@ -72,9 +75,9 @@
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Existing Uploads</h6>
                             </div>
-                            
+
                             {{uploads}}
-                            
+
                             <p>
                                 {% with messages = get_flashed_messages() %} {% if messages %}
                                 <ul class=flashes>
@@ -84,7 +87,7 @@
                                 </ul>
                                 {% endif %} {% endwith %}
                             </p>
-                            
+
                             <progress id="progress-bar" max="100" value="10"></progress>
                             <div id="gallery"></div>
                                 <!-- end content -->
@@ -105,7 +108,7 @@
      -->
 
 </div>
-    
+
 
 
 
@@ -218,7 +221,7 @@ var socket = io();
 window.onbeforeunload = function () {
         socket.emit('upload_disconnect', {'process':true});
     }
-	
+
     const dropArea = document.querySelector("#drop-area");
     const progressBar = document.querySelector("#progress-bar");
     const fileElem = document.querySelector("#fileElem");
