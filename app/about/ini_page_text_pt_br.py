@@ -26,9 +26,10 @@ obter mais informações, consulte nossa página “Sobre nós”.
 
 <h3>Páginas Informativas</h3>
  <ul>
-  <li>Apresentação <a href="/data/pdfs/1_Apresentacao_PT.pdf">baixar</a></li>
-  <li>A Plataforma <a href="/data/pdfs/2_Plataforma_Agroclimatic_PT.pdf">baixar</a></li>
-  <li>Recomendações de Adaptação <a href="/data/pdfs/4_Recomendacoes_Adaptacao_PT.pdf">baixar</a></li>
+  <li>Apresentação do projeto <a href="/data/pdfs/ficha_tecnica_1_apresentacao_PT.pdf">baixar</a></li>
+  <li>Plataforma Agroclimatic Monitor <a href="/data/pdfs/ficha_tecnica_2_plataforma_PT.pdf">baixar</a></li>
+  <li>Modelagem de impacto climático <a href="/data/pdfs/ficha_tecnica_3_modelagem_PT.pdf">baixar</a></li>
+  <li>Práticas de adaptação <a href="/data/pdfs/ficha_tecnica_4_adaptacao_PT.pdf">baixar</a></li>
 </ul>
 
 <img src='/data/geojson/ini2.jpg' style="width:100%"></img>
