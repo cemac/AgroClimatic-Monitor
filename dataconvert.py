@@ -8,7 +8,9 @@ import matplotlib as mpl
 import os
 import rasterio
 
-bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
+#bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
+# in EPSG 3857 co ords
+bbox = [589079.89,-4011212.80,-3966771.69,-8235756.84]
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
@@ -17,13 +19,13 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         return None  # exists
 
     plt.cla()
-
+    # Open street maps are in EPSG:3857 so either take pngs
     try:
         ra=rxr.open_rasterio(loc, masked=True).squeeze()
         # check projection
         projection = str(ra.rio.crs)
-        if projection == 'EPSG:3857':
-            print('reprojecting from EPSG:3857 to EPSG:4326')
+        if projection == 'EPSG:4326':
+            print('reprojecting from 4326 to EPSG:3857')
             crs_wgs84 = CRS.from_string('EPSG:4326')
             # reproject to EPSG:4326
             ra = ra.rio.reproject(crs_wgs84)
@@ -37,9 +39,9 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         ra=rxr.open_rasterio(loc, decode_times=False).squeeze()
         # check projection
         projection = str(ra.rio.crs)
-        if projection == 'EPSG:3857':
-            print('reprojecting from EPSG:3857 to EPSG:4326')
-            crs_wgs84 = CRS.from_string('EPSG:4326')
+        if projection == 'EPSG:4326':
+            print('reprojecting from EPSG:4326 to EPSG:3857')
+            crs_wgs84 = CRS.from_string('EPSG:3857')
             # reproject to EPSG:4326
             ra = ra.rio.reproject(crs_wgs84)
             ra.rio.to_raster('./temp.tif')
