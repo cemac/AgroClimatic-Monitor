@@ -10,7 +10,8 @@ import rasterio
 
 #bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
 # in EPSG 3857 co ords
-bbox = [589079.89,-4011212.80,-3966771.69,-8235756.84]
+# bbox = [y2,x2,y1,x1]
+bbox = [589079.89,-3770269.33,-4250392.43,-8235756.84]
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
