@@ -50,27 +50,6 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
     print('imageloc', imageloc)
     thisfile = '%sdata_%s.h5' % (dataloc, i_kind)
     print('thisfile: ', thisfile)
-    #check if h5 exists and if
-    if os.path.exists(thisfile):
-        basetime = os.path.getmtime(thisfile)
-        print('file exists and basetime: ', basetime)
-    else:
-        basetime = -0
-
-    try:
-        indicator = h5py.File(thisfile, 'a')
-        print('indicator: ', indicator)
-
-    except:
-        # try closing all instances of the file first
-        basetime = -1
-        print('deleting: ', thisfile)
-        os.system('rm ' + thisfile)
-        # input('deleting ctrl-c to cancel, enter to continue')
-        # h5file = h5py.File( datafile, 'w')
-        print('FAILED retrying')
-        indicator = h5py.File(thisfile, 'a')
-
     # How many tif files present in <STORAGE>/Data/<inidicator>/
     FILES = glob.glob(FILES)
     nfiles = len(FILES)
@@ -90,7 +69,7 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
             fname = '%s-%s' % (fname[0], fname[1])
         else:
             fname = '%s-%s' % (fname[0:4], fname[4:])
-        print(fname)
+        print(i_kind + ' : ' + fname)
 
 
     return i_kind + ' finished'
