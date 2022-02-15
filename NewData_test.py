@@ -19,7 +19,7 @@ import PostProcess
 from filenames_test import parsefiles
 import os
 import multiprocessing
-#from params import indicators, iloc
+from params import indicators, iloc
 from config import *
 imageloc = PROCESSED + 'plotdata/'
 os.system('mkdir ' + imageloc)
