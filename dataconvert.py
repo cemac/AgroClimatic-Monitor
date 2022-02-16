@@ -15,9 +15,9 @@ bbox = [589079.89,-3770269.33,-4250392.43,-8235756.84]
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
-    #if os.path.isfile('%s%s_%s.png' % (where, name, what)):
-    #    print('png already exists skipping ', where, ' ', name,' ', what)
-    #    return None  # exists
+    if os.path.isfile('%s%s_%s.png' % (where, name, what)):
+        print('png already exists skipping ', where, ' ', name,' ', what)
+        return None  # exists
 
     plt.cla()
     # Open street maps are in EPSG:3857 so either take pngs
