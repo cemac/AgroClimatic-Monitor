@@ -41,6 +41,7 @@ do
       echo $f
       #mv $f
      done
+   done
   elif [[ ${index} = "RZSM" ]];
     then
       echo "renaming RZSM to tif not tiff"
