@@ -37,6 +37,7 @@ do
      for i in ${spi_n[@]};
      do
       for f in ${data_folder}spi${i}/*;
+      do
       echo $f
       #mv $f
      done
