@@ -64,6 +64,5 @@ do
         echo $f
         #mv
       done
-    then
   fi
 done
