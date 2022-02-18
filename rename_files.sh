@@ -41,7 +41,7 @@ do
       echo $f
       #mv $f
      done
-  else [[ ${index} = "RZSM" ]];
+  elif [[ ${index} = "RZSM" ]];
     then
       echo "renaming RZSM to tif not tiff"
       for f in ${data_folder}RZSM/*;
@@ -49,14 +49,14 @@ do
         echo $f
         #mv $f "${f:0:55}"
       done
-  else [[ ${index} = "IIS3" ]];
+  elif [[ ${index} = "IIS3" ]];
     then
       for f in ${data_folder}IIS3/*;
       do
         echo $f
         #mv
       done
-  else [[ ${index} = "VHI" ]];
+  elif [[ ${index} = "VHI" ]];
     then
       for f in ${data_folder}VHI/*;
       do
