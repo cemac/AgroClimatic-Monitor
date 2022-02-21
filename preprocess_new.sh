@@ -15,11 +15,10 @@
 # activate python env
 conda activate agro-python
 # create str arrays to loop through
-declare -a index_list=("IIS3" "RZSM" "VHI" "SPI")
+declare -a index_list=("IIS3" "RZSM" "VHI" "spi")
 declare -a spi_n=("01" "03" "06" "12")
 # set file paths
 data_folder="/var/www/AgroClimatic-Monitor/uolstorage/Data/"
-spi_folder="/var/www/AgroClimatic-Monitor/uolstorage/Data/SPI/"
 upload_folder="${data_folder}upload/"
 
 echo 'moving tif to data folder'
@@ -31,24 +30,11 @@ do
 	   then
      for i in ${spi_n[@]};
      do
-      mv ${upload_folder}*/spi_${i}*.tif*  ${data_folder}/SPI/SPI${i}/
+      mv ${upload_folder}*/spi${i}*.tif*  ${data_folder}/spi${i}/
      done
   else
     mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
   fi
 done
-
-echo 'renaming spi files'
-# rename spi to spi_
-for i in ${spi_n[@]};
-do
-  for f in ${data_folder}SPI${i}/*;
-    do
-    mv $f "${f:0:55}"_"${f:55:14}"
-    mv $f "${f:0:63}""${f:64:10}"
-  done
-  mv  ${data_folder}SPI${i}/*  ${data_folder}SPI/SPI${i}/
-  done
-
 
 python NewData.py

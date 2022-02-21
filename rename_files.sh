@@ -40,7 +40,7 @@ do
       do
       echo $f
       echo ${data_folder}spi${i}/${index}${i}_${f:59:4}_${f:63:2}.tif
-      mv $f ${index}${i}_${f:59:4}_${f:63:2}.tif
+      mv $f ${data_folder}spi${i}/${index}${i}_${f:59:4}_${f:63:2}.tif
      done
    done
   elif [[ ${index} = "RZSM" ]];
@@ -49,7 +49,7 @@ do
       for f in ${data_folder}RZSM/*;
       do
         echo $f
-        echo ${data_folder}RZSM/${f:0:67}
+        echo ${f:0:67}
         mv $f ${f:0:67}
       done
   elif [[ ${index} = "IIS3" ]];
@@ -58,7 +58,7 @@ do
       do
         echo $f
         echo ${data_folder}IIS3/IIS3_${f:59:4}_${f:56:2}.tif
-        mv $f IIS3_${f:59:4}_${f:56:2}.tif
+        mv $f ${data_folder}IIS3/IIS3_${f:59:4}_${f:56:2}.tif
       done
   elif [[ ${index} = "VHI" ]];
     then
@@ -66,7 +66,8 @@ do
       do
         echo $f
         echo ${data_folder}VHI/VHI_${f:57:4}_${f:54:2}.tif
-        mv $f VHI_${f:57:4}_${f:54:2}.tif
+        mv $f ${data_folder}VHI/ls
+        VHI_${f:57:4}_${f:54:2}.tif
       done
   fi
 done
