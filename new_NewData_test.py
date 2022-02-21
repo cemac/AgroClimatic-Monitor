@@ -48,4 +48,4 @@ args = [(kind, STORAGE + iloc[kind], PROCESSED, imageloc,)
 # for each indicator run each_h5
 for item in args:
     cmd = ' '.join(['"%s"' % i for i in item])
-    os.system('python filenames_test.py ' + cmd)
+    os.system('python new_filenames_test.py ' + cmd)
