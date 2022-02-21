@@ -147,17 +147,15 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
                 os.system('rm ./temp.tif')
             else:
                 data = rasterio.open(f)
-
-        fname = f.split('/')[-1].replace('.tiff',
-                                         '').replace('.tif', '').replace(i_kind + '_', '')
-        if i_kind == 'VHI' or i_kind == 'IIS3':
-            fname = fname.split('_')
-            fname = '%s-%s' % (fname[1], fname[0])
-        elif i_kind == 'RZSM':
-            fname = fname.split('_')
-            fname = '%s-%s' % (fname[0], fname[1])
-        else:
-            fname = '%s-%s' % (fname[0:4], fname[4:])
+        # f = path/index_name>_YYYY_MM.tif
+        # get file name <index_name>_YYYY_MM.tif
+        # buy splitting at / and removing file extenstion
+        fname = f.split('/')[-1].replace('.tif', '')
+        # Now split into three <index>,<yyyy>,<mm>
+        fname = fname.split('_')
+        fname = '%s-%s' % (fname[1], fname[2])
+        print(i_kind + ' : ' + fname)
+        # perform some checks
 
         ###
         # Generate pngs used in data browser
@@ -165,7 +163,7 @@ def parsefiles(i_kind, FILES, dataloc, imageloc):
         #  getpng(loc, name, what, cmap, norm, where='./processed/plotdata/')
 
         dc.getpng(f, fname, i_kind, cmap, norm, imageloc)
-        
+
         for shape in brazil.iterrows():
             # polygon shapes
             selection = shape[1].geometry
