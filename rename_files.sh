@@ -39,7 +39,8 @@ do
       for f in ${data_folder}spi${i}/*;
       do
       echo $f
-      #mv $f
+      echo ${index}${i}_${f:59:4}_${f:63:2}.tif
+      #mv $f ${index}${i}_${f:59:4}_${f:63:2}.tif
      done
    done
   elif [[ ${index} = "RZSM" ]];
@@ -48,21 +49,24 @@ do
       for f in ${data_folder}RZSM/*;
       do
         echo $f
-        #mv $f "${f:0:55}"
+        echo ${f:0:67}
+        #mv $f ${f:0:67}
       done
   elif [[ ${index} = "IIS3" ]];
     then
       for f in ${data_folder}IIS3/*;
       do
         echo $f
-        #mv
+        echo IIS3_${f:59:4}_${f:56:2}.tif
+        #mv $f IIS3_${f:59:4}_${f:56:2}.tif
       done
   elif [[ ${index} = "VHI" ]];
     then
       for f in ${data_folder}VHI/*;
       do
         echo $f
-        #mv
+        echo VHI_${f:57:4}_${f:54:2}.tif
+        #mv $f VHI_${f:57:4}_${f:54:2}.tif
       done
   fi
 done
