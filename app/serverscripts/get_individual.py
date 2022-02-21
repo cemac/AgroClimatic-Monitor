@@ -10,16 +10,15 @@ import numpy as np
 from warnings import simplefilter
 simplefilter("ignore", FutureWarning)
 # min norm, abnorm, mod, sev, ext exception (else) max 8
-cat_lims = {"VHI": [[40, 30, 20, 12, 6], [100, 0]],  # VHI is backwards
-            "spi_01": [[-.5, -.8, -1.3, -1.6, -2], [4, -4]],
-            "spi_03": [[-.5, -.8, -1.3, -1.6, -2], [4, -4]],
-            "spi_06": [[-.5, -.8, -1.3, -1.6, -2], [4, -4]],
-            "spi_12": [[-.5, -.8, -1.3, -1.6, -2], [4, -4]],
-            "SPI": [[-.5, -.8, -1.3, -1.6, -2], [4, -4]],
+cat_lims = {"VHI":[[40,30,20,12,6],[100,0]],### VHI is backwards
+            "spi01":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi03":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi06":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "spi12":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
+            "SPI":[[-.5,-.8,-1.3,-1.6,-2],[4,-4]],
             "RZSM": [[40, 30, 20, 12, 6], [100, 0]],
-            "IIS3": [[6, 5, 4, 3, 2], [7, 0]]
+            "IIS3":[[6,5,4,3,2],[7,0]]
             }
-
 location = PROCESSED + 'muncipalities/'
 
 polydata = pd.read_csv(PROCESSED + 'geojson/poly.csv')
