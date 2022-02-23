@@ -44,7 +44,7 @@ print('CHANGE PARAM LOCATION')
 
 iloc={
 'VHI':    'VHI/VHI_*.tif',
-'spi03':  'spi03/spi03_.tif',
+'spi03':  'spi03/spi03_*.tif',
 'spi06':  'spi06/spi06_*.tif',
 'spi01':  'spi01/spi01_*.tif',
 'spi12':  'spi12/spi12_*.tif',
