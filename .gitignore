@@ -115,3 +115,14 @@ app/__pycache_
 
 # don't upload all jsons
 processed/muncipalities/*.json
+data/plotdata/*
+*.bak
+data/raster/
+processed/movies_bak/
+processed/muncipalities_bak/
+processed/plotdata/.DS_Store
+processed/plotdata/plotdata/
+processed/plotdata_bak
+data/geojson
+data/plotdata
+processed/trash/
