@@ -111,4 +111,7 @@ typings/
 
 
 __pycache__
-app/__pycache__
+app/__pycache_
+
+# don't upload all jsons
+processed/muncipalities/*.json
