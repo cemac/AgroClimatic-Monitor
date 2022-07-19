@@ -38,12 +38,12 @@ if [[ ! ${no_files} = 0  ]];
   	   then
        for i in ${spi_n[@]};
        do
-        echo "moving ${upload_folder}*/spi${i}*.tif* to ${data_folder}/spi${i}/"
+        echo "moving ${upload_folder}*/spi${i}*.tif* to ${data_folder}spi${i}/"
         #mv ${upload_folder}*/spi${i}*.tif*  ${data_folder}/spi${i}/
        done
     else
-      #echo "moving ${upload_folder}*/${index}*.tif* to ${data_folder}/${index}/"
-      mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
+      echo "moving ${upload_folder}*/${index}*.tif* to ${data_folder}${index}/"
+      #mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
     fi
   done
   #python NewData.py
