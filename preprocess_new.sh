@@ -13,6 +13,7 @@
 #                                                                          #
 ############################################################################
 # activate python env
+eval "$(/var/www/miniconda3/bin/conda shell.bash hook)"
 conda activate agro-python
 # create str arrays to loop through
 declare -a index_list=("IIS3" "RZSM" "VHI" "spi")
@@ -24,7 +25,7 @@ upload_folder="${data_folder}upload/"
 # check if new files
 no_files=$(ls -d ${upload_folder}/*/ | wc -l)
 
-if [[ ! ${no_folders} = 0 } ]];
+if [[ ! ${no_files} = 0 } ]];
 	then
 
 
