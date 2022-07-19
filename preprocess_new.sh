@@ -21,20 +21,29 @@ declare -a spi_n=("01" "03" "06" "12")
 data_folder="/var/www/AgroClimatic-Monitor/uolstorage/Data/"
 upload_folder="${data_folder}upload/"
 
-echo 'moving tif to data folder'
-# for each index mv from upload to data index folder
-for index in ${index_list[@]};
-do
-  # if its SPI then mv to corresponding SPI folder
-  if [[ ${index} = "SPI" ]];
-	   then
-     for i in ${spi_n[@]};
-     do
-      mv ${upload_folder}*/spi${i}*.tif*  ${data_folder}/spi${i}/
-     done
-  else
-    mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
-  fi
-done
+# check if new files
+no_files=$(ls -d ${upload_folder}/*/ | wc -l)
 
-python NewData.py
+if [[ ! ${no_folders} = 0 } ]];
+	then
+
+
+  echo 'moving tif to data folder'
+  # for each index mv from upload to data index folder
+  for index in ${index_list[@]};
+  do
+    # if its SPI then mv to corresponding SPI folder
+    if [[ ${index} = "spi" ]];
+  	   then
+       for i in ${spi_n[@]};
+       do
+        echo "moving ${upload_folder}*/spi${i}*.tif* to ${data_folder}/spi${i}/"
+        #mv ${upload_folder}*/spi${i}*.tif*  ${data_folder}/spi${i}/
+       done
+    else
+      #echo "moving ${upload_folder}*/${index}*.tif* to ${data_folder}/${index}/"
+      mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
+    fi
+  done
+  #python NewData.py
+fi
