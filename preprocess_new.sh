@@ -23,7 +23,7 @@ data_folder="/var/www/AgroClimatic-Monitor/uolstorage/Data/"
 upload_folder="${data_folder}upload/"
 
 # check if new files
-no_files=$(ls -d ${upload_folder}/*/ | wc -l)
+no_files=$(find ${upload_folder} -type f | wc -l)
 
 if [[ ! ${no_files} = 0  ]];
 	then
