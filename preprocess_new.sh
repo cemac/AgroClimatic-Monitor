@@ -46,5 +46,5 @@ if [[ ! ${no_files} = 0  ]];
       mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
     fi
   done
-  #python NewData.py
+  python NewData.py
 fi
