@@ -46,5 +46,6 @@ if [[ ! ${no_files} = 0  ]];
       mv ${upload_folder}*/${index}*.tif* ${data_folder}/${index}/
     fi
   done
+  cd  /var/www/AgroClimatic-Monitor
   python NewData.py
 fi
