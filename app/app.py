@@ -1,16 +1,19 @@
-'''
-The main CSSP-Brazil flask app
-
-'''
-__author__ = 'D.Ellis'
-__organisation__ = 'CEMAC'
-__contact__ = ''
-
-
-'''
-imports
-'''
-
+"""CSSP Brazil Flask App
+.. module:: app
+    :platform: Unix
+    :synopsis: Main flask app
+.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil
+   Project. This Script is the main flask application file.
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+Example:
+    To use::
+        python app.py
+        It is best to run this app via a web server gunicorn or Apache
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 # file processing (uploads)
 from flask import Flask, flash, request, redirect, render_template, url_for, Response, send_from_directory
 from flask_socketio import SocketIO

@@ -1,9 +1,22 @@
-'''
-Process individual hdf5 FILES
+"""CSSP Brazil
+.. module::
+    :platform: Unix
+    :synopsis: A script for creating or appending indicator H5 files
+.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil
+   Project. This Script takes tiff files for each indicator and appends the
+   information to munuicipatility timeseries in dataframes using a shape file to
+   determine areas. This information is stored as H5 files.
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+Example:
 
-CSSP brazil
-written by d.ellis@leeds.ac.uk for CEMAC
-'''
+    To use::
+        python each_h5.py <kind>, <STORAGE>/kind, <PROCESSED>, imageloc
+        It is best to run this app via NewData.py
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 
 import geopandas as gpd
 import rasterio

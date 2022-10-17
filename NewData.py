@@ -1,3 +1,21 @@
+"""CSSP Brazil
+.. module:: NewData
+    :platform: Unix
+    :synopsis: Batch Script for processing muncipalities
+.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil
+   Project. This Script is called to handle new data in the upload folder passing
+   to each_h5.py the storage location for the indicator, the indicaor and where
+   to put the processed files
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+Example:
+    To use::
+        python app.py
+        It is best to run this app via a web server gunicorn or Apache
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 '''
 CSSP Brazil
 

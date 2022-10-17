@@ -1,3 +1,20 @@
+"""WSGI scrip
+.. module:: wsgi
+    :platform: Unix
+    :synopsis:  WSGI script for mod_wgsi to use
+.. moduleauther: Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil 
+   Project. This Script passes information about the python environment to the
+   web server
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+Example:
+    To use::
+        python app.py
+        It is best to run this app via a web server gunicorn or Apache
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 # WSGI script for mod_wgsi to use
 # Step one activate python environment via bespoke activate_this.py (supplied in repo)
 #activate_this = '/var/www/agro-python/bin/activate_this.py'

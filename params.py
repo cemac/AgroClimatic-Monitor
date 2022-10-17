@@ -1,5 +1,16 @@
-
-
+"""CSSP Brazil
+.. module::
+    :platform: Unix
+    :synopsis: config file
+.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil
+   Project. This file is a simple configuation file defining variables used
+   accross multiple scripts
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 
 indicators = ['VHI','spi01','spi03','spi06','spi12','IIS3','RZSM']
 

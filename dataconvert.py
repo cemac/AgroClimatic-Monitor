@@ -1,3 +1,18 @@
+"""CSSP Brazil
+.. module:: dataconvert
+    :platform: Unix
+    :synopsis: Script for processing raster images
+.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. description: This module was developed by CEMAC as part of the CSSP Brazil
+   Project. This Script takes raster tifs from EPSG:4326 to EPSG:3857'.
+   Map plotting requires EPSG:3857 is Pseudo-Mercator  required for plotting on
+   open street maps, the EPSG:4326 format is required for all the exact lat lon
+   categorising from the shape files. This is called by each_h5
+   :copyright: © 2022 University of Leeds.
+   :license: GPL-3.0
+.. AgroClimatic-Monitor:
+   https://github.com/cemac/AgroClimatic-Monitor
+"""
 import rasterio as rio
 from rasterio.plot import show
 from rasterio.crs import CRS
@@ -8,10 +23,12 @@ import matplotlib as mpl
 import os
 import rasterio
 
-#bbox = [5.2842873,-33.8689056,-35.6341164,-73.9830625]
+
 # in EPSG 3857 co ords
 # bbox = [y2,x2,y1,x1]
-bbox = [589079.89,-3770269.33,-4250392.43,-8235756.84]
+bbox = [589079.89, -3770269.33, -4250392.43, -8235756.84]
+# IMPORTNAT if you get blank PNGS its likely you've put the above co ordinates
+# in the wrong projection!
 
 def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
 
@@ -36,6 +53,7 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
         else:
             data = rasterio.open(loc)
     except ValueError:
+        # A weird error is worked around by not decoding the times or mask
         'Strang Mask or time values'
         ra=rxr.open_rasterio(loc, decode_times=False).squeeze()
         # check projection
@@ -65,7 +83,6 @@ def getpng(loc, name, what, cmap, norm, where='./processed/plotdata/'):
     plt.figure(figsize=(width / my_dpi, height / my_dpi), dpi=70)
     ax=plt.gca()
     plt.axis('off')
-    #ra.plot.imshow(ax=ax, cmap=cmap, norm=norm)
     show(data, cmap=cmap, norm=norm, with_bounds=True,ax=ax)
     plt.xlim(bbox[-1], bbox[1])
     plt.ylim(bbox[-2], bbox[0])
