@@ -48,7 +48,7 @@ https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 #### update base to include data
 ```
 conda install pip;
-conda env update --file local.yml
+conda env update --file environment.yml
 
 ```
 
