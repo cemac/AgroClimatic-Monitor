@@ -42,27 +42,31 @@ tool_br = parsetext.about(about_tool_text_pt_br)
 tool_uk = parsetext.about(about_tool_text_en_uk)
 disc_br = parsetext.about(discl_liab_text_pt_br)
 disc_uk = parsetext.about(discl_liab_text_en_uk)
-ini_br = parsetext.about(ini_page_text_pt_br)
-ini_en = parsetext.about(ini_page_text_en_uk)
+ini_br  = parsetext.about(ini_page_text_pt_br)
+ini_en  = parsetext.about(ini_page_text_en_uk)
 
 
-rootdir = '/var/www/AgroClimatic-Monitor/app/'
-app = Flask('AGROCLIM_SERVER',
-            static_url_path='',  # removes path prefix requirement
-            static_folder=os.path.abspath(
-                rootdir + 'templates/static/'),  # static file location
-            template_folder=rootdir + 'templates'  # template file location
+from flask_sqlalchemy import SQLAlchemy
+from flask_statistics import Statistics
+from flask_socketio import SocketIO
+
+rootdir = apphome # taken from config settings
+# cemaccam: updated path construction to use os.path.join, to ensure slashes in correct places
+# cemaccam: added 'app' to paths, to correctly locate 'templates' directory
+app=Flask('AGROCLIM_SERVER',
+            static_url_path='', # removes path prefix requirement
+            static_folder=os.path.abspath(os.path.join(rootdir,'app','templates/static')),# static file location
+            template_folder=os.path.abspath(os.path.join(rootdir,'app','templates')) # template file location
             )
 
-
 app.secret_key = app_key
-
-
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///var/www/AgroClimatic-Monitor/statslog.sqlite3'
+# cemaccam: URI needs three slashes before the directory (so 4 in total for Unix/Mac).
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///'+os.path.join(rootdir,'statslog.sqlite3')
 app.config['DATA_LOCATION'] = PROCESSED
-app.config['MAX_CONTENT_LENGTH'] = file_mb_max * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = file_mb_max* 1024 * 1024
 
-sqlc = Database(db_loc, app_key)
+sqlc = Database(db_loc,app_key)
+
 
 
 db = SQLAlchemy(app)
@@ -87,27 +91,29 @@ class Request(db.Model):
     platform = db.Column(db.String)
     mimetype = db.Column(db.String)
 
+# cemaccam: added with app.app_context(), in response to runtime error: 'Working outside of application context.'
+with app.app_context():
+    db.create_all()
 
-db.create_all()
 statistics = Statistics(app, db, Request)
 
 
 # # Check that the upload folder exists
 def makedir(dest, upload=True):
     if upload:
-        global STAGING
-        fullpath = '%s%s' % (STAGING, dest)
+        # cemaccam: update to use more legible f-string syntax
+        fullpath = f'{STAGING}{dest}'  # '%s%s'%(STAGING,dest)
     else:
         fullpath = dest
     print('read full: ', fullpath)
     if not os.path.isdir(fullpath):
-        os.mkdir(fullpath)
-
-
+        # cemaccam: changed to os.makedirs rather than os.mkdir, to deal with any parent not existing
+        os.makedirs(fullpath)
 #
 try:
     makedir('')  # make uploads folder
 except (PermissionError, FileNotFoundError) as e:
+# except PermissionError:
     print('ERROR: STORAGE Not Readable by Apache')
     print(
         'PermissionError: [Errno 13] Permission denied: /var/www/AgroClimatic-Monitor/uolstorage/Data/upload')
@@ -256,15 +262,18 @@ def getbundle(page):
 @app.route('/allfiles/')
 def getallfiles():
     print(PROCESSED)
-    return send_from_directory('%s/' % (PROCESSED), 'allfiles.json', as_attachment=True)
+    # cemaccam: updated to use f-string syntax
+    return send_from_directory(f'{PROCESSED}/', 'allfiles.json', as_attachment=True)
 
 
 @app.route('/data/<folder>/<item>/')
 def getdata(folder, item):
+    # cemaccam: updated to use f-string syntax
+    print(f'{PROCESSED}{folder}/',folder,item,'\n\n\n')
 
-    print('%s%s/' % (PROCESSED, folder), folder, item, '\n\n\n')
+    # cemaccam: updated to use f-string syntax
+    return send_from_directory(f'{PROCESSED}{folder}/', item, as_attachment=True)
 
-    return send_from_directory('%s%s/' % (PROCESSED, folder), item, as_attachment=True)
 
 
 '''
