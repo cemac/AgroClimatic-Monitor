@@ -26,12 +26,12 @@ from serverscripts.get_individual import m_new
 from werkzeug.utils import secure_filename
 import simplejson as json
 import pandas as pd
-from params import indicators
 from pathlib import Path
 import sys, os, re, glob
 file = Path(__file__).resolve()
 parent, root = file.parent, file.parents[1]  # 1 level up
 sys.path.append(str(root))
+from params import indicators  # Needs to come after sys.path has been amended
 
 # import the about scripts
 importdir.do(str(parent) + '/about', globals())
