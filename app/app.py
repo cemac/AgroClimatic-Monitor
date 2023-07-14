@@ -2,7 +2,7 @@
 .. module:: app
     :platform: Unix
     :synopsis: Main flask app
-.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. moduleauthor: Dan Ellis & Helen Burns @ CEMAC (UoL)
 .. description: This module was developed by CEMAC as part of the CSSP Brazil
    Project. This Script is the main flask application file.
    :copyright: © 2022 University of Leeds.
@@ -514,4 +514,4 @@ if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
     # socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
-    app.run()
+    app.run(port=4000)
