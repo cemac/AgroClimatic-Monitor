@@ -5,7 +5,10 @@ var last;
 // const fall = require('/allfiles')
 d3.json('/allfiles').then(fall => {
   const keys = Object.keys(fall)
-  currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
+
+  // cemaccam: select instead latest entry as default
+  // currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
+  // currentfile = '/data/plotdata/' + fall[keys[0]][fall[keys[0]].length-1] + '/'
   //////////////////////
   //// leaflet
   //////////////////
@@ -38,14 +41,16 @@ d3.json('/allfiles').then(fall => {
     [-73.9700625, -35.6331164].reverse()
   ]);
 
-  currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
+  // load first image in first allfiles.json entry by default
+  // cemaccam: select instead latest entry as default
+  currentfile = '/data/plotdata/' + fall[keys[0]][fall[keys[0]].length - 1] + '/'  // cemaccam: duplicate of line 11
   const image = L.imageOverlay(currentfile, bounds, {
     preserveAspectRatio: "none",
     opacity: .8
   })
   image.addTo(mymap);
   /*
-  add boarders
+  add borders
   currentfile2 = '/data/plotdata/br-02.png'
   const image2 = L.imageOverlay(currentfile2, bounds, {
     preserveAspectRatio: "none",
@@ -56,18 +61,19 @@ d3.json('/allfiles').then(fall => {
   mymap.doubleClickZoom.disable()
   mymap.options.minZoom = 3;
   mymap.options.maxZoom = 8;
+
   d3.csv('/data/geojson/poly.csv/').then(e => {
     // window.d3 = d3
     // window.e = e
     // console.log(e)
     // d3.polygonHull(points);
-
+    // Create array of polygons corresponding to regions
     polygons = e.map(q => {
-      var i = eval(q.poly)
-      q.poly = d3.polygonHull(d3.zip(i[0], i[1]))
+      var i = eval(q.poly)  // i will contain an array of the polygon points
+      q.poly = d3.polygonHull(d3.zip(i[0], i[1]))  // create polygon from the x array (i[0]) & y array (i[i])
       return q
     })
-    // window.p = polygons
+    window.p = polygons  // cemaccam: uncommented, to confirm what it contains.
 
 
     function find(ev) {
@@ -87,13 +93,12 @@ d3.json('/allfiles').then(fall => {
 
     }
 
+    // respond to single and double clicks on map
     mymap.addEventListener('click', find);
     mymap.addEventListener('dblclick', (ev) => {
       console.log('DOUBLE')
       window.location.href = `/${window.location.pathname.split('/')[1]}/individual/${find(ev).GEOCODIGO}`;
     })
-
-
 
   })
   ////////////////
@@ -101,16 +106,60 @@ d3.json('/allfiles').then(fall => {
   ///////////////
   // var color = d3.interpolateViridis
   // d3.scaleOrdinal(d3.range(keys.length).map(i=>d3.interpolateViridis(i/(keys.length-1))))
-  const pt = d3.timeParse("%Y-%m")
-  const re = new RegExp('(\\d{4}-\\d{2})');
-  const sp = document.getElementById('sp')
-  var allplots = document.getElementById("summary");
+  const pt = d3.timeParse("%Y-%m")  // Year-month time parse function
+  const re = new RegExp('(\\d{4}-\\d{2})');  // match 4 digits followed by dash, then 2 digits.
+  const sp = document.getElementById('sp')  // summary title
+  var allplots = document.getElementById("summary");  // summary plot
   var allsize = allplots.getBoundingClientRect();
-  const psvg = d3.select(allplots).append("svg");
+  const psvg = d3.select(allplots).append("svg");  // set up vector graphic
   psvg.attr("width", allsize.width).attr("height", allsize.height);
-  var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(Object.values(fall).flat().map(d => pt(re.exec(d)[0]))))
-  var y = d3.scaleLinear().range([allsize.height - 50, 0]).domain([0, 7])
-  var bisect = d3.bisector(d => d).right;
+  
+  // cemaccam: TODO: change so that, by default, shows only months of most
+  // recent year:
+  // cemaccam: find latest year.
+  // first, collect all unique dates (cf https://stackoverflow.com/a/44906207)
+  var allDates = Object.values(fall).flat().map(d => pt(re.exec(d)[0])).filter(
+    (date, index, self) => self.findIndex(value => value.getTime() === date.getTime()) === index
+    );
+  // all unique years
+  var years = [...new Set(allDates.map(d => d.getFullYear()))];
+
+  // cemaccam: populate year selector drop-down, with default being latest
+  var thisYear = d3.max(years)
+  var yearSelector = document.getElementById("year")
+  var option
+  years.reverse().map(d => {
+    option = document.createElement('option')
+    option.text = d
+    option.value = d
+    yearSelector.add(option)
+  })
+  yearSelector.selectedIndex = 0
+  yearSelector.onchange = function() {
+    thisYear = yearSelector.value
+
+    // console.log(thisYear)
+  }
+  
+  // function datesInYear(dateArray, year) {
+  //   return dateArray.filter(d => d.getFullYear() == year)
+  // }
+  
+  // thisYearDates = datesInYear(allDates, lastYear)
+  // console.log(thisYearDates)
+  // console.log(keys[0] + ' : ' + fall[keys[0]].filter(f => pt(re.exec(f)[0]).getFullYear() == thisYear))
+
+  // cemaccam: get subsets of fall corresponding to these dates
+  var thisYearDates = allDates.filter(d => d.getFullYear() == thisYear)
+
+  // Then find first & last months listed for latest year.
+  // Then set time scale according to [min yyyymm, max yyyymm].
+  // Replace fall with a dictionary whose values cover only the desired range.
+  // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(Object.values(fall).flat().map(d => pt(re.exec(d)[0]))))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
+  // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(thisYearDates))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
+  var x = d3.scaleTime().range([100, allsize.width - 20]).domain([new Date(`${thisYear}-01-01`), new Date(`${thisYear}-12-31`)]).nice()  // scale months of a year to screen coordinates
+  var y = d3.scaleLinear().range([allsize.height - 50, 0]).domain([0, 7])  // 7 types of plot = 7 keys in allfiles.json
+  // var bisect = d3.bisector(d => d).right;  // cemaccam: bisect is never used
   // psvg.on("touchmove mousemove", mousemove);
   psvg
     .append("g")
@@ -119,20 +168,42 @@ d3.json('/allfiles').then(fall => {
     .call(d3.axisBottom(x));
 
 
-  keys.reverse().map((d, i) => {
+  // for each key in allfiles.json (plot type), add a row of month markers,
+  // adding in reverse order so first appears at top.
 
+  // array.map creates a new array populated with results of calling provided
+  // function on every element of original array (works as a lambda function).
+  // d here is the relevant key; i is the corresponding index.
+  
+  // cemaccam: TODO: should be adjusted to correspond to timeframe
+  // selected (default = latest year's months).
+  // Easiest way to do this is to replace fall with a subarray matching the
+  // desired year.
+
+  keys.reverse().map((d, i) => {
+    
+    // 'g' is a group element.
+    // Not sure what selectAll("d") is doing. It seems it's essentially allowing
+    // all subsequent methods in the chain to be applied to a virtual "d" 
+    // element.
+    // fall[d] is the file list associated with key d.
+    // d.target.__data__ is the specific value in the fall[d] array, i.e.
+    // file name.
+
+    // cemaccam: TODO: tidy up ticks to better fit (up to) 1 year of data.
     psvg.append('g')
-      .selectAll("d")
-      .data(fall[d])
-      .enter()
+      .selectAll("d") // create an empty selection
+      // .data(fall[d])  // fill the selected virtual "d" elements with selected data
+      .data(fall[d].filter(f => pt(re.exec(f)[0]).getFullYear() == thisYear))  // fill the selected virtual "d" elements with selected data
+      .enter()  // contains elements needing to be added to contain data
       .append("circle")
       .classed('circle', true)
       .attr("cx", function(d) {
         return x(pt(re.exec(d)[0]));
-      })
+      })  // d here is the value from fall[d]
       .attr("cy", y(i))
       .attr("r", 6)
-      .style("fill", i % 2 == 0 ? d3.color('whitesmoke').darker(.2) : '#999') //color(i%2==0?.6:.8))
+      .style("fill", i % 2 == 0 ? d3.color('whitesmoke').darker(.2) : '#999') //color(i%2==0?.6:.8))  // different shading for every 2nd line
       .style('stroke', '#222')
       .style('stroke-width', 3)
       .style('stroke-opacity', .6)
@@ -150,7 +221,7 @@ d3.json('/allfiles').then(fall => {
       })
 
 
-
+    // Give caption at start of row
     psvg.append("text")
       .attr("x", 0)
       .attr("y", y(i))
