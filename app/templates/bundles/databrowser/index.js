@@ -5,6 +5,7 @@ var last;
 // const fall = require('/allfiles')
 d3.json('/allfiles').then(fall => {
   const keys = Object.keys(fall)
+  const keys_reversed = keys.slice().reverse()
 
   // cemaccam: select instead latest entry as default
   // currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
@@ -124,8 +125,11 @@ d3.json('/allfiles').then(fall => {
   // all unique years
   var years = [...new Set(allDates.map(d => d.getFullYear()))];
 
-  // cemaccam: populate year selector drop-down, with default being latest
+  // Select latest year as default. Create summary plot.
   var thisYear = d3.max(years)
+  summaryPlot(thisYear)
+
+  // cemaccam: populate year selector drop-down, with default being latest
   var yearSelector = document.getElementById("year")
   var option
   years.reverse().map(d => {
@@ -137,98 +141,86 @@ d3.json('/allfiles').then(fall => {
   yearSelector.selectedIndex = 0
   yearSelector.onchange = function() {
     thisYear = yearSelector.value
-
+    summaryPlot(thisYear)
     // console.log(thisYear)
   }
   
-  // function datesInYear(dateArray, year) {
-  //   return dateArray.filter(d => d.getFullYear() == year)
-  // }
-  
-  // thisYearDates = datesInYear(allDates, lastYear)
-  // console.log(thisYearDates)
-  // console.log(keys[0] + ' : ' + fall[keys[0]].filter(f => pt(re.exec(f)[0]).getFullYear() == thisYear))
-
   // cemaccam: get subsets of fall corresponding to these dates
-  var thisYearDates = allDates.filter(d => d.getFullYear() == thisYear)
+  // var thisYearDates = allDates.filter(d => d.getFullYear() == thisYear)
 
-  // Then find first & last months listed for latest year.
-  // Then set time scale according to [min yyyymm, max yyyymm].
-  // Replace fall with a dictionary whose values cover only the desired range.
   // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(Object.values(fall).flat().map(d => pt(re.exec(d)[0]))))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
   // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(thisYearDates))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
-  var x = d3.scaleTime().range([100, allsize.width - 20]).domain([new Date(`${thisYear}-01-01`), new Date(`${thisYear}-12-31`)]).nice()  // scale months of a year to screen coordinates
-  var y = d3.scaleLinear().range([allsize.height - 50, 0]).domain([0, 7])  // 7 types of plot = 7 keys in allfiles.json
-  // var bisect = d3.bisector(d => d).right;  // cemaccam: bisect is never used
-  // psvg.on("touchmove mousemove", mousemove);
-  psvg
-    .append("g")
-    .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + (allsize.height - 30) + ")")
-    .call(d3.axisBottom(x));
-
-
-  // for each key in allfiles.json (plot type), add a row of month markers,
-  // adding in reverse order so first appears at top.
-
-  // array.map creates a new array populated with results of calling provided
-  // function on every element of original array (works as a lambda function).
-  // d here is the relevant key; i is the corresponding index.
-  
-  // cemaccam: TODO: should be adjusted to correspond to timeframe
-  // selected (default = latest year's months).
-  // Easiest way to do this is to replace fall with a subarray matching the
-  // desired year.
-
-  keys.reverse().map((d, i) => {
+  function summaryPlot(selectedYear) {
     
-    // 'g' is a group element.
-    // Not sure what selectAll("d") is doing. It seems it's essentially allowing
-    // all subsequent methods in the chain to be applied to a virtual "d" 
-    // element.
-    // fall[d] is the file list associated with key d.
-    // d.target.__data__ is the specific value in the fall[d] array, i.e.
-    // file name.
+    var x = d3.scaleTime().range([100, allsize.width - 20]).domain([new Date(`${selectedYear}-01-01`), new Date(`${selectedYear}-12-31`)]).nice()  // scale months of a year to screen coordinates
+    var y = d3.scaleLinear().range([allsize.height - 50, 0]).domain([0, 7])  // 7 types of plot = 7 keys in allfiles.json
+    // var bisect = d3.bisector(d => d).right;  // cemaccam: bisect is never used
+    // psvg.on("touchmove mousemove", mousemove);
+    // Clear any pre-existing data
+    psvg.selectAll('*').remove()
+    psvg
+      .append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + (allsize.height - 30) + ")")
+      .call(d3.axisBottom(x));
 
-    // cemaccam: TODO: tidy up ticks to better fit (up to) 1 year of data.
-    psvg.append('g')
-      .selectAll("d") // create an empty selection
-      // .data(fall[d])  // fill the selected virtual "d" elements with selected data
-      .data(fall[d].filter(f => pt(re.exec(f)[0]).getFullYear() == thisYear))  // fill the selected virtual "d" elements with selected data
-      .enter()  // contains elements needing to be added to contain data
-      .append("circle")
-      .classed('circle', true)
-      .attr("cx", function(d) {
-        return x(pt(re.exec(d)[0]));
-      })  // d here is the value from fall[d]
-      .attr("cy", y(i))
-      .attr("r", 6)
-      .style("fill", i % 2 == 0 ? d3.color('whitesmoke').darker(.2) : '#999') //color(i%2==0?.6:.8))  // different shading for every 2nd line
-      .style('stroke', '#222')
-      .style('stroke-width', 3)
-      .style('stroke-opacity', .6)
-      .on('click', d => {
-        console.log(d.target.__data__)
-        currentfile = '/data/plotdata/' + d.target.__data__ + '/'
-        image.setUrl(currentfile)
+    // for each key in allfiles.json (plot type), add a row of month markers,
+    // adding in reverse order so first appears at top.
 
-        d3.select('#imlink').attr('href', currentfile)
+    // array.map creates a new array populated with results of calling provided
+    // function on every element of original array (works as a lambda function).
+    // d here is the relevant key; i is the corresponding index.
+    
+    keys_reversed.map((d, i) => {
+      
+      // 'g' is a group element.
+      // Not sure what selectAll("d") is doing. It seems it's essentially allowing
+      // all subsequent methods in the chain to be applied to a virtual "d" 
+      // element.
+      // fall[d] is the file list associated with key d.
+      // d.target.__data__ is the specific value in the fall[d] array, i.e.
+      // file name.
 
-        document.getElementById('sp').innerText = d.target.__data__.replace('.png', '').replace('_', ' ')
+      // cemaccam: TODO: tidy up ticks to better fit (up to) 1 year of data.
+      psvg.append('g')
+        .selectAll("d") // create an empty selection
+        // .data(fall[d])  // fill the selected virtual "d" elements with selected data
+        .data(fall[d].filter(f => pt(re.exec(f)[0]).getFullYear() == selectedYear))  // fill the selected virtual "d" elements with selected data
+        .enter()  // contains elements needing to be added to contain data
+        .append("circle")
+        .classed('circle', true)
+        .attr("cx", function(d) {
+          return x(pt(re.exec(d)[0]));
+        })  // d here is the value from fall[d]
+        .attr("cy", y(i))
+        .attr("r", 6)
+        .style("fill", i % 2 == 0 ? d3.color('whitesmoke').darker(.2) : '#999') //color(i%2==0?.6:.8))  // different shading for every 2nd line
+        .style('stroke', '#222')
+        .style('stroke-width', 3)
+        .style('stroke-opacity', .6)
+        .on('click', d => {
+          console.log(d.target.__data__)
+          currentfile = '/data/plotdata/' + d.target.__data__ + '/'
+          image.setUrl(currentfile)
 
-        d3.selectAll('.circle').style('stroke', 'whitesmoke')
-        d3.select(d.target).style('stroke', 'red')
-      })
+          d3.select('#imlink').attr('href', currentfile)
+
+          document.getElementById('sp').innerText = d.target.__data__.replace('.png', '').replace('_', ' ')
+
+          d3.selectAll('.circle').style('stroke', 'whitesmoke')
+          d3.select(d.target).style('stroke', 'red')
+        })
 
 
-    // Give caption at start of row
-    psvg.append("text")
-      .attr("x", 0)
-      .attr("y", y(i))
-      .attr("dy", ".35em")
-      .text(d.toUpperCase().replace('_', ' ').replace('0', '').replace('IIS3', 'IDI'));
+      // Give caption at start of row
+      psvg.append("text")
+        .attr("x", 0)
+        .attr("y", y(i))
+        .attr("dy", ".35em")
+        .text(d.toUpperCase().replace('_', ' ').replace('0', '').replace('IIS3', 'IDI'));
 
-  })
+    })
+}
 
   window.onresize = reload
   window.onhashchange = reload
