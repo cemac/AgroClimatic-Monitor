@@ -141,7 +141,15 @@ d3.json('/allfiles').then(fall => {
   yearSelector.selectedIndex = 0
   yearSelector.onchange = function() {
     thisYear = yearSelector.value
+
+    // update summary plot
     summaryPlot(thisYear)
+
+    // update default plot to be latest IDI plot for selected year
+    var idiPlots = fall[keys[0]].filter(f => pt(re.exec(f)[0]).getFullYear() == thisYear)
+    currentfile = `/data/plotdata/${idiPlots[idiPlots.length - 1]}/`
+    image.setUrl(currentfile)
+    d3.select('#imlink').attr('href', currentfile)
     // console.log(thisYear)
   }
   
