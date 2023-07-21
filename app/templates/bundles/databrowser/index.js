@@ -1,15 +1,13 @@
 let d3 = require("d3");
 let L = require("leaflet");
-var currentfile = ''
+var currentfile = '';
 var last;
 // const fall = require('/allfiles')
 d3.json('/allfiles').then(fall => {
-  const keys = Object.keys(fall)
-  const keys_reversed = keys.slice().reverse()
+  const keys = Object.keys(fall);
+  const keys_reversed = keys.slice().reverse();  // this leaves keys array unchanged, to ensure summary behaves predictably when a new year is selected 
 
-  // cemaccam: select instead latest entry as default
-  // currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'
-  // currentfile = '/data/plotdata/' + fall[keys[0]][fall[keys[0]].length-1] + '/'
+  // currentfile = '/data/plotdata/' + fall[keys[0]][0] + '/'  // cemaccam: duplicated below
   //////////////////////
   //// leaflet
   //////////////////
@@ -44,7 +42,7 @@ d3.json('/allfiles').then(fall => {
 
   // load first image in first allfiles.json entry by default
   // cemaccam: select instead latest entry as default
-  currentfile = '/data/plotdata/' + fall[keys[0]][fall[keys[0]].length - 1] + '/'  // cemaccam: duplicate of line 11
+  currentfile = '/data/plotdata/' + fall[keys[0]][fall[keys[0]].length - 1] + '/'
   const image = L.imageOverlay(currentfile, bounds, {
     preserveAspectRatio: "none",
     opacity: .8
@@ -74,10 +72,11 @@ d3.json('/allfiles').then(fall => {
       q.poly = d3.polygonHull(d3.zip(i[0], i[1]))  // create polygon from the x array (i[0]) & y array (i[i])
       return q
     })
-    window.p = polygons  // cemaccam: uncommented, to confirm what it contains.
+    // window.p = polygons
 
 
     function find(ev) {
+      // Report clicked map region
       lat = ev.latlng.lat;
       lng = ev.latlng.lng;
       console.log(lat, lng)
@@ -117,7 +116,6 @@ d3.json('/allfiles').then(fall => {
   
   // cemaccam: TODO: change so that, by default, shows only months of most
   // recent year:
-  // cemaccam: find latest year.
   // first, collect all unique dates (cf https://stackoverflow.com/a/44906207)
   var allDates = Object.values(fall).flat().map(d => pt(re.exec(d)[0])).filter(
     (date, index, self) => self.findIndex(value => value.getTime() === date.getTime()) === index
@@ -140,6 +138,7 @@ d3.json('/allfiles').then(fall => {
   })
   yearSelector.selectedIndex = 0
   yearSelector.onchange = function() {
+    // when different year selected, update summary plot and map
     thisYear = yearSelector.value
 
     // update summary plot
@@ -150,46 +149,41 @@ d3.json('/allfiles').then(fall => {
     currentfile = `/data/plotdata/${idiPlots[idiPlots.length - 1]}/`
     image.setUrl(currentfile)
     d3.select('#imlink').attr('href', currentfile)
-    // console.log(thisYear)
   }
   
-  // cemaccam: get subsets of fall corresponding to these dates
-  // var thisYearDates = allDates.filter(d => d.getFullYear() == thisYear)
-
   // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(Object.values(fall).flat().map(d => pt(re.exec(d)[0]))))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
   // var x = d3.scaleTime().range([100, allsize.width - 20]).domain(d3.extent(thisYearDates))  // on each element of allfiles.json, run time parser on first (only) regex match, then set timescale to match the min & max of these yyyymm time-points. x is a function converting timepoints to x-coordinates on screen.
   function summaryPlot(selectedYear) {
     
     var x = d3.scaleTime().range([100, allsize.width - 20]).domain([new Date(`${selectedYear}-01-01`), new Date(`${selectedYear}-12-31`)]).nice()  // scale months of a year to screen coordinates
+    // nice() tidies axis to start & end on a round number (timepoint).
     var y = d3.scaleLinear().range([allsize.height - 50, 0]).domain([0, 7])  // 7 types of plot = 7 keys in allfiles.json
     // var bisect = d3.bisector(d => d).right;  // cemaccam: bisect is never used
     // psvg.on("touchmove mousemove", mousemove);
+
     // Clear any pre-existing data
     psvg.selectAll('*').remove()
+
+    // create x axis
     psvg
       .append("g")
       .attr("class", "axis axis--x")
       .attr("transform", "translate(0," + (allsize.height - 30) + ")")
       .call(d3.axisBottom(x));
 
-    // for each key in allfiles.json (plot type), add a row of month markers,
-    // adding in reverse order so first appears at top.
+    // for each key (index) in allfiles.json (plot type), add a row of month markers,
+    // adding in reverse order so first index appears at top.
 
-    // array.map creates a new array populated with results of calling provided
-    // function on every element of original array (works as a lambda function).
     // d here is the relevant key; i is the corresponding index.
-    
     keys_reversed.map((d, i) => {
       
-      // 'g' is a group element.
-      // Not sure what selectAll("d") is doing. It seems it's essentially allowing
-      // all subsequent methods in the chain to be applied to a virtual "d" 
+      // 'g' is a group element. selectAll("d") allows
+      // all subsequent methods to be applied to a virtual "d" 
       // element.
       // fall[d] is the file list associated with key d.
       // d.target.__data__ is the specific value in the fall[d] array, i.e.
       // file name.
 
-      // cemaccam: TODO: tidy up ticks to better fit (up to) 1 year of data.
       psvg.append('g')
         .selectAll("d") // create an empty selection
         // .data(fall[d])  // fill the selected virtual "d" elements with selected data
@@ -199,7 +193,7 @@ d3.json('/allfiles').then(fall => {
         .classed('circle', true)
         .attr("cx", function(d) {
           return x(pt(re.exec(d)[0]));
-        })  // d here is the value from fall[d]
+        })  // position circle using time scaling function x. d here is the value from fall[d]
         .attr("cy", y(i))
         .attr("r", 6)
         .style("fill", i % 2 == 0 ? d3.color('whitesmoke').darker(.2) : '#999') //color(i%2==0?.6:.8))  // different shading for every 2nd line
@@ -207,6 +201,7 @@ d3.json('/allfiles').then(fall => {
         .style('stroke-width', 3)
         .style('stroke-opacity', .6)
         .on('click', d => {
+          // select index and time-point; update map; highlight selection.
           console.log(d.target.__data__)
           currentfile = '/data/plotdata/' + d.target.__data__ + '/'
           image.setUrl(currentfile)
