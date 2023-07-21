@@ -24,7 +24,7 @@ see the maps for a given index and time, please click on the
 corresponding circle.
 
 Double Click on the municipality map to open the dashboard for that selected
-municipality. A time series avarage can also be downloaded for any index and municipality
+municipality. A time series average can also be downloaded for any index and municipality
 by selecting an indiviual item.
 
  '''
