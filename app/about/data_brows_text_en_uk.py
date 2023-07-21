@@ -2,10 +2,10 @@
 .. module:: about
     :platform: Unix
     :synopsis: Flask app template text
-.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. moduleauthor: Dan Ellis, Helen Burns and Cameron Wilson @ CEMAC (UoL)
 .. description: This module was developed by CEMAC as part of the CSSP Brazil
-   Project. This Script does contains text varaibles for pages
-   :copyright: © 2022 University of Leeds.
+   Project. This script contains text variables for pages.
+   :copyright: © 2022, 2023 University of Leeds.
    :license: GPL-3.0
 .. AgroClimatic-Monitor:
    https://github.com/cemac/AgroClimatic-Monitor

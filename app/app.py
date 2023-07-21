@@ -45,7 +45,6 @@ disc_uk = parsetext.about(discl_liab_text_en_uk)
 ini_br  = parsetext.about(ini_page_text_pt_br)
 ini_en  = parsetext.about(ini_page_text_en_uk)
 
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
 from flask_socketio import SocketIO
@@ -514,4 +513,4 @@ if __name__ == "__main__":
     print('to upload files navigate to http://127.0.0.1:57263/upload')
     # lets run this on localhost port 4000
     # socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
-    app.run(port=4000)
+    app.run(port=4000)  # cemaccam: added port specification, to allow tunnelling; can remove for release version.
