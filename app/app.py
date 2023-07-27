@@ -344,7 +344,7 @@ def getdatamap(lang):
                            textbox1=f(ov.data_brows_textbox1), table=table,
                            button=button, subtitle1=subtitle1,
                            subtitle2=subtitle2, subtitle3=subtitle3,
-                           subtitle4=subtitle4)
+                           subtitle4=subtitle4, textbox2=ov.data_brows_textbox2)
 
 
 '''

@@ -28,3 +28,5 @@ municipality. A time series average can also be downloaded for any index and mun
 by selecting an indiviual item.
 
  '''
+
+data_brows_textbox2 = 'Select Year'
