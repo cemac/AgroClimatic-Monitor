@@ -45,7 +45,6 @@ disc_uk = parsetext.about(discl_liab_text_en_uk)
 ini_br  = parsetext.about(ini_page_text_pt_br)
 ini_en  = parsetext.about(ini_page_text_en_uk)
 
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_statistics import Statistics
 from flask_socketio import SocketIO
@@ -345,7 +344,7 @@ def getdatamap(lang):
                            textbox1=f(ov.data_brows_textbox1), table=table,
                            button=button, subtitle1=subtitle1,
                            subtitle2=subtitle2, subtitle3=subtitle3,
-                           subtitle4=subtitle4)
+                           subtitle4=subtitle4, textbox2=ov.data_brows_textbox2)
 
 
 '''
@@ -511,7 +510,7 @@ def data_get(upload_id):
         return ','.join([i.rsplit('/', 1)[1] for i in files])
 
 if __name__ == "__main__":
-    print('to upload files navigate to http://127.0.0.1:57263/upload')
+    print('to upload files navigate to http://127.0.0.1:57263/upload')  # cemaccam: updated to match port specification # hburns Set to production value
     # lets run this on localhost port 4000
     # socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
-    app.run(port=4000)
+    app.run()  # cemaccam: added port specification, to allow tunnelling; can remove for release version. #hburns removed for production version

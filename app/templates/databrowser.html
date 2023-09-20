@@ -27,8 +27,18 @@
     <div class="row">
         <div class="col-xl-12 col-lg-0">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary" id='sp'>{{subtitle2}}</h6>
+                <div class="card-header fluid-container py-0">
+                  <div class="row">
+                    <h6 class="col font-weight-bold text-primary py-3" id='sp'>{{subtitle2}}</h6>
+                    <div class="col py-2">
+                      <div class="float-right">
+                        <div class="input-group">
+                          <label for="year" class="input-group-text text-primary m-0">{{textbox2}}</label>
+                          <select id="year" name="year" class="form-select m-0" aria-label="Year Selection Menu"></select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div style="width:auto;height:180px;margin:20px" id='summary'>
                   <!-- end content -->
