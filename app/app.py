@@ -510,7 +510,7 @@ def data_get(upload_id):
         return ','.join([i.rsplit('/', 1)[1] for i in files])
 
 if __name__ == "__main__":
-    print('to upload files navigate to http://127.0.0.1:4000/upload')  # cemaccam: updated to match port specification
+    print('to upload files navigate to http://127.0.0.1:57263/upload')  # cemaccam: updated to match port specification # hburns Set to production value
     # lets run this on localhost port 4000
     # socketio.run(app,host='129.11.78.152',port=57263,debug=True)#,threaded=True)
-    app.run(port=4000)  # cemaccam: added port specification, to allow tunnelling; can remove for release version.
+    app.run()  # cemaccam: added port specification, to allow tunnelling; can remove for release version. #hburns removed for production version
