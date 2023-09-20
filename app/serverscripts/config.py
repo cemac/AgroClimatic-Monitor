@@ -2,7 +2,7 @@
 .. module:: server
     :platform: Unix
     :synopsis: Flask app server scripts
-.. moduleauther: Dan Ellis & Helen Burns @ CEMAC (UoL)
+.. moduleauthor: Dan Ellis & Helen Burns @ CEMAC (UoL)
 .. description: This module was developed by CEMAC as part of the CSSP Brazil
    Project. This script is a back end web app script
    :copyright: © 2022 University of Leeds.
@@ -11,6 +11,7 @@
    https://github.com/cemac/AgroClimatic-Monitor
 """
 import os, glob
+from pathlib import Path
 '''
 Global arguments
 '''
@@ -23,7 +24,8 @@ app_key = 'CSSP'
 extensions = set(['txt', 'pdf', 'image/png', 'image/tiff','image/gtiff'])
 #text/html
 
-apphome = '/var/www/AgroClimatic-Monitor/'
+# cemaccam: Updated apphome to reflect wherever application is living
+apphome = str(Path(__file__).resolve().parents[2]) + os.sep  # '/var/www/dev-AgroClimatic-Monitor/'
 
 ### if change set in main/config.py too
 STORAGE = apphome + 'uolstorage/Data/' #symbolic link in main repo level 1
